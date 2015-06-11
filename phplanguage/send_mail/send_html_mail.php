@@ -1,5 +1,5 @@
 <?php 
-$to = "simon@mailexample.com, elaine@mailexample.com"; //设置收件人 
+$to = "uahoo@sina.com"; //设置收件人 
 $subject = "This is a test"; //设置E-mail主题 
 //设置E-mail内容：
 $message = " 
