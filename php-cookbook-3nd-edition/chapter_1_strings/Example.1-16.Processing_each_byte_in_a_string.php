@@ -4,13 +4,13 @@
 $string = "This weekend, I'm going shopping for a pet chicken.";
 $vowels = 0;
 for ($i = 0, $j = strlen($string); $i < $j; $i++) {
-	echo "\n";
-	echo $i;
-	echo "\n";
-	echo $j;
+        
+	echo $string[$i];
+	echo "*****";
 	echo "\n";
 	if (strstr('aeiouAEIOU',$string[$i])) {
 	$vowels++;
+	echo "\n";
 	}
 }
 
