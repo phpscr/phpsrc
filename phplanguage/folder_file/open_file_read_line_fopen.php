@@ -6,12 +6,24 @@
 $handle = @fopen("/data0/largefile.random.txt", "r");
 if ($handle) {
     while (!feof($handle)) {
-        $buffer = fgets($handle, 4096);
-        echo $buffer;
-    }
+        //$string = fgets($handle, 4096);
+        $string = fgets($handle);
+        echo $string;
+	
+	//	Example 1-16. Processing each byte in a string
+	//	$string = "This weekend, I'm going shopping for a pet chicken.";
+		$vowels = 0;
+		for ($i = 0, $j = strlen($string); $i < $j; $i++) {
+		//	if (strstr('aeiouAEIOU',$string[$i])) {
+	        //	$vowels++;
+			echo "\n";
+			echo $string[$i];
+			}
+	}
+
+    
     fclose($handle);
 }
-?> 
 
 /*
 <?php
@@ -25,4 +37,6 @@ if ($handle) {
      }
      fclose ($f);
 ?>
+
 */
+?> 
