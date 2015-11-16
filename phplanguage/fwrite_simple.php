@@ -1,8 +1,18 @@
 //Example #1 一个简单的 fwrite() 例子
 <?php
+// 判断文件是否存在,不存在则创建
+$str = ''
+$somecontent = "添加这些文字到文件,中文 ";
 $filename = 'test.txt';
-$somecontent = "添加这些文字到文件 ";
+if (file_exists($filename)) {
+    echo "文件 $filename 存在";
+} else {
+    echo "文件 $filename 不存在";
+    $fp=fopen($filename,"w") ;
+      # code...
+      fputs($fp,$str);
 
+}
 // 首先我们要确定文件存在并且可写。
 if (is_writable($filename)) {
 
