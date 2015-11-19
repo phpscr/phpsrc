@@ -1,4 +1,4 @@
-，<?php
+/*
  $array=array("1"=>"编","2"=>"程","3"=>"词","4"=>"典");
  print_r($array);
  echo "<br>";
@@ -6,4 +6,10 @@
  echo $array[2];
  echo $array[3];
  echo $array[4];
+*/
+<?php
+ $array[1]="I";
+ $array[2]="love";
+ $array[3]="PHP";
+ print_r($array); //输出所创建数组的结构
  ?>
