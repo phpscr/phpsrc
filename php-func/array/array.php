@@ -1,4 +1,4 @@
-，<?php
+<?php
  $array=array("1"=>"编","2"=>"程","3"=>"词","4"=>"典");
  print_r($array);
  echo "<br>";
@@ -6,4 +6,5 @@
  echo $array[2];
  echo $array[3];
  echo $array[4];
- ?>
+ echo "<br>";
+?>
