@@ -9,6 +9,6 @@ if($handle){
   }
   for($i=0,$j=strlen($string),$i<$j){
     echo "$string[$i]";
-    
+
   }
 }
