@@ -7,7 +7,7 @@ if($handle){
   while(!feof($handle)){
     $string = fgets($handle);
   }
-  for($i=0,$j=strlen($string);$i<$j){
+  for($i=0,$j=strlen($string);$i<$j;$i++){
     echo "$string[$i]";
 
   }
