@@ -4,7 +4,7 @@
      $result = array();
      $color =array("red","blue","green");
      //自定义键值
-     $language = (1=>"English",3=>"Chinese",5=>"Franch");
+     $language = array(1=>"English",3=>"Chinese",5=>"Franch");
      //定义二维数组
      $two = array(
                  "color"=>array("red","blue"),    //用逗号结尾
