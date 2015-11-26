@@ -1,5 +1,5 @@
 <?php
-
+/*
 //使用for循环遍历
  $arr2=array(
     array("张三","20","男"),
@@ -10,9 +10,11 @@
 // echo "<table border=2 bordercolor=red><tr><td>姓名</td><td>年龄</td& gt;<td>性别</td></tr>";
 for($i=0;$i<4;$i++){
 //    echo "<tr>";
+	echo "\n";
     for($j=0;$j<3;$j++){
 //      echo "<td>";
-      echo $arr2[$i][$j];
+	echo "\n";
+	echo $arr2[$i][$j];
 //      echo "</td>";
     }
 // echo "</tr>";
@@ -22,8 +24,9 @@ for($i=0;$i<4;$i++){
 //
 //使用foreach遍历
 
-/*
-<?php
+
+//<?php
+*/
  $arr = array('one'=>array('name'=>'张三','age'=>'23','sex'=>'男'),
      'two'=>array('name'=>'李四','age'=>'43','sex'=>'女'),
      'three'=>array('name'=>'王五','age'=>'32','sex'=>'男'),

@@ -19,6 +19,7 @@ $arr = array(
 	);
 
 foreach($arr as $k=>$val){
+		echo "====$k====";
 		echo "\n";
    		echo $val['name'].$val['age'].$val['sex']."\n";
 		echo "\n";

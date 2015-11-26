@@ -3,15 +3,15 @@
 
 
 
-
+//定义
 $count_letter = array(
 	'A'=>array(
-		'A'=>'A',
-                'N'=>0,
+		'0'=>'A',
+                '1'=>0,
 		),
 	'B'=>array(
-		'B'=>'B',
-		'N'=>0,
+		'0'=>'B',
+		'1'=>9,
 		)
 	);
 print_r($count_letter);
@@ -31,13 +31,18 @@ if($handle){
 			#echo "\n";
 			$n=$n+1;
 		#	var_dump($n);			
-			if (string[$i] === r(
+			foreach($count_letter as $k => $val) {
+			
+				if (string[$i] === $val['0']){
+					$val['1']+1	
+
 
   		}
 	}
 }
 
 print( $count_letter['A']['A']) ;
+print( $count_letter['B']['N']) ;
 echo "=======" ;
 #echo $n ;
 echo "=======" ;
