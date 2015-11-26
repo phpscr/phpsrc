@@ -27,29 +27,36 @@ for($i=0;$i<4;$i++){
 
 //<?php
 */
- $arr = array('one'=>array('name'=>'张三','age'=>'23','sex'=>'男'),
-     'two'=>array('name'=>'李四','age'=>'43','sex'=>'女'),
-     'three'=>array('name'=>'王五','age'=>'32','sex'=>'男'),
-     'four'=>array('name'=>'赵六','age'=>'12','sex'=>'女'));
-
-foreach($arr as $k=>$val){
-    echo $val['name'].$val['age'].$val['sex']."<br>";
- }
- echo "<p>";
- ?>
-*/
 
 /*
-<?php
- $arr = array('one'=>array('name'=>'张三','age'=>'23','sex'=>'男'),
-     'two'=>array('name'=>'李四','age'=>'43','sex'=>'女'),
-     'three'=>array('name'=>'王五','age'=>'32','sex'=>'男'),
-     'four'=>array('name'=>'赵六','age'=>'12','sex'=>'女'));
- foreach($arr as $key=>$value){
- foreach($value as $key2=>$value2){
-    echo $value2;
- }
- echo "<br>";
- }
+$arr = array(
+	'one'=>array('name'=>'张三','age'=>'23','sex'=>'男'),
+     	'two'=>array('name'=>'李四','age'=>'43','sex'=>'女'),
+    	'three'=>array('name'=>'王五','age'=>'32','sex'=>'男'),
+     	'four'=>array('name'=>'赵六','age'=>'12','sex'=>'女')
+);
+
+foreach($arr as $k=>$val){
+    echo $val['name'].$val['age'].$val['sex']."\n";
+}
+
 */
+
+//<?php
+ 
+$arr = array(
+	'one'=>array('name'=>'张三','age'=>'23','sex'=>'男'),
+     	'two'=>array('name'=>'李四','age'=>'43','sex'=>'女'),
+     	'three'=>array('name'=>'王五','age'=>'32','sex'=>'男'),
+     	'four'=>array('name'=>'赵六','age'=>'12','sex'=>'女')
+);
+ 	foreach($arr as $key=>$value){
+	
+		echo "\n";
+	 	foreach($value as $key2=>$value2){
+    		echo $value2;
+		echo "\n";
+ 		}
+}
+
 ?>
