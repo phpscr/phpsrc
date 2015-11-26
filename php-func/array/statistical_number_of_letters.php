@@ -34,7 +34,8 @@ if($handle){
 			foreach($count_letter as $k => $val) {
 			
 				if (string[$i] === $val['0']){
-					$val['1']+1	
+					$val['1']=$val['1']+1;
+					$count_letter=array(array('1'=>$val[$i]));	
 
 
   		}
