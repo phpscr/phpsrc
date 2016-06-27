@@ -12,7 +12,7 @@ require_once('CountLogData.class.php');
 $format = "%a %u %l %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%other1\" \"%other2\"";
 $UrchinParse = new CountIpByHour();
 $UrchinParse->setFormat($format);
-$UrchinParse->readLog('logFileName');
+$UrchinParse->readLog('/var/log/httpd/access_log');
 $result = $UrchinParse->apply();
 var_dump($result);
 
