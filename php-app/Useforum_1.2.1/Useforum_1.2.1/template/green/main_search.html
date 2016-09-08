@@ -1,0 +1,74 @@
+{include file="header.html" t="搜索"}
+	<div id="page">
+		<div class="post">
+			<h2 class="title">搜索</h2>
+			<div class="entry">
+				<form action="" method="POST" >
+					<p><input name="search" type="search" results=s style="width: 400px;" placeholder="关键词" value="{$smarty.post.search}">
+                    </p>
+					<p>
+						<label><input name="type"  type="radio" value="topic"
+                            {if 'topic'  == $smarty.post.type  ||!$smarty.post.type} checked ="checked" {/if}
+                                />话题</label>
+						<label><input name="type"  type="radio" value="user" {if 'user' == $smarty.post.type} checked ="checked" {/if} />用户</label>
+                        <a href="{spUrl c=main a=advanced_search}" title="请先在账号框内输入用户名再点击" >高级搜索</a>
+					</p>
+					<p><input type="submit" class="links" value="搜  索" /></p>
+				</form>
+			</div>
+{if $result1}
+	<table width="100%" class="item_list">
+		<thead>
+			<th width="500" ><b>标题</b></th>
+			<th width="100"><b>作者</b></th>
+            <th width="100"><b>版块</b></th>
+			<th width="130" class="tdcenter"><b>发布时间</b></th>
+			<th width="130" class="tdcenter"><b>最后评论</b></th>
+			<th width="39" class="tdcenter" ><b>评论</b></th>
+			<th width="59" class="tdcenter" ><b>阅读</b></th>
+		</thead>
+		<tbody>
+		{foreach from=$result1 item=result}
+			<tr>
+				<td>
+				{if $result.digest == "1"}
+				<img src="{$siteurl}/template/green/images/digest.gif" />
+				{/if}
+				<a href="{spUrl c=main a=view gid=$result.gid}">{$result.title}</a></td>
+				<td class="tdcenter"><a href="{spUrl c=user a=profile uname=$result.uname}">{$result.uname}</a> </td>
+                <td class="tdcenter"><a href="{spUrl c=main a=viewforum id=$result.forum}" style="font-size: 12px;">{$result.f.name}</a></td>
+                <td class="tdcenter">{theDate time=$result.ctime}</td>
+				<td class="tdcenter">{theDate time=$result.rtime}</td>
+				<td class="tdcenter">{$result.replynum}</td>
+				<td class="tdcenter">{$result.view}</td>
+			</tr>
+		{/foreach}
+		</tbody>
+	</table>
+	{/if}
+	{if $result2}
+	<table width="100%" class="item_list">
+		<thead>
+			<th width="60px" ></th>
+			<th width="500" ><b>用户名</b></th>
+			<th width="100" class="tdcenter"><b>积分</b></th>
+			<th width="150" class="tdcenter"><b>注册时间</b></th>
+			<th width="100" class="tdcenter"><b>来自</b></th>
+		</thead>
+		<tbody>
+		{foreach from=$result2 item=result}
+			<tr>
+				<td>{if ($result.avatar)}<img src="{$result.avatar}" width="60px"/>{else}<img src ="./template/green/images/noavatar_big.gif" width="60px" alt="{$info.uname}" align="right"/>{/if}</td>
+				<td><a href="{spUrl c=user a=profile uid=$result.uid}">{$result.uname}</a>({$result.introduce})</td>
+				<td class="tdcenter">{$result.credits}</td>
+				<td class="tdcenter">{theDate time=$result.ctime}</td>
+				<td class="tdcenter">{$result.live} {if "GBADMIN" == $smarty.session.userinfo.acl}<a href="{spUrl c=user a=editprofile uid=$result.uid}" target="_blank">编辑</a>{/if}</td>
+			</tr>
+		{/foreach}
+		</tbody>
+	</table>
+	{/if}
+	{if !$result2 && !$result1 && isset($smarty.post['type'])}<P>什么也没找到……</P>{/if}
+	</div>
+</div>
+{include file="footer.html"}

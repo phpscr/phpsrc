@@ -1,0 +1,38 @@
+{include file="subnavibar.html"}
+	<div id="page">
+		<div class="post">
+			<h2 class="title">邮件设置</h2>
+            <div class="instruction">
+                <p>你可以设置邮件参数</p>
+            </div>
+			<div class="entry">
+                <form action="{spUrl c=admin a=update_mail}" method="POST">
+                    <p>当前配置信息：</p>
+                    <table>
+                   <tr><td>邮箱Host :</td><td><input  type="text" name="mailhost" value="{$results.mailhost}" /> (例如：smtp.qq.com)</td></tr>
+<tr><td>邮箱端口 :</td><td><input type="text" name="mailport" value="{$results.mailport}" /> (例如：25)</td></tr>
+<tr><td>邮箱用户 :</td><td><input type="email" name="mailuser" value="{$results.mailuser}" /> (例如：user@qq.com)</td></tr>
+<tr><td>邮箱密码 :</td><td><input type="text"  name="mailpwd" value="{$results.mailpwd}" /> (例如：123456)</td></tr>
+                    </table>
+                    <p><input type="submit" class="links" value="生成配置文件" /></p>
+                </form>
+                <form action="{spUrl c=admin a=mail_test}" method="POST">
+
+                <p>发送测试邮件:</p>
+                    <p>标题：<input type="text" name="title"  style="width:500px;"  /> </p>
+                    <p>收件人：<input type="email" name="email"  style="width:300px;" /> </p>
+                  <p>内容： <textarea name="content" style="width: 450px;height: 100px;"></textarea>
+                    <p><input type="submit" class="links" value="发送" /></p>
+                    </form>
+
+                <form action="{spUrl c=admin a=mail_user}" method="POST">
+
+                    <p>发送邮件给论坛用户:</p>
+                    <p>标题：<input type="text" name="title"  style="width:500px;"  /> </p>
+                    <p>用户：<input type="text" name="user"  style="width:300px;" />  多个用户名用","分隔</p>
+                    <p>内容： <textarea name="content" style="width: 450px;height: 100px;"></textarea>
+                    <p><input type="submit" class="links" value="发送" /></p>
+                </form>
+	</div>
+</div>
+{include file="footer.html"}

@@ -1,0 +1,172 @@
+
+/*
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+*/
+
+body {
+	margin: 0;
+	padding: 0;
+	text-align:center;
+	background: #FFFFFF;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #837669;
+	background: url(bg.jpg) repeat-x left top;
+}
+
+h1, h2, h3 {
+	margin: 0;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: normal;
+	color: #0161C3;
+}
+
+h1 { font-size: 28px; }
+h3 {font-size:14px;margin:10px 0;}
+p {text-indent:20px;}
+p i{color:red;font-size:14px;}
+p, ul, ol {
+	margin-top: 0;
+	line-height: 240%;
+	text-align: justify;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+ul, ol { }
+
+blockquote { }
+
+a { color: #3B5999; }
+
+a:hover { text-decoration: none; }
+
+a img {
+	border: none;
+}
+
+img.left {
+	float: left;
+	margin: 7px 30px 0 0;
+}
+
+img.right {
+	float: right;
+	margin: 7px 0 0 30px;
+}
+
+hr { display: none; }
+
+.list1 {
+}
+
+.list1 li {
+	float: left;
+	line-height: normal;
+}
+
+.list1 li img {
+	margin: 0 30px 30px 0;
+}
+
+.list1 li.alt img {
+	margin-right: 0;
+}
+
+.button{
+padding:5px;
+}
+
+/* Page */
+
+#page {
+	width: 800px;
+	margin: 0 auto;
+	padding: 0 20px;
+	text-align:center;
+}
+
+/** LOGO */
+
+#logo {
+	height: 148px;
+}
+
+#logo h1, #logo p {
+	float: left;
+	margin: 0;
+	padding: 0;
+	line-height: normal;
+}
+
+#logo h1 { 
+	padding-top: 30px; 
+	font-family: Microsoft Yahei;
+	font-size: 30px;
+	color: #185979;
+	}
+
+#logo h1 a {
+	text-decoration: none;
+	color: #185979;
+}
+
+#logo h1 a:hover { text-decoration: underline; }
+
+#logo p {
+	padding: 65px 0 0 15px;
+	font: italic 13px Georgia, "Times New Roman", Times, serif;
+	color: #B6ACA2;
+}
+
+#logo p a {
+	text-decoration: none;
+	color: #B6ACA2;
+}
+
+#logo p a:hover { text-decoration: underline; }
+
+/* Content */
+
+#content {
+	text-align:left;
+}
+
+/* Post */
+
+.post {
+	margin-bottom: 25px;
+}
+
+.post .title {
+	margin-bottom: 3px;
+	padding: 2px 0px;
+	border-bottom: 1px dashed #97CEEA;
+}
+
+.post .meta {
+	margin: 0 0 3px 0;
+	padding: 2px 30px 2px 0px;
+	font: italic 13px Georgia, "Times New Roman", Times, serif;
+	color: #B6ACA2;
+}
+
+.post .meta a { color: #B6ACA2; }
+
+.post .entry {
+	padding: 25px 0px;
+}
+.post p span{width:180px;float:left;}
+.post .links {
+	text-align:center;
+	margin: 50px 0;
+}
+
+.post .links .comments {
+}
+
+.post .links .permalink {
+	padding-left: 17px;
+}

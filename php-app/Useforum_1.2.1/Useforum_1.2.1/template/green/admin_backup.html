@@ -1,0 +1,42 @@
+{include file="subnavibar.html"}
+<div id="page">
+	<h2 class="title">数据备份</h2>
+	<p><a href="{spUrl c=admin a=backup ouall=yes}">备份全部数据</a></p>
+	<div class="post">
+		<table width="100%" class="item_list">
+			<thead>
+				<tr>
+					<th>数据表</th>
+					<th width="30">引擎</th>
+					<th width="70">字符集</th>
+
+					<th width="50">占用空间</th>
+
+					<th width="50">记录数</th>
+					<th width="40">表状态</th>
+
+					<th width="120">创建时间</th>
+					<th width="120">更新时间</th>
+					
+					<th width="60">多余</th>
+				</tr>
+			</thead>
+			<tbody>{foreach from=$data.rs item=d}
+				<tr>
+					<td>{$d.TABLE_NAME}{if $d.TABLE_COMMENT != ''}({$d.TABLE_COMMENT}){/if}</td>
+					<td>{$d.ENGINE}</td>
+					<td>{$d.TABLE_COLLATION}</td>
+
+					<td>{formatBytes size=$d.DATA_LENGTH}</td>
+					<td class="tdcenter">{$d.TABLE_ROWS}</td>
+					<td>{if $d.ROW_FORMAT == 'Dynamic'}动态{else}静态{/if}</td>
+
+					<td class="tdcenter">{$d.CREATE_TIME|date_format:"%Y-%m-%d %H:%I"} </td>
+					<td class="tdcenter">{$d.UPDATE_TIME|date_format:"%Y-%m-%d %H:%I"}</td>
+					<td class="tdcenter">{if $d.DATA_FREE !=0}{formatBytes size=$d.DATA_FREE} {else}正常 {/if}</td>
+				</tr>
+			{/foreach}</tbody>
+		</table>
+	</div>
+</div>
+{include file="footer.html"}
