@@ -1,0 +1,26 @@
+{if $smarty.get.c == 'admin'}
+{include file="header.html" t="管理中心"}
+<div id="admin" >
+    <ul><li>{if $smarty.get.a==index}<a id="justit">管理首页</a>{else}<a href ="{spUrl c=admin a=index}">管理首页</a>{/if}</li>
+        <li>{if $smarty.get.a==topic}<a id="justit">话题管理</a>{else}<a href ="{spUrl c=admin a=topic}">话题管理</a>{/if}</li>
+        <li>{if $smarty.get.a==forum}<a id="justit">版块管理</a>{else}<a href ="{spUrl c=admin a=forum}">版块管理</a>{/if}</li>
+        <li>{if $smarty.get.a==attachment}<a id="justit">附件管理</a>{else}<a href ="{spUrl c=admin a=attachment}">附件管理</a>{/if}</li>
+        <li>{if $smarty.get.a==user}<a id="justit">用户管理</a>{else}<a href ="{spUrl c=admin a=user}">用户管理</a>{/if}</li>
+        <li>{if $smarty.get.a==acl}<a id="justit">权限&用户组</a>{else}<a href ="{spUrl c=admin a=acl}">权限&用户组</a>{/if}</li>
+        <li>{if $smarty.get.a==menu}<a id="justit">导航设置</a>{else}<a href ="{spUrl c=admin a=menu}">导航设置</a>{/if}</li>
+        <li>{if $smarty.get.a==option}<a id="justit">论坛设置</a>{else}<a href ="{spUrl c=admin a=option}">论坛设置</a>{/if}</li>
+        <li>{if $smarty.get.a==mail}<a id="justit">邮件设置</a>{else}<a href ="{spUrl c=admin a=mail}">邮件设置</a>{/if}</li></ul>
+        <li>{if $smarty.get.a==backup}<a id="justit">数据操作</a>{else}<a href ="{spUrl c=admin a=backup}">数据操作</a>{/if}</li></ul>
+        <li>{if $smarty.get.a==api}<a id="justit">API设置</a>{else}<a href ="{spUrl c=admin a=api}">API设置</a>{/if}</li></ul>
+</div>
+{elseif $smarty.get.c == 'user' ||$smarty.get.a == 'qq_binding'}
+{include file="header.html" t="个人设置"}
+<div id="admin" >
+    <ul><li>{if $smarty.get.a==editprofile}<a id="justit">编辑资料</a>{else}<a href ="{spUrl c=user a=editprofile uid=$smarty.get.uid}">编辑资料</a>{/if}</li>
+        <li>{if $smarty.get.a==changepwd}<a id="justit">修改密码</a>{else}<a href ="{spUrl c=user a=changepwd uid=$smarty.get.uid}">修改密码</a>{/if} </li>
+        <li>{if $smarty.get.a==secure}<a id="justit">安全设置</a>{else}<a href ="{spUrl c=user a=secure uid=$smarty.get.uid}">安全设置</a>{/if}</li>
+        <li>{if $smarty.get.a==identify}<a id="justit">身份认证信息</a>{else}<a href ="{spUrl c=user a=identify uid=$smarty.get.uid}">身份认证信息</a>{/if}</li>
+        <li>{if $smarty.get.a==qq_binding}<a id="justit">QQ互联设置</a>{else}<a href ="{spUrl c=api a=qq_binding uid=$smarty.get.uid}">QQ互联设置</a>{/if}</li>
+    </ul>
+</div>
+{/if}

@@ -1,0 +1,35 @@
+body{background:#8c8c8c;margin:0;padding:0;font-size:12px;font-family:Arial, Helvetica, sans-serif,"宋体";}
+
+ul,li,form{margin:0;padding:0;list-style:none;}
+
+.container{width:800px;margin:0 auto;background:#fff}
+.block{margin:30px;padding:10px;background:#f0f8ff}
+.b_list{border:1px solid #d5e4f4;padding:3px;background:#fff}
+.b_list li{float:left;width:100%;}
+.b_list li .title{background:#f4faff;border-top:1px solid #ebf5fe;border-bottom:1px solid #ebf5fe;line-height:24px;}
+.b_list li .title .time{float:left;color:#999;}
+.b_list li .title .name{color:#175cbb;padding-left:10px;float:left}
+.b_list li .title .email{color:#175cbb;padding-right:10px;float:right}
+.b_list li .content{margin:5px 0px;padding:0 20px;color:#625f5f;line-height:24px;}
+.b_list li .content .reply{margin:10px 20px;padding:7px;border:1px dashed #ffaa00;background:#fff6e3}
+.b_list li .content .reply .gly{color:#ff9933;float:left;}
+.b_list li .content .reply .gly_content{clear:both;color:#625f5f;}
+
+.ly_list{margin:0;padding:0;}
+.ly_list li{clear:both;}
+.ly_list li .left{width:70px;float:left;color:#625f5f;line-height:24px;}
+.ly_list li .right{width:500px;float:left;}
+.ly_list li .text{border:1px solid #d5e4f4;background:#f4faff;}
+.ly_list li .textarea{border:1px solid #d5e4f4;background:#f4faff;}
+.ly_list li .btn{border:1px solid #d5e4f4;padding:2px 4px;background:#f4faff;color:#175cbb;}
+
+.clear{clear:both}
+
+/********分页样式*********/
+.pagelist{text-align:center;font-size: 14px;line-height:20px;font-family:Arial, Helvetica, sans-serif;margin:0px 30px;}
+
+
+.page{ font-family:Arial, Helvetica, sans-serif; line-height: normal; font-size: 14px; }
+.page a,.page span{display:block;color:#390;font-weight:normal;text-decoration:none;letter-spacing:0px;border:1px solid #ccc;padding-top:3px;float:left;margin-top:5px;margin-right:2px;margin-bottom:5px;margin-left:2px;text-align:center;padding-right:5px;padding-left:5px;height:18px} /* SPAN和链接 */
+.page a:hover, .page a.in{color:#F44;border:1px solid #F44} /* 当前链接有激活时 */
+.page input{padding:0px;color:#390;height:16px;width:25px;border:0px solid #fff;text-align:center;margin-top:0px;margin-right:-5px;margin-bottom:0px;margin-left:-5px;vertical-align:middle;font-size:12px} /* 跳转INPUT */

@@ -1,0 +1,29 @@
+{include file="header.html" t="登录"}
+	<div id="page">
+		<div class="post">
+			<h2 class="title">登录</h2>
+            {if $is_close == 1}
+            <div class="instruction">
+                <p>{$close_reason}</p>
+            </div>
+            {/if}
+			<div class="entry">
+                <p>{if $errmsg}<span class="notice">{$errmsg}</span>{else}请输入您的帐号及密码：{/if}</p>
+				<form action="" method="POST" onsubmit="return aclcode();" autocomplete="off">
+					<p>帐　　号：<input type="text" name="uname"  value="{$smarty.post.uname}" placeholder=" 用户名或E-Mail" required="required" id="uname"></p>
+					<p>密　　码：<input type="password" name="upass" value="{$smarty.post.upass}" required="required"></p>
+                   				<p>自动登录：<input type="checkbox" name="autologin" checked="checked"></p>
+					<p>
+						<input type="submit" class="links" value="提  交" />  
+						<a href="javascript:void(0);" onclick="findpwd();" title="请先在账号框内输入用户名再点击" >找回密码</a>
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+{include file="footer.html"}
+<script>
+function findpwd(){
+	window.location = "{spUrl c=user a=findpwd  step=1}&uname=" + document.getElementById("uname").value;
+}
+</script>

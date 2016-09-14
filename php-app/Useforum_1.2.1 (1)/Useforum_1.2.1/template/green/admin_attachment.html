@@ -1,0 +1,23 @@
+{include file="subnavibar.html"}
+<div id="page">
+    <h2 class="title">附件管理</h2>
+    <div class="entry"><form action="{spUrl c=admin a=multidel}" method="POST"  name="frmAnnounce">
+            {foreach from=$results item=result}
+            <p>
+                {if substr($result.type,0,5)=='image'}
+                <img src="{$result.url}" width="30px" style="vertical-align: middle;">
+                {/if}
+                <a href="{$result.url}" target="_blank">{$result.name}</a> {formatBytes size=$result.size}
+                <span><a href="{spUrl c=admin a=delattach aid=$result.aid}">删除</a>
+                     {getUrl uname=$result.uname.uname}
+                    {theDate time=$result.ctime} </span></p>
+            {/foreach}
+    </div>
+    <div class="scott">
+            {if $pager}
+            {pager pager=$pager c="admin" a="attachment" idname="none" id="1"}
+            {/if}
+        </p>
+    </div>
+</div>
+{include file="footer.html"}

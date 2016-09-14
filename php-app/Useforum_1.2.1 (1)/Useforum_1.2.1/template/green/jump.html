@@ -1,0 +1,10 @@
+{include file="header.html"}
+<div id="page">
+    <div class="middle">
+        <img src="{$siteurl}/template/green/images/{("s" == $type) ? "success" : "error"}.gif"/>
+        <br>
+        <p class="middle">{$msg}</p><a href ={$url}>如果浏览器没有自动跳转，请点击这里</a>
+    </div>
+</div>
+{include file="footer.html"}
+<head><meta http-equiv='refresh' content='{$time};url={$url}'></head>

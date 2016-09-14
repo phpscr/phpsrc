@@ -1,0 +1,21 @@
+{include file="subnavibar.html"}
+<div id="page">
+    <div class="post">
+    <h2 class="title">设置安全提问</h2>
+        <div class="instruction">
+            <p>安全提问非常重要，它可以辅助你找回密码，请认真设置并把它保存在安全的地方。你需要输入登录密码、在注册时提供的电子邮箱确认身份。若已设置安全提问，提问会在这里显示，但答案不会显示。</p>
+        </div>
+        <div class="entry">
+            <form action="" method="POST">
+                <p>登录密码 ：<input name="upass" type="password" required="required"></p>
+                <p>电子邮箱 ：<input name="email" type='email'></p>
+                <p>安全提问1：<input type="text" name="q1" value="{$q.q1}"></p>
+                <p>问题答案1：<input type="text" name="a1"></p>
+                <p>安全提问2：<input type="text" name="q2" value="{$q.q2}"></p>
+                <p>问题答案2：<input type="text" name="a2"></p>
+                <p><input type="submit" class="links" value="提  交" /></p>
+            </form>
+        </div>
+    </div>
+</div>
+{include file="footer.html"}

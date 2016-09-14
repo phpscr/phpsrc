@@ -1,0 +1,54 @@
+{include file="header.html" t="`$info.uname`的听众"}{if $pager.current_page == ""}{$pager.current_page = 1}{/if}
+<div id="page" xmlns="http://www.w3.org/1999/html">
+	<div class="post">
+        <h2 class="title">{$info.uname}的听众 <a href="{spUrl c=user a=follower uid=$info.uid}"> </a> <span id="exresult">{$info.fnum}</span>
+            <button id="follow" name="follow" >
+                {if $followed ==1}取消收听{else}收听{/if}
+            </button>
+        </h2>
+		<table width="100%" class="item_list">
+				<th width="600" ><b>用户名</b></th>
+				<th width="100" class="tdcenter">积分</th>
+				<th width="150" class="tdcenter">收听时间</th>
+			</thead>
+			<tbody>
+			{foreach from=$results item=result}
+				<tr>
+
+					<td>
+                        {if avatar($info.avatar)}
+                        <img src ="{$result.info.avatar}" width="60"  align="left"/>
+                        {else}
+                        <img src ="{$siteurl}/template/green/images/noavatar_big.gif" width="60" align="left"/>
+                        {/if}<a href ="{spUrl c=user a=profile uid=$result.follower}">{$result.info.uname}</a></td>
+					<td class="tdcenter">{$result.info.credits}</td>
+					<td class="tdcenter">{theDate time=$result.ctime}</td>
+				</tr>
+			{/foreach}
+			</tbody>
+		</table>	
+		<div class="scott">
+			<p>
+				{if $pager.all_pages}
+                    {pager pager=$pager c="user" a="userlist" idname="sort" id=$smarty.get.sort}
+				{/if}
+			</p>
+		</div>
+	</div>
+</div>
+<script>
+    $(document).ready(function(){
+        //用户名
+        $('#follow').click(function(){
+            $.getJSON("{spUrl c=user a=follow}", { 'following': '{$info.uid}' }, function(json){
+                if(json.message == 1){
+                    $('#follow').html("取消收听");
+                }else{
+                    $('#follow').html("收听");
+                }
+                $('#exresult').html(json.follower);
+            });
+        });
+    });
+</script>
+{include file="footer.html"}
