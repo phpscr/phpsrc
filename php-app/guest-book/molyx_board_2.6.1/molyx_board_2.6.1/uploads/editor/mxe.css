@@ -1,0 +1,57 @@
+.b_normal {
+	padding: 1px;
+	border: none;
+	cursor: pointer;
+}
+
+.bu_miss {
+	padding: 1px;
+	border: none;
+	cursor: not-allowed;
+	filter: Gray();
+}
+
+.b_over{
+	background: #D7F1FE url(./images/hover_bg.gif) repeat-x;
+	padding: 0px;
+	border: 1px solid #000080;
+	cursor: pointer;
+}
+
+.b_down{
+	background: #98B5E2 url(./images/down_bg.gif) repeat-x;
+	padding: 0px;
+	border: 1px solid #000080; 
+	cursor: pointer;
+}
+
+.e_menu {
+	background: #EEEEF4 url(./images/menu_bg.gif) repeat-x;
+	width: 100%;
+}
+
+.div_editor {
+	border: 1px solid #CFCFCF;
+	background: #EEEEF4;
+	margin: 0px;
+	padding: 5px;
+	font-size: 12px;
+	line-height: normal;
+}
+
+.box_editor, textarea.box_editor {
+	border: 1px solid #CFCFCF;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.pop_editor {
+	border: 1px solid #CFCFCF;
+	background: #EEEEF4;
+	font-size: 14px;
+	position: absolute;
+	padding: 2px;
+	cursor: default;
+	overflow: auto;
+}

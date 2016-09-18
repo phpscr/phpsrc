@@ -1,0 +1,14 @@
+<?php
+$config['servername'] = "localhost";
+$config['dbname'] = "molyx";
+$config['dbusername'] = "root";
+$config['dbpassword'] = "";
+$config['tableprefix'] = "mxb_";
+$config['usepconnect'] = "0";
+$config['superadmin'] = "";
+$config['technicalemail'] = "";
+$config['dbtype'] = "mysql";
+$config['dbcharset'] = "";
+$config['forum_url'] = "";
+$config['remoteattach'] = "";
+?>
