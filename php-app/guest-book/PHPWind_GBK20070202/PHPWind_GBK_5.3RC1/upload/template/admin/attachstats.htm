@@ -1,0 +1,78 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<tr><td colspan=2 align=center>
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td class=head colspan=2><b>附件统计</b></td></tr>
+<tr><td class=b width=30%>附件总计(个)</td><td class=b>$A_count</td></tr>
+<tr><td class=b>附件占用空间(KB)</td><td class=b>$A_size</td></tr>
+<tr><td class=b>附件平均大小(KB)</td><td class=b>$average</td></tr>
+<tr><td class=b>总计下载次数(次)</td><td class=b>$A_hits</td></tr>
+</table></td></tr></table>
+<br>
+<form action=$basename method=post>
+<input type=hidden name=action value='delete'> 
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td class=head colspan=7><b>前二十个最热门附件</b></td></tr>
+<tr class=head_2 align=center><td>附件ID</td><td width=30%>附件名称</td><td>附件下载</td><td width=12%>附件大小</td><td>下载次数</td><td>所在版块</td>
+<td width=4%>删</td></tr>
+<!--
+EOT;
+$num=0;
+foreach($M_hits as $thread){
+$num++;
+print <<<EOT
+-->
+<tr class=b  align=center>
+<td>$num</td>
+<td>$thread[name]</td>
+<td><a href="$attachpath/$thread[url]">$thread[url]</a></td><td>$thread[size](KB)</td>
+<td>$thread[hits]</td>
+<td><a href='thread.php?fid=$thread[fid]'>$thread[forum]</a></td>
+<td><input type='checkbox' name='urlarray[$thread[aid]]' value=$thread[url]></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></td></tr></table><br>
+<center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)">
+<input type="submit" value="提 交"></center></form><br>
+
+<form action=$basename method=post>
+<input type=hidden name=action value='delete'> 
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td class=head colspan=7><b>前二十个最大附件</b></td></tr>
+<tr class=head_2 align=center><td>附件ID</td><td width=30%>附件名称</td><td>附件下载</td><td width=12%>附件大小</td><td>下载次数</td><td>所在版块</td>
+<td width=4%>删</td></tr>
+<!--
+EOT;
+$num=0;
+foreach($M_size as $thread){
+$num++;
+print <<<EOT
+-->
+<tr class=b>
+<td align=center>$num</td>
+<td align=center>$thread[name]</td>
+<td align=center><a href="$attachpath/$thread[url]">$thread[url]</a></td><td align=center>$thread[size](KB)</td>
+<td align=center>$thread[hits]</td>
+<td align=center><a href='thread.php?fid=$thread[fid]'>$thread[forum]</a></td>
+<td align=center>
+<input type='checkbox' name='urlarray[$thread[aid]]' value=$thread[url]>
+</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></td></tr></table><br>
+<center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)">
+<input type="submit" name="hello" value="提 交"></center></form><br>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>
+-->

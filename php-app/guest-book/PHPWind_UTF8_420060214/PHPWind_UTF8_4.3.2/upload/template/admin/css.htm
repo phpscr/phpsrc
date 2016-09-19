@@ -1,0 +1,84 @@
+<!--<?php
+print <<<EOT
+-->
+<html>
+<head>
+<title>{$db_bbsname}- powered by phpwind.net</title>
+<meta http-equiv="Content-Type" content="text/html; charset=$db_charset">
+<style type="text/css">
+table { BORDER-TOP: 0px; BORDER-LEFT: 0px; BORDER-BOTTOM: 2px}
+select {
+	FONT-SIZE: 12px;
+	COLOR: #000000; background-color: #E0E2F1;
+}
+a { TEXT-DECORATION: none; color:#000000}
+a:hover{ text-decoration: underline;}
+body {font-family:Verdana;FONT-SIZE: 12px;MARGIN: 0;color: #000000;background: #F7F7F7;}
+textarea,input,object{font-size: 12px;}
+td { BORDER-RIGHT: 1px; BORDER-TOP: 0px; FONT-SIZE: 12px; COLOR: #000000;}
+.b{background:#F7F7F7;}
+.left_over{background:#F0F0F0;}
+.head { color: #ffffff;background: #739ACE;font-weight:bold;}
+.head td{color: #ffffff;}
+.head a{color: #ffffff;}
+.head_2 {background: #CED4E8;}
+.head_2 td{color: #000000;}
+.hr  {border-top: 1px solid #739ACE; border-bottom: 0; border-left: 0; border-right: 0; }
+.bold {font-weight:bold;}
+.smalltxt {font-family: Tahoma, Verdana; font-size: 12px;color: #000000;}
+.i_table{border: 1px solid #739ACE;background:#DEE3EF;}
+</style>
+<script language="JavaScript">
+ifcheck = true;
+function CheckAll(form)
+{
+	for (var i=0;i<form.elements.length-2;i++)
+	{
+		var e = form.elements[i];
+		e.checked = ifcheck;
+	}
+	ifcheck = ifcheck == true ? false : true;
+}
+function atccheck()
+{
+	if(document.FORM.atc_title.value==''){
+		alert('标题为空');
+		document.FORM.atc_title.focus();
+		return false;
+	} else if(document.FORM.fid.value==''){
+		alert('没有选择文章所属分类');
+		document.FORM.fid.focus();
+		return false;
+	}
+	_submit();
+}
+function checkhackset(chars)
+{
+	if(!confirm("确定要卸载此插件吗? 如果您卸载了此插件,程序将自动删除插件相关文件，请确认!"))
+		return false;
+	location.href=chars;
+}
+function checkgroupset(chars)
+{
+	if(!confirm("确定删除吗? 如果您删除了此用户组,请到论坛缓存数据管理更新用户头衔缓冲!"))
+		return false;
+	location.href=chars;
+}
+function report_jump(admin_file){
+	var URL=document.form1.type.options[document.form1.type.selectedIndex].value;
+	location.href=admin_file+"?adminjob=report&type="+URL;
+}
+function level_jump(admin_file)
+{
+	var URL=document.mod.selectfid.options[document.mod.selectfid.selectedIndex].value;
+	location.href=admin_file+"?adminjob=level&action=editgroup&gid="+URL;
+}
+function ip_jump(name)
+{
+	URL = eval('document.form1.' + name + '.options[document.form1.' + name + '.selectedIndex].value');
+	location.href=URL;
+}
+</script>
+<!--
+EOT;
+?>

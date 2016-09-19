@@ -1,0 +1,33 @@
+<!--<?php print <<<EOT
+-->
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0" align="center"><tr><td align="left">
+<img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> 
+<b><a href="$db_bfn">$db_bbsname </a> -> 忘记密码</b></td></tr></table></div>
+
+<form action="sendpwd.php?" method="POST">
+<input type="hidden" value="2" name="step" />
+<div class="t" style="margin-top:15px">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr>
+<td class="h"><b>密码发送程序</b></td></tr>
+<tr class="tr1"><th><br />利用论坛的用户名和email发送密码，请输入您的用户名和email地址： <br /><br />
+用户名 : <input type="text" name="pwuser" size="16" /><br />
+Email &nbsp;: <input type="text" name="email" size="16" /><br />
+<!--
+EOT;
+if($othergd){
+$rawwindid=addslashes($windid);
+print <<<EOT
+-->
+认证码 : <input type="text" maxLength="4" name="gdcode" size="8" />&nbsp;<img src="ck.php?windid=$rawwindid" align="absmiddle" onclick="this.src='ck.php?'" /><br />
+<!--
+EOT;
+}print <<<EOT
+-->
+</th></tr>
+</table></div>
+<div style="text-align:center;margin-bottom:25px"><input class="btn" type="submit" value="提 交" /></div></form>
+<!--
+EOT;
+?>-->

@@ -1,0 +1,66 @@
+<!--<?php
+print <<<EOT
+-->
+<html>
+<head>$expires
+<title>$subject $forumname $db_bbsname - powered by phpwind.net</title>
+<meta http-equiv="Content-Type" content="text/html; charset=$db_charset">
+<meta name="keywords" content="$db_metakeyword" />
+<meta name="description" content="$db_metadescrip" />
+<base href="$db_bbsurl/" />
+<style type="text/css">
+body{
+	scrollbar-base-color: #ffffff;
+	scrollbar-darkshadow-color: #ffffff;
+	scrollbar-highlight-color: #ffffff;
+	overflow:hidden;
+	margin:0;
+}
+</style>
+</head>
+<script language=javascript>
+function changewin(){
+	var obj=document.getElementById('leftframe');
+	var menu=document.getElementById('menuswitch');
+	if(obj.style.display=='none'){
+		obj.style.display='';
+		menu.innerHTML = "<img src=\"$imgpath/wind/left_close.gif\" style=\"cursor:pointer;\">";
+	}else{
+		obj.style.display='none';
+		menu.innerHTML = "<img src=\"$imgpath/wind/left_open.gif\" style=\"cursor:pointer;\">";
+	}
+}
+</script>
+<body vlink="#333333" link="#333333" style="MARGIN: 0px;scrolling=no;frameBorder=no noResize">
+<table cellspacing="0" cellpadding="0" width="100%" height="100%" border="0" align="center">
+<tbody>
+	<tr>
+		<td align="middle" id="leftframe" nowrap valign="center" name="fmtitle">
+			<iframe frameborder="0" id="left" name="left" src="left.php" style="height: 100%; visibility: inherit; width: 145px; z-index: 2"></iframe>
+		</td>
+		<td>
+			<table height="100%" width="12" cellspacing="0" cellpadding="0" width="100%" bgcolor="#9EBCD8">
+			<tbody>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td align="center" id="menuswitch" onclick="changewin();" height="100%">
+						<img src="$imgpath/wind/left_close.gif" style="cursor:pointer;">
+					</td>
+				</tr>
+			</tbody>
+			</table>
+		</td>
+		<td style="width: 100%">
+			<iframe frameborder="0" id="main" name="main" scrolling="yes" src="$url" style="height: 100%; visibility: inherit; width: 100%; z-index: 1"></iframe>
+		</td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>
+<!--
+EOT;
+?>
+-->

@@ -1,0 +1,34 @@
+<!--<?php print <<<EOT
+-->
+<table width='$tablewidth' align=center cellspacing=0 cellpadding=0><tr><td align=left>
+<img src='$imgpath/$stylepath/index/home.gif' align=absbottom> 
+<b><a href='$db_bfn'>$db_bbsname </a>  -> 到访会员(今日到访人数 {$count} )</b></td></tr></table><br>
+
+<table cellspacing='0' cellpadding='0' align=center width='$tablewidth'>
+<tr><td bgcolor='$forumcolorone'>
+<table cellspacing='1' cellpadding='4' width='100%' $i_table>
+<tr class=head align='center'>
+<td class=head>用户名</td>
+<td class=head>注册时间</td>
+<td class=head>登录时间</td>
+<td class=head>活动时间</td>
+<td class=head>IP地址</td>
+<td class=head>发帖</td>
+<td class=head>{$db_rvrcname}</td>
+</tr>
+<!--
+EOT;
+foreach($inbbsdb as $inbbs){
+print <<<EOT
+-->
+<tr align=center><td bgcolor='#F8F8F8'><a href='profile.php?action=show&username=$inbbs[rawuser]'>$inbbs[user]</a></td><td bgcolor='#FFFFFF'>$inbbs[rgtime]</td><td bgcolor='#FFFFFF'>$inbbs[logintime]</td><td bgcolor='#F8F8F8'>$inbbs[intime]</td><td bgcolor='#F8F8F8'>$inbbs[ip]</td><td bgcolor='#FFFFFF'>$inbbs[post]</td><td bgcolor='#FFFFFF'>$inbbs[rvrc]</td></tr>
+<!--
+EOT;
+}
+print <<<EOT
+-->
+</table></td></tr></table><br><table cellspacing='0' cellpadding='0' align=center width='$tablewidth'>
+<tr><td align=center>$pages</td></tr></table>
+<!--
+EOT;
+?>-->

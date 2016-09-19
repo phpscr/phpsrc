@@ -1,0 +1,65 @@
+<!--<?php print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center>
+<tr><td align=left><img src='$imgpath/$stylepath/index/home.gif' align=absbottom> 
+<b><a href='$db_bfn'>$db_bbsname </a> -> 收藏夹</b></td></tr></table>
+<br>
+<table width='100%' cellspacing=1 cellpadding=4 align=center $i_table style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word;'>
+	<tr align=center>
+		<td class='f_one'><a href='profile.php'>控制面板首页</a></td>
+		<td class='f_one'><a href='profile.php?action=modify'>编辑个人资料</a></td>
+		<td class='f_one'><a href="profile.php?action=show&uid=$winddb[uid]">查看个人资料</a></td>
+		<td class='f_one'><a href="profile.php?action=permission">用户权限查看</a></td>
+		<td class='f_one'><a href='userpay.php'>交易币管理</a></td>
+		<td class='f_one'><a href='job.php?action=favor'>收藏夹</a></td>
+	</tr>
+</table>
+<br>
+<form method=post name=form action=job.php?action=favor>
+<input type=hidden name=job value=clear>
+<table cellspacing=1 cellpadding=5 width='$tablewidth' $i_table align=center>
+<tr class=head><td colspan="6">收藏夹</td></tr>
+<tr class=cbg align=center>
+<td width='3%'>ID</td>
+<td>标题</td>
+<td width='15%'>论坛</td>
+<td width='15%'>作者</td>
+<td width='15%'>发表时间</td>
+<td width='5%'>删除</td>
+</tr>
+<!--
+EOT;
+foreach($favordb as $id=>$favor) {
+if($favor){
+$id++;
+print <<<EOT
+-->
+<tr align=center class='f_one'>
+<td>$id</td>
+<td align=left><a href='read.php?fid=$favor[fid]&tid=$favor[tid]' target=_blank>$favor[subject]</a></td>
+<td><a href='thread.php?fid=$favor[fid]'>$favor[forum]</a></td>
+<td><a href="profile.php?action=show&uid=$favor[authorid]">$favor[author]</a></td>
+<td class='smalltxt'>$favor[postdate]</td>
+<td><input type=checkbox name='delid[]' value='$favor[tid]'></td>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</table>
+<br>
+<center>
+<input type='button' name='chkall' value='全 选' onclick='CheckAll(this.form)'>
+<input type='submit' value='提 交'>
+</center>
+</form>
+<script language=JavaScript>
+function CheckAll(form){
+	for (var i=0;i<form.elements.length;i++){
+		var e = form.elements[i];
+		e.checked == true ? e.checked = false : e.checked = true;
+	}
+}
+</script>
+<!--
+EOT;
+?>-->

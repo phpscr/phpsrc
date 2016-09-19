@@ -1,0 +1,106 @@
+<!--<?php print <<<EOT
+-->
+<form name="FORM" method="post" action="post.php?" onsubmit="return checkCnt();">
+<table cellspacing=1 cellpadding=0 align=center width="$tablewidth" $i_table>
+<tr>
+<td colspan=2>
+<table cellspacing=0 cellpadding=0 width="100%">
+<td class=head><b>快速发帖</b></td>
+<td class=head align=right>
+<a href="javascript:scroll(0,0)"><b>顶端</b></a>
+</td></tr></table></td></tr>
+<tr><td valign=top width=20% bgcolor=$forumcolorone style="padding:7px">
+<b>内容</b><br>
+<font face=verdana>  HTML 代码不可用
+$windcode
+<br>
+<input type=checkbox name="atc_hide" value="1" $htmlpost>隐藏此帖
+<br>
+<input type=checkbox name="atc_requiresell" value="1" $htmlsell>出售此帖
+<input maxlength=3 size=3 name=atc_money value="0">$money_title
+<br>
+<input type=checkbox name="atc_requirervrc" value="1" $htmlhide>加密此帖
+<input maxlength=6 size=3 name=atc_rvrc value="0"><br><br>
+[<a  href="javascript:checklength(document.FORM,'$db_postmax');">查看帖子长度</a>]
+</td>
+
+<td width=80% bgcolor=$forumcolorone style="padding:7px"> 
+标题:
+<input type="text" name="atc_title" value="$titletop1" size="65">
+<!--
+EOT;
+list(,,$postgd)=explode("\t",$db_gdcheck);
+if($postgd){
+$rawwindid=addslashes($windid);
+print <<<EOT
+-->
+认证码: <input type='text' maxLength=4 name='gdcode' size=7>&nbsp;<img src="ck.php?windid=$rawwindid" align=absmiddle>
+<!--
+EOT;
+}print <<<EOT
+-->
+<br>
+<input type=checkbox name="atc_usesign" value="1" checked>使用签名
+<input type=checkbox name='atc_convert' value='1' checked>Wind Code自动转换
+<input type=hidden name='atc_autourl' value='1'>
+表情:
+<!--
+EOT;
+include_once(R_P.'data/bbscache/postcache.php');
+foreach($face as $key=>$facedb){
+print <<<EOT
+-->	
+<a href="javascript:addsmile('[s:$key]')"><img src="$imgpath/post/smile/$facedb"></a>
+<!--
+EOT;
+}print <<<EOT
+-->
+<br>
+<textarea onkeydown="quickpost(event)" name='atc_content' cols='100' rows='8'></textarea>
+<input type='hidden' value='2' name='step'>
+<input type='hidden' value='$psot_sta' name='action'>
+<input type='hidden' value='$fid' name='fid'>
+<input type='hidden' value='$tid' name='tid'>
+<input type='hidden' value='$winddb[editor]' name='editor'>
+<input type='hidden' value='none' name='atc_attachment'>
+
+<br><font color=red> 按 Ctrl+Enter 直接提交&nbsp;&nbsp;&nbsp;</font><input type='submit' name='Submit' value='提 交'> 
+<br><br>
+</td></tr></table></form>
+<script language="JavaScript">
+cnt = 0;
+function checkCnt(){
+	document.FORM.Submit.disabled=true;
+	cnt++;
+	if (cnt!=1){
+		alert('Submission Processing. Please Wait');
+		return false;
+	}
+}
+function quickpost(event)
+{
+	if((event.ctrlKey && event.keyCode == 13)||(event.altKey && event.keyCode == 83))
+	{
+		cnt++;
+		if (cnt==1){
+			this.document.FORM.submit();
+		}else{
+			alert('Submission Processing. Please Wait');
+		}
+	}	
+}
+function checklength(theform,postmaxchars) {
+	if (postmaxchars != 0) {
+		message = '\\n最大的字符为'+postmaxchars+' 字节';
+	}else {
+		message = ''; 
+	}
+	alert('您的信息已经有 '+theform.atc_content.value.length+' 字节'+message);
+}
+function addsmile(NewCode) {
+    document.FORM.atc_content.value += ' '+NewCode+' '; 
+}
+</script>
+<!--
+EOT;
+?>

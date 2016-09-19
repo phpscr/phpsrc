@@ -1,0 +1,31 @@
+PHPWind 5.0.1 正式版(php+mysql)高速论坛程序(gbk,big5,utf-8)
+
+PHPWind 是一套采用 php+mysql 数据库 方式运行并可生成 html 页面的全新且完善的强大系统. 我们希望作为一个开源.共享的软件,PHPWind 可以以其 流畅的速度 与 高负载能力 激起各位加入PHPWind阵营的热情!共同打造专业品牌 PHPWind.Net 　 
+
+PHPWind 除了具备多重子版块.和后台用户组权限可以自由组合外, 还具备分版块控制生成html页面、可选用的所见即所得编辑器、防止图片和附件防盗链、多附件上传下载、输入图片URL直接显示图片、版块主题分类、版块积分控制与版块内的用户组权限控制、主题与回复审核功能、自定义积分与自定义等级提升系统、论坛用户宣传接口、帖子加密隐藏出售、分论坛二级目录/域名等一些特色功能. 从而减轻了大部分论坛程序中都必须要借助开发hack才能实现的诸多工作。
+
+希望大家多多宣传 .
+
+宣传时别忘了加上了自己的宣传ID(提高自己的贡献值) 
+
+http://www.phpwind.net/?a=fengyu
+
+如果你觉得写自己的名字不好,可以用数字ID代替!
+
+http://www.phpwind.net/?u=581
+
+如果您希望得到更好的技术服务、更完善的建站方案与技术保障，请购买我们的 商业版授权
+
+PHPWind 5.0.1 安装包下载地址: 
+http://www.phpwind.com/5.0/PHPWind_GBK_5.0.1.zip（GBK简体中文版）
+http://www.phpwind.com/5.0/PHPWind_BIG5_5.0.1.zip（BIG5繁体中文版）
+http://www.phpwind.com/5.0/PHPWind_UTF8_5.0.1.zip（UTF8简体中文版）
+
+
+PHPWind 5.0.1 升级包下载 (3.x ,4.x--->5.0.1) 
+http://www.phpwind.com/5.0/Upto_GBK_5.0.1.zip （GBK简体中文版）
+http://www.phpwind.com/5.0/Upto_BIG5_5.0.1.zip（BIG5繁体中文版）
+
+
+关于 5.0.1 版更新文档
+http://www.phpwind.net/read.php?tid=253440

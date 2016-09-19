@@ -1,0 +1,143 @@
+<!--<?php
+print <<<EOT
+-->
+<html>
+<head>$expires
+<title>$subject $forumname $db_bbsname - powered by phpwind.net</title>
+<meta http-equiv="Content-Type" content="text/html; charset=$db_charset">
+<meta name="keywords" content="$db_metakeyword" />
+<meta name="description" content="$db_metadescrip" />
+<base href="$db_bbsurl/" />
+<!--css--><style type="text/css">
+body {font-family: Verdana;FONT-SIZE: 12px;MARGIN: 0;color: #000;background: #D5E2EE ;
+	SCROLLBAR-FACE-COLOR: #fofofo ; 
+	SCROLLBAR-HIGHLIGHT-COLOR: #FFFFFF; 
+	SCROLLBAR-SHADOW-COLOR: #fofofo; 
+	SCROLLBAR-3DLIGHT-COLOR: #fofofo; 
+	SCROLLBAR-ARROW-COLOR: #fofofo; 
+	SCROLLBAR-TRACK-COLOR: #ffffff;
+	SCROLLBAR-DARKSHADOW-COLOR: #ffffff;
+	SCROLLBAR-BASE-COLOR: #D5E2EE;
+}
+
+td {FONT-SIZE: 12px;}
+textarea,input,select{
+	font-family: Verdana;
+	font-size: 12px;
+	background-color: #ffffff;
+}
+form{margin:0px; display:inline}
+div.quote{
+	margin:5px 5px;
+	border:1px dashed $tablecolor;
+	padding:5px;
+	background:$forumcolorone;
+	line-height:normal;
+}
+a { TEXT-DECORATION: none;color: #000;}
+a:hover{text-decoration: underline;}
+img {border:0;}
+.banner{background: #84AACE;}
+.head {color: #FFFFFF;background: #84AACE;padding: 5px;font-weight:bold;}
+.head a{color: #FFFFFF;}
+.f_one {background: $forumcolorone;}
+.f_two {background: $forumcolortwo;}
+.hr  {border-top: 1px solid $tablecolor; border-bottom: 0; border-left: 0; border-right: 0; }
+.t_one {background: $threadcolorone;}
+.t_two {background: $threadcolortwo;}
+.r_one {background: $readcolorone;}
+.r_two {background: $readcolortwo;}
+.cbg { color:#000000;background: #E5E8EA;}
+.cbg a{ color:#000000;}
+.smalltxt {font-family: Tahoma, Verdana; font-size: 12px;}
+.tinytxt {font-family: Tahoma, Verdana; font-size: 11px;}
+.cfont { color:#FFFFFF; }
+.fnamecolor { color:#003366;}
+.index_font{color: #3A4F6C;background-color:#E5E8EA; font-weight:bold;padding: 5px;}
+.tpc_title { font-size: 12px;font-weight:bold;}
+.tpc_content { font-size: 13px;}
+.i_table {BORDER: $tablecolor 1px solid;background:#D6E3EF;}
+.tool {color:#84AACE;}
+.menu{position:absolute;}
+.catebg{color:#000;}
+.catebg a{color:#000;}
+.catemenu{color:#fff;background:#84AACE;border-bottom:1px solid #D5E2EE;border-right:1px solid #D5E2EE;height:19px;font-weight:bold;}
+.catemenu a{color:#fff;}
+.br{padding:1px;}
+</style><!--css-->
+
+<script language=javascript>
+
+function Show(id){
+	var obj=document.getElementById('c_'+id);
+	var img=document.getElementById('img_'+id);
+	if(obj.style.display=="none"){
+		obj.style.display="";
+		img_re=new RegExp("_on\\.gif$");
+		img.src=img.src.replace(img_re,'_off.gif');
+	}else{
+		obj.style.display="none";
+		img_re=new RegExp("_off\\.gif$");
+		img.src=img.src.replace(img_re,'_on.gif');
+	}
+}
+</script>
+</head>
+<body vlink="#333333" link="#333333">
+
+<table width="145" height="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+	<tbody>
+	<tr>
+		<td id="left" valign="top" >
+			<table width="100%" cellspacing="5" cellpadding="0" border="0" align="center">
+				<tr><td align="center">
+					<a href="index.php" target="main">论坛首页</a> | <a href="profile.php" target="main">控制面板</a> <br />
+					<a href="search.php?sch_time=all&orderway=lastpost&asc=desc&newatc=1" target="main">查看新帖</a> | <a href="faq.php" target="main">论坛帮助</a>
+				</td></tr>
+			</table>
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<!--
+EOT;
+foreach($catedb as $key=>$cate){
+$id_name='c_'.$key;
+$img_name='img_'.$key;
+print <<<EOT
+-->
+				<tr>
+					<td class="catemenu">
+						&nbsp;
+						<a style="cursor:pointer;" onclick="Show($key)">
+							<img id="$img_name" src="$imgpath/wind/cate_on.gif" border="0" align="absmiddle" /> $cate[name]
+						</a>
+						<font color="#000000"></font>
+					</td>
+				</tr>
+				<tbody id="$id_name" style="display:none">
+<!--
+EOT;
+foreach($forumdb[$key] as $k=>$forum){ print <<<EOT
+-->
+				<tr>
+					<td class="catebg" height="20">
+						&nbsp; &nbsp;<a href="thread.php?fid=$k" target="main">$forum[name]</a>
+					</td>
+				</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+				</tbody>
+
+<!--
+EOT;
+} print <<<EOT
+-->
+			</table>
+		</td>
+	</tr>
+	</tbody>
+</table>
+</body></html>
+<!--
+EOT;
+?>-->

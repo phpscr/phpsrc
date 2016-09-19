@@ -1,0 +1,78 @@
+<!--<?php
+include_once PrintEot('left');
+if (empty($action)){
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>
+<ul>
+步骤：<br>1.到添加插件处配置插件相关设置<br><br>2.上传相应文件到指定目录(hack)<br><br>
+</ul>
+<br></td></tr></table><br>
+
+
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr class=i_table><td colspan="8" class=head><b>插件管理</b></td></tr>
+<tr class=head_2  align=center><td width=5%>ID</td><td width=20%>插件名称</td>
+<td width=20%>唯一标识符</td><td width=20%>前台文件名</td>
+<td width=20%>后台文件名</td><td width=5%>启用</td>
+<td width=5%>编辑</td><td width=5%>卸载</td></tr>
+<!--
+EOT;
+$id_h=0;
+foreach($db_hackdb as $key=>$hack){
+$id_h++;
+$hack[4]=$hack[4] ? '是' :'否';
+print <<<EOT
+-->
+<tr align=center><td class=b>$id_h</td><td class=b>$hack[0]</td><td class=b>$hack[1]</td>
+<td class=b>$hack[2]</td><td class=b>$hack[3]</td>
+<td class=b>$hack[4]</td>
+<td class=b><a href="$basename&action=edit&id=$key">编辑</a></td>
+<td class=b><a href="$basename&action=del&id=$key" onclick="return checkhackset('$basename&action=del&id=$key')">卸载</a></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></td></tr></table>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>
+<ul>
+说明（以银行插件为例）：<br><br>插件名称－－前后台显示的插件名称（银行）<br><br>唯一标识符－－插件唯一标识，区分不同插件（bank）<br><br>前台文件名－－前台使用的插件文件（bank.php）<br><br>后台文件名－－后台使用的插件文件（bankset.php）<br><br>相关文件－－插件涉及的文件包括php文件和模版文件，<font color=blue>卸载插件</font>时将删除这些文件，请认真配置，以免删除不相关的文件(文件名之间用","分隔)<br>（hack/bank.php,hack/bankset.php,template/wind/bank.htm,template/admin/bankset.htm）<br><br>是否启用－－控制插件是否在前台显示
+</ul>
+<br></td></tr></table><br>
+
+<form action="$basename" method=post>
+<input type=hidden name=action value='$action'>
+<input type=hidden name=step value=1>
+<input type=hidden name=id value='$id'>
+<table width=70% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=6>
+<tr><td class=head colspan=5><b>插件设置</b></td></tr>
+<tr><td class=b width=30%>插件名称</td>
+<td class=b><input type=text name=hackname size=50 value='$hackname'></td></tr>
+<tr><td class=b width=30%>唯一标识符</td>
+<td class=b><input type=text name=hacksign size=50 value='$hacksign'></td></tr>
+<tr><td class=b width=30%>前台文件名</td>
+<td class=b><input type=text name=filename1 size=50 value='$filename1'></td></tr>
+<tr><td class=b width=30%>后台文件名</td>
+<td class=b><input type=text name=filename2 size=50 value='$filename2'></td></tr>
+<tr><td class=b width=30%>相关文件</td>
+<td class=b><textarea name="hackfile" cols="60" rows="5">$hackfile</textarea></td></tr>
+<tr><td class=b>是否启用(是否在前台显示)</td>
+<td class=b><input type=radio name=ifopen value=1 $H_open>是
+<input type=radio name=ifopen value=0 $H_close>否</td></tr>
+</table></td></tr></table>
+<br><center><input type='submit' value='提 交'></center></form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>
+-->

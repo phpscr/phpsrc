@@ -1,0 +1,83 @@
+<!--<?php
+print <<<EOT
+-->
+<html>
+<head>
+<title>插入多媒体</title>
+<script type="text/javascript" src="$imgpath/dialog.js"></script>
+<script type="text/javascript">
+window.resizeTo(300, 100);
+function Init() {
+	__dlg_init();
+};
+function onOK() {
+	var url = document.FORM.mediaurl.value;
+	if(url == ''){
+		alert('url链接地址不能为空!');
+		return false;
+	}
+	var param  = '';
+	var length = document.FORM.medialength.value;
+	var width  = document.FORM.mediawidth.value;
+	var auto   = document.FORM.midiaauto.checked == true ? 1 : 0;
+	switch(document.FORM.mediatype.value){
+		case '1': param = '[rm=' + length + ',' + width + ',' + auto + ']' + url + '[/rm]';break;
+		case '2': param = '[wmv=' + length + ',' + width + ',' + auto + ']' + url + '[/wmv]';break;
+		case '3': param = '[wmv]'  + url + '[/wmv]';break;
+		case '4': param = '[flash=' + length + ',' + width + ']' + url + '[/flash]';break;
+	}
+	__dlg_close(param);
+	return false;
+};
+function onCancel() {
+	__dlg_close(null);
+	return false;
+};
+</script>
+<style type="text/css">
+html, body {
+  background: ButtonFace;
+  color: ButtonText;
+  font: 12px Tahoma,Verdana,sans-serif;
+  margin: 0px;
+  padding: 0px;
+}
+body { padding: 5px; }
+table {font: 12px Tahoma,Verdana,sans-serif;}
+select, input, button { font: 11px Tahoma,Verdana,sans-serif; }
+button { width: 70px; }
+form { padding: 0px; margin: 0px; }
+</style>
+</head>
+<body onload="Init()">
+<form name="FORM" action="" method="get">
+<table border="0" width="100%" style="padding: 0px; margin-left: 0px">
+	<tr><td width="25%">链接地址：</td><td><input type="text" name="mediaurl" size="32" /></td></tr>
+	<tr><td>媒体类型：</td>
+		<td><select name="mediatype">
+			<option value="1">rm</option>
+			<option value="2" selected>wmv</option>
+			<option value="3">mp3</option>
+			<option value="4">flash</option>
+			</select>
+		</td>
+	</tr>
+	<tr><td>显示尺寸：</td>
+		<td><input type="text" name="medialength" value="314" size="6" />&nbsp;[长]
+			&nbsp;&nbsp;<input type="text" name="mediawidth" value="256" size="6" />&nbsp;[宽]
+		</td>
+	</tr>
+	<tr><td>播放控制：</td>
+		<td><input type="checkbox" name="midiaauto" />自动播放</td>
+	</tr>
+	<tr><td colspan="2" align="center" style="padding-top:6px;padding-bottom:6px">
+		<input type="button" value="提 交" onclick="return onOK();" />
+		<input type="button" value="取消" onclick="return onCancel();"></td>
+	</tr>
+</table>
+</form>
+</body>
+</html>
+<!--
+EOT;
+?>-->

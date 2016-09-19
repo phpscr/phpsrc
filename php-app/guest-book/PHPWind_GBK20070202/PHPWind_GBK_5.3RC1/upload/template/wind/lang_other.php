@@ -1,0 +1,33 @@
+<?php
+
+$lang = array (
+'currency'=>'论坛交易币',
+'buy_currency'=>'购买论坛交易币',
+'unpay_list'=>'未支付订单',
+'invite'=>'邀请注册',
+'invite_content'=>"您好:\r\n\t这里是 $db_bbsname 论坛，欢迎使用邀请注册插件，点击以下连接，您就可以顺利完成注册！\r\n链接地址:$db_bbsurl/register.php?invcode=$invcode[invcode]。\r\n\r\n$db_bbsname 欢迎你!",
+'men'=>'先生',
+'women'=>'小姐',
+'send_content'=>":\n 今天是你 age 岁生日,祝你生日快乐!",
+'send_title'=>'祝你生日快乐',
+'cancle'=>'本次悬赏被取消',
+'finished'=>'本次悬赏被强行结案',
+'js_close'=>'该网站没有开启首页调用功能，需要到论坛核心设置中开启。',
+'js_bindurl'=>'非法调用，系统限制了允许调用论坛内容的域名。',
+'js_totalmember'=>'会员总数',
+'js_newmember'=>'最新注册会员',
+'js_topic'=>'主题数',
+'js_article'=>'帖子数',
+'js_today'=>'今 日',
+'js_yesterday'=>'昨 日',
+'js_highday'=>'最高日',
+'js_online'=>'在线总数',
+'js_onlinemen'=>'会员数',
+'js_onlineguest'=>'游客数',
+'js_highonline'=>'最高在线',
+'js_happen'=>'发生在',
+'js_replies'=>'回复',
+'js_hits'=>'点击',
+'mawhole_copy'=>"该帖由 $windid 从 {$forum[$fid][name]} 复制到本区.\t$windid",
+);
+?>

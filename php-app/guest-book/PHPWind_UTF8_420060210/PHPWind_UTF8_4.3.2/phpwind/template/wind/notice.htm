@@ -1,0 +1,28 @@
+<!--<?php print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center>
+<tr><td align=left><img src='$imgpath/$stylepath/index/home.gif' align=absbottom> <b><a href='$db_bfn'>$db_bbsname</a> $msg_guide</b></td></tr>
+</table><br>
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center>
+<tr><td>
+<table width=100% cellspacing=1 cellpadding=3 $i_table style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word'>
+<!--
+EOT;
+foreach($noticedb as $notice){print <<<EOT
+-->
+<tr align=center height=25>
+<td class=head colspan=2 align=center><a name="$notice[aid]">≡ $notice[subject] ≡<br></td></tr>
+<tr>
+<td colspan=2 class='f_two'><br><br>$notice[content]<br><br></td></tr>
+<tr><td colspan=2 class='f_two' align=right>
+作者:<a href='profile.php?action=show&username=$notice[rawurl]'>$notice[author]</a>
+时间:$notice[startdate]
+</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></td></tr></table>
+<!--
+EOT;
+?>-->

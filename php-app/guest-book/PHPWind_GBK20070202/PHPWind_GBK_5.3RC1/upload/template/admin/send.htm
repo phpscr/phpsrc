@@ -1,0 +1,103 @@
+<!--<?php
+include_once PrintEot('left');
+if(empty($action)){print <<<EOT
+-->
+<script language="JavaScript" src="$db_bbsurl/$js_path"></script>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>
+<ul><li>字符变量使用说明：您可以在内容中使用 \$windid , \$email 两个变量  分别表示 用户名 邮件</li></ul>
+<br></td></tr></table>
+<br>
+<form name='FORM' action="$basename" method="post">
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td colspan="2" class=head>消息发送</td></tr>
+<tr><td colspan="2" class=c>
+<input type='radio' name='by' value='0' onclick="sendtype(0)" checked>按用户组
+<input type='radio' name='by' value='1' onclick="sendtype(1)">在线用户</td></tr>
+<tr class=b id="group"><td width="20%" align=right valign=top>接收用户<br></td>
+<td width="80%">
+<table><tr>
+<!--
+EOT;
+$num=0;
+foreach($ltitle as $key=>$value){
+if($key=='1' || $key=='2' || isset($lneed[$key]))continue;
+$num++;
+print <<<EOT
+-->
+<td><input type='checkbox' name='sendto[]' value='$key'>$value</td>
+<!--
+EOT;
+if($num==4){
+$num=0;
+print <<<EOT
+-->
+</tr><tr>
+<!--
+EOT;
+}}print <<<EOT
+-->
+<td><input type='checkbox' name='sendto[]' value='-1'>普通会员</td></tr></table>
+<input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)">
+</td></tr>
+<tr class=b><td width="20%" align=right>每批发送个数</td>
+<td width="80%"><input type="text" value=100 name="percount"></td></tr>
+<tr class=b>
+<td width="20%" align=right>主题</td>
+<td width="80%"><input type="text" name="subject"></td></tr>
+<!--
+EOT;
+if($a_type=='mailuser'){print <<<EOT
+-->
+<tr class=b valign=middle>
+<td width='20%' align=right><b>From:</b></td>
+<td width='80%'><input type='text' value='$db_ceoemail' name='ceo_email'></td></tr>
+<!--
+EOT;
+}elseif($a_type=='giveuser'){print <<<EOT
+ -->
+<tr class=b valign=middle>
+<td width=20% align=right>赠送{$db_rvrcname}</td>
+<td width=80%><input type=text name='send_rvrc'></td></tr>
+<tr class=b valign=middle>
+<td width=20% align=right>赠送{$db_moneyname}</td>
+<td width=80%><input type=text name='send_money'></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr class=b valign=top>
+<td align=right>内容</td>
+<td>
+<!--
+EOT;
+if($a_type=='send_msg' || $a_type=='giveuser'){
+require_once (R_P.'template/wind/editor.htm');
+}elseif($a_type=='mailuser'){print <<<EOT
+-->
+<textarea size=20 name="atc_content" cols="60" rows="10">
+您好，欢迎光临 $db_bbsurl.</textarea>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+</table></td></tr></table>
+<br><input type=hidden name="action" value="send"><center>
+<input type="submit" value="提 交"><input type="reset" value="重 置"></center></td></tr></form>
+<SCRIPT LANGUAGE="JavaScript">
+function sendtype(ID){
+	var group = document.getElementById("group");
+	if (ID==0){
+		group.style.display = "";
+	}else if (ID==1){
+		group.style.display = "none";
+	}
+}
+</SCRIPT>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>-->

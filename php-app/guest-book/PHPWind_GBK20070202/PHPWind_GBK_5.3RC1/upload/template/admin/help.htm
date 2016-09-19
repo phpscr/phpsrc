@@ -1,0 +1,94 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="head" colspan="2"><b>提示信息</b></td></tr>
+<tr><td class="b"><br />自定义帮助说明功能：可以帮助站点更好的规范管理和运行机制。(支持html代码)<br />
+<br /></td></tr></table><br />
+<!--
+EOT;
+if(!$action){ print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="b">
+[<b>添加自定义管理</b>]
+[<a href="$basename&action=add">添加自定义帮助</a>]
+</td></tr></table><br>
+<form action="$basename" method="post">
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr class="head" align="left">
+		<td colspan="4">自定义帮助</td>
+	</tr>
+	<tr class="head_2" align="center">
+		<td width="4%"></td>
+		<td width="6%">ID</td>
+		<td width="*">自定义帮助标题</td>
+		<td width="6%">编辑</td>
+	</tr>
+<!--
+EOT;
+$i=0;
+foreach($helpdb as $key=>$help){ 
+$i++;
+print <<<EOT
+-->
+	<tr class="b" align="center">
+		<td width="4%"><input type="checkbox" name="selid[]" value="$help[id]" /></td>
+		<td width="6%">$i</td>
+		<td width="*" align="left">$help[title]</td>
+		<td width="6%"><a href="$basename&action=edit&id=$help[id]">编辑</td>
+	</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+</table><br />
+<input type="hidden" name="action" value="del" />
+<center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)">
+<input type="submit" value="提 交" /></center></form>
+<!--
+EOT;
+}elseif($action=='add' || $action=='edit'){ print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="b">
+[<a href="$basename">添加自定义管理</a>]
+[<b>添加自定义帮助</b>]
+</td></tr></table><br>
+<form action="$basename" method="post">
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr class="head" align="left">
+		<td colspan="2">自定义帮助</td>
+	</tr>
+	<tr class="b" align="left">
+		<td width="25%">自定义帮助标题</td>
+		<td width="*"><input type="text" name="title" value="$title" size="60" /></td>
+	</tr>
+	<tr class="b" align="left">
+		<td width="25%">自定义帮助内容<br>(支持html代码)</td>
+		<td width="*"><textarea name="content" rows="16" cols="80">$content</textarea></td>
+	</tr>
+</table><br />
+<!--
+EOT;
+if($action=='add'){ print <<<EOT
+-->
+<input type="hidden" name="action" value="add" />
+<!--
+EOT;
+}elseif($action=='edit'){
+print <<<EOT
+-->
+<input type="hidden" name="action" value="edit" />
+<input type="hidden" name="id" value="$id" />
+<!--
+EOT;
+} print <<<EOT
+-->
+<input type="hidden" name="step" value="3" />
+<center><input type="submit" value="提 交" /></center></form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>-->

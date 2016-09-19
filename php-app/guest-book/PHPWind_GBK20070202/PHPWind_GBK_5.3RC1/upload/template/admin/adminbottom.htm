@@ -1,0 +1,34 @@
+<!--<?php 
+$CT=0;
+if(readover(D_P.'data/bbscache/none.txt')!='' || @filemtime(D_P.'data/bbscache/file_lock.txt')<$timestamp-3600*24 || @filemtime(D_P.'data/bbscache/info.txt')<$timestamp-3600*24 ||  @filemtime(D_P.'data/bbscache/userpay.txt')<$timestamp-3600*24){$CT=1;
+}print <<<EOT
+-->
+<center>
+<blockquote><br><br><br><br><hr class="hr" size=1>
+Powered by <a href='http://www.phpwind.net' target=_blank> <b>PHPwind
+</b> $wind_version</a>&nbsp;&copy; 2003-07,<b style='color: #FF9900'>phpwind.net</b>
+<a href='http://www.phpwind.net' target=_blank><b>fengyu</b></a>
+</blockquote><br>
+</center>
+</body></html>
+<!--
+EOT;
+if($CT && (!isset($msg) || !isset($jumpurl) || !isset($t))){print <<<EOT
+-->
+<script language="JavaScript">
+top.frames['notice'].location.href="$admin_file?adminjob=notice";
+</script>
+<!--
+EOT;
+}
+$output = ob_get_contents();
+$output = preg_replace(
+	"/\<form([^\<\>]*)\saction=['|\"]?([^\s\"'\<\>]+)['|\"]?([^\<\>]*)\>/ies",
+	"FormCheck('\\1','\\2','\\3')",
+	$output
+);
+
+ob_end_clean();
+$db_obstart == 1 && function_exists('ob_gzhandler') ? ob_start('ob_gzhandler') : ob_start();
+echo $output;
+?>

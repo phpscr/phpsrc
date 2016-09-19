@@ -1,0 +1,116 @@
+<html>
+<head>
+<title>颜色</title>
+<style type="text/css">
+body{margin:8px;}
+body,a,table,div,span,td,th,input,select{font:9pt;font-family: "宋体", Verdana, Arial, Helvetica, sans-serif;}
+.text{border:0 solid #ffffff;}
+</style>
+<body bgcolor=menu topmargin="0" leftmargin="0">
+<script>
+var SC = '#000000';
+var DC = '#000000';
+var SG = '120';
+var hexch = new Array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F');
+
+function ToHex(n){
+  var h, l;
+  n = Math.round(n);
+  l = n % 16;
+  h = Math.floor((n / 16)) % 16;
+  return (hexch[h] + hexch[l]);
+}
+
+function DoColor(c, l){
+  var r, g, b;
+  r = '0x' + c.substring(1, 3);
+  g = '0x' + c.substring(3, 5);
+  b = '0x' + c.substring(5, 7);
+
+  if(l > 120) {
+    l = l - 120;
+    r = (r * (120 - l) + 255 * l) / 120;
+    g = (g * (120 - l) + 255 * l) / 120;
+    b = (b * (120 - l) + 255 * l) / 120;
+  } else {
+    r = (r * l) / 120;
+    g = (g * l) / 120;
+    b = (b * l) / 120;
+  }
+  return '#' + ToHex(r) + ToHex(g) + ToHex(b);
+}
+
+function EndColor(){
+  var i;
+  if(DC != SC) {
+    DC = SC;
+    for(i = 0; i <= 30; i ++)
+      G_Table.rows(i).bgColor = DoColor(SC, 240 - i * 8);
+  }
+  S_Color.value = DoColor(R.innerText, G.innerText);
+  ShowColor.bgColor = S_Color.value;
+}
+</script>
+</head>
+<table cellspacing="0" cellpadding="0" width="260" align="center">
+  <tr><td>
+  <table id=ColorTable cellspacing="0" cellpadding="0" style='cursor:hand'
+onclick		='SC = event.srcElement.bgColor;		EndColor();'
+onmouseover	='R.innerText = event.srcElement.bgColor;	EndColor();'
+onmouseout	='R.innerText = SC;			EndColor();'
+>
+<script>
+function wc(r, g, b, n) {
+  r = ((r * 16 + r) * 3 * (15 - n) + 0x80 * n) / 15;
+  g = ((g * 16 + g) * 3 * (15 - n) + 0x80 * n) / 15;
+  b = ((b * 16 + b) * 3 * (15 - n) + 0x80 * n) / 15;
+  document.write('<td bgcolor=#' + ToHex(r) + ToHex(g) + ToHex(b) + ' height=8 width=8></td>');
+}
+
+var cnum = new Array(1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0);
+
+for(i = 0; i < 16; i ++) {
+  document.write('<tr title=\'单击选定颜色\'>');
+  for(j = 0; j < 30; j ++) {
+    n1 = j % 5;
+    n2 = Math.floor(j / 5) * 3;
+    n3 = n2 + 3;
+    wc((cnum[n3] * n1 + cnum[n2] * (5 - n1)),
+    (cnum[n3 + 1] * n1 + cnum[n2 + 1] * (5 - n1)),
+    (cnum[n3 + 2] * n1 + cnum[n2 + 2] * (5 - n1)), i);
+  }
+  document.writeln('</tr>');
+}
+</script>
+</table>
+</td><td>
+<table ID=G_Table cellspacing="0" cellpadding="0" height=100% style='cursor:hand'
+onclick		='SG = event.srcElement.title;		EndColor();'
+onmouseover	='G.innerText = event.srcElement.title;	EndColor();'
+onmouseout	='G.innerText = SG;			EndColor();'
+>
+<script>
+for(i = 255; i >= 0; i -= 8.5)
+document.write('<tr bgcolor=#' + ToHex(i) + ToHex(i) + ToHex(i) + '><td title=' + Math.floor(i * 16 / 17) + ' height=4 width=20></td></tr>');
+</script>
+</table>
+</td></tr>
+</table>
+<table cellspacing="10" cellpadding="0" width="260" align="center">
+<tr><td rowspan="2" align="center">
+<table ID=ShowColor cellspacing="0" cellpadding="0" width="60" height="50" bgcolor='#000000'>
+<tr><td></td></tr>
+</table>
+</td><td rowspan="2" width="120" style="line-height:16pt">
+&nbsp;基色: <span ID=R></span><br>
+&nbsp;亮度: <span ID=G>120</span><br>
+&nbsp;代码: <input class=text type=text size=7 ID=S_Color readonly>
+</td><td>
+<input type=submit onclick='window.returnValue = S_Color.value;window.close();' value="提 交">
+</td></tr>
+<tr><td>
+<input type=button onclick='window.close();' value="取消">
+</td></tr>
+</table>
+</body>
+</html>

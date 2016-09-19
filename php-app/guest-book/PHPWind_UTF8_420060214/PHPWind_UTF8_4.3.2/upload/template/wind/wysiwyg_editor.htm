@@ -1,0 +1,154 @@
+<!--<?php
+print <<<EOT
+-->
+<style type='text/css'>
+.btn     { width: 22px; height: 22px; border: 1px solid buttonface;}
+.btnOver { width: 22px; height: 22px; border: 1px outset; }
+.btnDown { width: 22px; height: 22px; border: 1px inset buttonface; background-color: #FFFFFF;}
+.ebg{background: #F0EDDC;}
+</style>
+<table cellPadding=5 cellSpacing=0 width="560" height="300" class='ebg'>
+<tr><td id='edit' style='padding-top: 5px;padding-bottom: 6px;'>
+<select onchange="format('fontname',this[this.selectedIndex].value);this.selectedIndex=0">
+<option selected>字体</option>
+<option value="宋体">宋体</option>
+<option value="新宋体">新宋体</option>
+<option value="楷体_GB2312">楷体_GB2312</option>
+<option value="黑体">黑体</option>
+<option value="Arial">Arial</option>
+<option value="Arial Black">Arial Black</option>
+<option value="Courier New">Courier New</option>
+<option value="Georgia">Georgia</option>
+<option value="Impact">Impact</option>
+<option value="Lucida Console">Lucida Console</option>
+<option value="Lucida Sans Unicode">Lucida Sans Unicode</option>
+<option value="Marlett">Marlett</option>
+<option value="Symbol">Symbol</option>
+<option value="Tahoma">Tahoma</option>
+<option value="Times New Roman">Times New Roman</option>
+<option value="Verdana">Verdana</option>
+<option value="Webdings">Webdings</option>
+<option value="Wingdings">Wingdings</option></select>
+<select onchange="format('fontSize',this[this.selectedIndex].text);this.selectedIndex=0">
+<option selected>字号</option>
+<option>1</option><option>2</option>
+<option>3</option><option>4</option>
+<option>5</option><option>6</option>
+<option>7</option></select>
+<select onchange="format('formatblock',this[this.selectedIndex].value);this.selectedIndex=0">
+<option>段落格式</option>
+<option value="&lt;P&gt;">普通</option>
+<option value="&lt;PRE&gt;">已编排格式</option>
+<option value="&lt;H1&gt;">标题一</option>
+<option value="&lt;H2&gt;">标题二</option>
+<option value="&lt;H3&gt;">标题三</option>
+<option value="&lt;H4&gt;">标题四</option>
+<option value="&lt;H5&gt;">标题五</option>
+<option value="&lt;H6&gt;">标题六</option></select><br>
+<button title="粗体" class="btn" onclick="this.className='btnDown'; format('bold');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/bold.gif"></button>
+<button title="斜体" class="btn" onclick="this.className='btnDown'; format('italic');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/italic.gif"></button>
+<button title="下划线" class="btn" onclick="this.className='btnDown'; format('underline');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/underline.gif"></button>
+<button title="字体颜色" class="btn" onclick="this.className='btnDown'; forecolor('wysiwyg.php?type=color');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/fcolor.gif"></button>
+<span style="border: 1px inset; width: 1px; font-size: 16px; height: 16px; margin: 0 3 0 3"></span>
+
+<button title="左对齐" class="btn" onclick="this.className='btnDown';format('justifyleft');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/justifyleft.gif"></button>
+<button title="居中" class="btn" onclick="this.className='btnDown';format('justifycenter');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/center.gif"></button>
+<button title="右对齐" class="btn" onclick="this.className='btnDown'; format('justifyright');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/justifyright.gif"></button>
+<span style="border: 1px inset; width: 1px; font-size: 16px; height: 16px; margin: 0 3 0 3"></span>
+
+<button title="有序列表" class="btn" onclick="this.className='btnDown';format('insertorderedlist');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/list_1.gif"></button>
+<button title="无序列表" class="btn" onclick="this.className='btnDown'; format('insertunorderedlist');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/list_2.gif"></button>
+<button title="缩进" class="btn" onclick="this.className='btnDown'; format('indent');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/indent.gif"></button>
+<button title="取消缩进" class="btn" onclick="this.className='btnDown';format('outdent');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/outdent.gif"></button>
+<span style="border: 1px inset; width: 1px; font-size: 16px; height: 16px; margin: 0 3 0 3"></span>
+
+<button title="插入url链接" class="btn" onclick="this.className='btnDown'; format('createlink');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/link.gif"></button>
+<button title="删除链接" class="btn" onclick="this.className='btnDown';format('unlink')" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/unlink.gif"></button>
+<button title="发表交易帖" class="btn" onclick="this.className='btnDown';saletable('wysiwyg.php?type=sale')" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/sale.gif"></button>
+<br>
+<button title="插入表格" class="btn" onclick="this.className='btnDown'; intable('wysiwyg.php?type=table');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/table.gif"></button>
+<button title="插入代码" class="btn" onclick="this.className='btnDown'; insertcode();" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/code.gif"></button>
+<button title="插入引用" class="btn" onclick="this.className='btnDown'; quote();" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/quote.gif"></button>
+<button title="插入水平线" class="btn" onclick="this.className='btnDown'; format('inserthorizontalrule');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/line.gif"></button>
+<span style="border: 1px inset; width: 1px; font-size: 16px; height: 16px; margin: 0 3 0 3"></span>
+ 
+<button title="删除文字格式" class="btn" onclick="this.className='btnDown'; format('RemoveFormat');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/remove.gif"></button>
+<button title="撤消" class="btn" onclick="this.className='btnDown'; format('undo');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/undo.gif"></button>
+<button title="恢复" class="btn" onclick="this.className='btnDown'; format('redo');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/redo.gif"></button>
+<span style="border: 1px inset; width: 1px; font-size: 16px; height: 16px; margin: 0 3 0 3"></span>
+
+<button title="删除" class="btn" onclick="this.className='btnDown'; format('delete');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/del.gif"></button>
+<button title="剪切" class="btn" onclick="this.className='btnDown'; format('cut');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/cut.gif"></button>
+<button title="复制" class="btn" onclick="this.className='btnDown'; format('copy');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/copy.gif"></button>
+<button title="粘贴" class="btn" onclick="this.className='btnDown'; format('paste');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/paste.gif"></button>
+<span style="border: 1px inset; width: 1px; font-size: 16px; height: 16px; margin: 0 3 0 3"></span>
+<button title="换行" class="btn" onclick="this.className='btnDown'; br();" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<b>BR</b></button>
+<button title="替换" class="btn" onclick="this.className='btnDown'; replac();" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/replace.gif"></button>
+<span style="border: 1px inset; width: 1px; font-size: 16px; height: 16px; margin: 0 3 0 3"></span>
+<button title="插入rm电影文件" class="btn" onclick="this.className='btnDown';rming();" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/rm.gif"></button>
+<button title="插入wmv在线播放" class="btn" onclick="this.className='btnDown';wmv();" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/mpeg.gif"></button>
+<button title="插入 Flash 动画" class="btn" onclick="this.className='btnDown';setswf();" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/swf.gif"></button>
+<!-- <button title="插入附件" class="btn" onclick="this.className='btnDown'; insertattach('{$R_P}upload.php?step=1');" onmouseover="this.className='btnOver';" onmouseout="this.className='btn'">
+<img src="$imgpath/post/c_editor/attach.gif"></button> -->
+</td></tr>
+<tr align=center><td>
+<iframe name="editcontent" width="100%" height="352"></iframe>
+<textarea name=atc_content cols=90 rows=25 style="overflow:auto;display:none">{$atc_content}</textarea><br>
+<!--
+EOT;
+if($gp_htmlcode){print <<<EOT
+-->
+<input type=button style="background-color:#ECE9D8" value='设计' onclick="setMode(true)">
+<input type=button style="background-color:#ECE9D8" value='源码' onclick="setMode(false)">
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+<script language="JavaScript">
+editcontent.document.designMode="On";
+ed = editcontent
+
+var sContents=document.FORM.atc_content.value
+var Header="<html><head><style type=text/css>div.quote{margin:5px 20px;border:1px solid #CCCCCC;padding:5px;background:#F3F3F3;line-height : normal;}BODY {font-family: Verdana;FONT-SIZE: 12px;MARGIN: 2;}img {border:0;}</style></head><body onkeydown=\"quickpost(event);\">";
+ed.document.open()
+ed.document.write(Header+sContents)
+ed.document.write("</body>");
+ed.document.write("</html>");
+ed.document.close()
+ed.focus();
+var C_Mode=true,sel=null
+</script>
+<!--
+EOT;
+?>

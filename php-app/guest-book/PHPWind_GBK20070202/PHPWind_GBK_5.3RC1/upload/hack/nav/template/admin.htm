@@ -1,0 +1,120 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr class="b">
+	  <td colspan="2">[<a href="$basename&job=add">添加导航</a>]  [<a href="$basename&job=viewhead">头部导航栏</a>] [<a href="$basename&job=viewfoot">底部导航栏</a>]</td>
+	</tr>
+</table><br>
+<script language="JavaScript" type="text/javascript">
+function delnav(){
+	var msg=confirm("您确定要删除该条信息？");
+	return msg;
+}
+</script>
+<!--
+EOT;
+if(!$job || $job=="add" || $job=="edit"){
+print <<<EOT
+-->
+<form action="$basename" method="post">
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr class="head">
+	  <td colspan="2">社区导航自定义</td>
+	</tr>
+	<tr class="b">
+	  <td width="20%" align="center">栏目名称</td>
+	  <td width="80%"><input name="title" type="text" id="title" value="$title"></td>
+  </tr>
+	<tr class="b">
+	  <td align="center">字体样式</td>
+	  <td><select name="color" id="color">
+	    <option value="" selected>标题颜色</option>
+$color_select</select>
+	    <input name="b" type="checkbox" id="b" value="1" $b_check>
+	    粗体
+	    <input name="i" type="checkbox" id="i" value="1" $i_check>
+	    斜体
+	    <input name="u" type="checkbox" id="u" value="1" $u_check>
+	    下划线</td>
+  </tr>
+	<tr class="b">
+	  <td align="center">栏目链接</td>
+	  <td><input name="link" type="text" id="link" value="$link" size="50">
+      （如果是外部链接，要加http://）</td>
+  </tr>
+	<tr class="b">
+	  <td align="center">文字说明</td>
+	  <td><input name="alt" type="text" id="alt" value="$alt">
+      （鼠标悬浮于链接文字上时的说明内容）</td>
+  </tr>
+	<tr class="b">
+	  <td align="center">目标框架</td>
+	  <td><input type="radio" name="target" value="0" $self_check />
+	    本窗口
+        <input type="radio" name="target" value="1" $blank_check />
+        新窗口</td>
+    </tr>
+	<tr class="b">
+	  <td align="center">栏目类型</td>
+	  <td><input type="radio" name="pos" value="head" $head_check>
+	    头部导航 
+        <input type="radio" name="pos" value="foot" $foot_check>
+        底部导航</td>
+  </tr>
+	<tr class="b">
+	  <td align="center">位置排序</td>
+      <td><input name="view" type="text" id="view" value="$view" size="5"></td>
+  </tr>
+</table>
+<center>
+<br />
+<input name="nid" type="hidden" id="nid" value="$nid" />
+<input name="action" type="hidden" id="action" value="$actionvalue">
+<input type="submit" name="Submit" value="提交">
+</center></form>
+<br>
+<!--
+EOT;
+}elseif($job=="viewhead" || $job=="viewfoot"){
+print <<<EOT
+-->
+<form action="$basename" method="post">
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr class="head">
+	  <td colspan="4">社区导航自定义</td>
+	</tr>
+	<tr>
+	  <td align="center">编号</td>
+	  <td align="center">链接预览</td>
+	  <td align="center">排序</td>
+	  <td align="center">操作</td>
+	</tr>
+<!--
+EOT;
+$i=0;
+foreach($nav as $n){
+$i++;
+print <<<EOT
+-->	
+<tr class="b">
+	  <td align="center">$i</td>
+	  <td align="center"><a href="$n[link]" target="_blank" title="$n[alt]">$n[title]</a></td>
+	  <td align="center"><input name="view[$n[nid]]" type="text" id="view[$n[nid]]" value="$n[view]" size="5" /></td>
+	  <td align="center">[<a href="$basename&amp;action=del&amp;nid=$n[nid]" onclick="return delnav();">删除</a>][<a href="$basename&amp;job=edit&amp;nid=$n[nid]">编辑</a>]</td>
+  </tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+  </table>
+<center>
+<br />
+<input name="action" type="hidden" id="action" value="editview" /><input type="submit" name="Submit2" value="提交" />
+</center>
+</form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>-->

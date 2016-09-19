@@ -1,0 +1,221 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=5 class=i_table>
+<tr><td class=head><a href="$basename#2">表情管理</a> | <a href="$basename#1">动作管理</a></td></tr>
+<tr><td class=b>
+<ul>
+<li>添加每一套表情请先把图片上传到该套表情目录中（image/post/smile/表情目录/） </li>
+<li>添加动作的图片目录为/post/act </li>
+<li>请不要上传文件名过长的图片，否则将会无法识别</li>
+<li>从浏览器兼容性考虑，建议使用英文名称的图片，合法的图片后缀为jpg,jpeg,bmp,gif,png，图片名中不要带有特殊字符</li>
+</ul>
+</td></tr></table><br>
+<!--
+EOT;
+if(!$action){
+print <<<EOT
+-->
+<form method="post" action="$basename">
+<table cellspacing="1" cellpadding="5" border="0" width="98%" align="center" class=i_table>
+<tr class=i_table><td colspan="6" class=head><a name="1">动作管理</a></td></tr>
+<tr class=head_2 align=center>
+<td width="5%">ID</td><td></td><td >动作说明</td>
+<td>图片文件名</td><td>图片</td><td width="45">删</td></tr>
+<!--
+EOT;
+$num=0;
+foreach($motiondb as $motion){
+$num++;
+print <<<EOT
+-->
+<tr align=center><td class=b>$num</td><td class=b>$motion[name]</td>
+<td class=b>$motion[descrip]</td>
+<td class=b>$motion[images]</td>
+<td class=b><img width=30 height=30 src="$imgpath/post/act/$motion[images]"></td>
+<td class=b><input type='checkbox' name='delid[]' value='$motion[id]'></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<input name=action type=hidden value="delete">
+<input name="table" type=hidden value="pw_actions">
+<br><center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)"> <input type="submit" name="delete" value="提 交"></center>
+</form>
+<br />
+<form method="post" action="$basename">
+<table cellspacing="1" cellpadding="5" border="0" width="98%" align="center" class=i_table>
+<tr><td colspan="3" class=head>添加动作 <a href="javascript:addact();">[+]</a> <a href="javascript:removeact();">[-]</a></td></tr>
+<tr class=head_2 align="center">
+	<td width="25%">动作名称</td>
+	<td width="*">动作说明</td>
+	<td width="25%"></td>
+</tr>
+<tr class=b align="center">
+	<td><input type="text" name="names[1]"></td>
+	<td><input type="text" name="descrips[1]" size="60"></td>
+	<td><input type="text" name="images[1]"></td>
+</tr>
+<!--
+EOT;
+for($i=2;$i<=10;$i++){
+$id='act_'.$i;
+print <<<EOT
+-->
+<tr class=b align="center" id="$id" style="display:none">
+	<td><input type="text" name="names[$i]"></td>
+	<td><input type="text" name="descrips[$i]" size="60"></td>
+	<td><input type="text" name="images[$i]"></td>
+</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+<input name=action type=hidden value="addact">
+</table><br>
+<center><input type="submit" name="add" value="提 交"></center></form>
+<br />
+<table cellspacing="1" cellpadding="5" border="0" width="98%" align="center" class=i_table>
+<tr><td>
+<a name="2">表情组使用帮助</a><br /></td></tr><tr><td class="b">
+<li>要增加一个表情组，请先在你的图片文件夹下的post/smile/文件夹下建立相应的文件夹</li>
+<li>一个表情组下所有的表情图片都要上传至该表情组的文件夹下才可以进行添加</li>
+</td>
+</tr></table>
+<br />
+<form method="post" action="$basename">
+<table cellspacing="1" cellpadding="5" border="0" width="98%" align="center" class=i_table>
+<tr><td colspan="6" class=head>表情管理</td></tr>
+<tr class=head_2><td align=center width="5%">ID</td>
+<td align=center>表情组名称</td><td align=center>图片路径</td>
+<td align=center>显示顺序</td>
+<td align=center>操作</td>
+<td align=center>默认显示个数</td>
+</tr>
+<!--
+EOT;
+foreach($facedb as $key=>$face){
+print <<<EOT
+-->
+<tr><td class=b align=center>$face[id]</td>
+<td class=b align=center><input name="name[$face[id]]" value="$face[name]" size="10" type="text"></td>
+<td class=b align=center>$face[path]</td>
+<td class=b align=center><input value="$face[vieworder]" name="vieworder[$face[id]]" type="text" size=3></td>
+<td class=b align=center>
+<a href="$basename&action=smilemanage&id=$face[id]">[分类表情管理]</a>
+<a href="$basename&action=delete&id=$face[id]" onclick="return delSmile();"><font color=red>[删除此表情分类]</font></a></td>
+<!--
+EOT;
+if($key==0){ print <<<EOT
+-->
+<td class="b" rowspan="$shownum" align="center" valign="top">
+<input type="text" size="10" value="$fc_shownum" name="shownum" /></td>
+<!--
+EOT;
+}print <<<EOT
+-->
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<input name=action type=hidden value="editsmiles">
+<input name="table" type=hidden value="pw_smiles">
+<br><center><input type="submit" name="update" value="提 交"></center>
+</form>
+
+<form method="post" action="$basename">
+<table cellspacing="1" cellpadding="5" border="0" width="98%" align="center" class=i_table>
+<tr><td colspan="3" class=head>添加表情组</td></tr>
+<tr class=b align="center">
+<td width="40%" >图片路径</td>
+<td width="40%">表情组名称</td>
+<td width="20%">显示顺序</td>
+</tr>
+<tr class=b align="center">
+<td width="40%" ><input type="text" size=15 name=path></td>
+<td width="40%"><input type="text" size=15 name=name></td>
+<td width="20%"><input type="text" size=3 name=vieworder></td>
+</tr>
+</table><br>
+<center><input name=action type=hidden value="addface"><input type="submit" name="add" value="提 交"></center>
+</form>
+<script language="javascript">
+function delSmile(){
+	var msg=confirm("删除表情分类也会删除该分类下的所有表情\\n将会导致前台的所有该分类下的表情图片无法再显示，您确认要删除吗？");
+	return msg;
+}
+</script>
+<script type="text/javascript">
+var act = 1;
+function addact() {
+	if(act < 10) {
+		act++;
+		document.getElementById("act_"+act).style.display = "";
+	}
+}
+function removeact() {
+	if(act > 1){
+		document.getElementById("act_"+act).style.display = "none";
+		act--;
+	}
+}
+</script>
+<!--
+EOT;
+}elseif($action=='smilemanage'){
+print <<<EOT
+-->
+<form action="$basename" method="post">
+<table cellspacing="1" cellpadding="5" border="0" width="60%" align="center" class=i_table>
+<tr><td colspan="5" class=head>表情管理（已经成功添加的表情）</td></tr>
+<tr align="center"><td>ID</td><td>图片路径</td><td>图片预览</td><td>显示顺序</td><td>删 除</td></tr>
+<!--
+EOT;
+foreach($smiles as $value){
+print <<<EOT
+-->
+<tr align="center" class="b"><td>$value[id]</td><td>$value[path]</td>
+<td><img src="$value[src]"></td>
+<td><input name="vieworder[$value[id]]" value="$value[vieworder]" size=3></td>
+<td><a href="$basename&action=delsmile&smileid=$value[id]&typeid=$id" onclick="return delSmile();">删 除</a></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<center><br><input type="hidden" name="id" value="$id"><input type="hidden" name="action" value="smilevieworder"> <input type="submit" value="提 交"></center>
+</form>
+<script language="javascript">
+function delSmile(){
+	var msg=confirm("删除表情请注意：\\n\\n删除该表情将会导致前台的该表情图片无法再显示，您确认要删除吗？");
+	return msg;
+}
+</script>
+<br />
+<form action="$basename" method="post">
+<table cellspacing="1" cellpadding="5" border="0" width="60%" align="center" class=i_table>
+<tr><td colspan="3" class=head>表情管理（该目录下尚未被添加的表情）</td></tr>
+<tr align="center"><td width="15%">添 加</td><td width="40%">图片路径</td><td width="45%">图片预览</td></tr>
+<!--
+EOT;
+foreach ($smiles_new as $value){
+print <<<EOT
+-->
+<tr class="b" align="center"><td><input type="checkbox" name="add[]" value="$value[path]"></td><td>$value[path]</td><td><img src="$value[src]"></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<center><br><input type="button" value="全 选" onclick="CheckAll(this.form)"><input type="hidden" name="id" value="$id"><input type="hidden" name="action" value="addsmile"> <input type="submit" value="添 加"></center>
+</form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>
+-->

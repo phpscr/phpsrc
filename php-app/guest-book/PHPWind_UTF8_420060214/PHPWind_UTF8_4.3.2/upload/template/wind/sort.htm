@@ -1,0 +1,282 @@
+<!--<?php print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center>
+<tr><td align=left>
+<img src='$imgpath/$stylepath/index/home.gif' align=absbottom> 
+<b><a href='$db_bfn'>$db_bbsname </a> -> PhpWind 统计信息</b>
+<!--
+EOT;
+if($cachetime){print <<<EOT
+-->
+</td>
+<td align=right>
+<b>下次更新时间:$cachetime</b>
+</td>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table><br>
+
+<table width="$tablewidth" cellspacing="1" cellpadding="5" $i_table align="center" style="TABLE-LAYOUT: fixed;WORD-WRAP: break-word">
+<tr align=center>
+<td class='f_one'><a href='sort.php'>基本统计信息</a></td>
+<td class='f_one'><a href='sort.php?action=ipstate'>到访IP统计</a></td>
+<td class='f_one'><a href='sort.php?action=team'>管理团队</a></td>
+<td class='f_one'><a href='sort.php?action=online'>在线统计</a></td>
+<td class='f_one'><a href='sort.php?action=member'>会员排行</a></td>
+<td class='f_one'><a href='sort.php?action=forum'>版块排行</a></td>
+<td class='f_one'><a href='sort.php?action=article'>帖子排行</a></td>
+</tr></table><br>
+<!--
+EOT;
+if(empty($action)){print <<<EOT
+-->
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=6 $i_table>
+<tr><td class=head colspan=3><b>基本统计信息</b></td></tr>
+<tr align=center>
+
+<td class='f_one' width=33% valign=top><table>
+<tr><td><b>会员统计</b></td></tr> 
+<tr><td><br></td></tr>
+<tr><td>会员总数:$bbsinfo[totalmember]</td></tr>
+<tr><td><br></td></tr>
+<tr><td>
+最新注册会员:<a href="profile.php?action=show&username=$bbsinfo[newmember]" target="_blank">$bbsinfo[newmember]</a>
+</td></tr></table></td>
+
+<td class='f_one' width=33%><table>
+<tr><td><b>帖子统计</b></td></tr>
+<tr><td>主题数:$topic</td></tr>
+<tr><td>帖子数:$article </td></tr>
+<tr><td>今 日:$tposts </td></tr>
+<tr><td>昨 日:$bbsinfo[yposts]</td></tr> 
+<tr><td>最高日:$bbsinfo[hposts]</td></tr></table></td>
+
+<td class='f_one'><table>
+<tr><td><b>在线统计</b></td></tr>
+<tr><td>在线总数:$usertotal</td></tr>
+<tr><td>会员数:$userinbbs</td></tr>
+<tr><td>游客数:$guestinbbs</td></tr>
+<tr><td>最高在线:$bbsinfo[higholnum]</td></tr>
+<tr><td>发生在:$bbsinfo[higholtime]</td></tr>
+</table></td></tr></table>
+<!--
+EOT;
+}elseif($action=='ipstate'){print <<<EOT
+-->
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=6 $i_table>
+<tr><td class=head colspan=2><b>到访IP统计</b></td></tr>
+<!--
+EOT;
+if($type=='month'){print <<<EOT
+-->
+<tr><td class='cbg' colspan=2><b>月到访IP统计</b>
+<a href="sort.php?action=ipstate&year=$p_year">< </a> $c_year <a href="sort.php?action=ipstate&year=$n_year">></a>
+</td></tr>
+<!--
+EOT;
+foreach($m_ipdb as $key => $ip){
+$percent=round($ip[nums]/$summip*100,1);
+$imgwidth=floor(500*$ip[nums]/($summip+1));
+print <<<EOT
+-->
+<tr class='f_one'><td width="15%">$ip[month] 
+<a href="sort.php?action=ipstate&type=day&month=$ip[month]">查看</a></td>
+<td><img src='$imgpath/post/vote/bar1.gif' width="$imgwidth" height=10> $ip[nums]($percent%)</td></tr>
+<!--
+EOT;
+}}elseif($type=='day'){print <<<EOT
+-->
+<tr><td class='cbg' colspan=2>
+<a href="sort.php?action=ipstate&year=$Y"><b>月到访IP统计</b></a>
+<b>日到访IP统计</b>
+<a href="sort.php?action=ipstate&type=day&month=$p_month">< </a> $c_month 
+<a href="sort.php?action=ipstate&type=day&month=$n_month">></a>
+</td></tr>
+<!--
+EOT;
+foreach($d_ipdb as $key => $ip){
+$percent=round($ip[nums]/$sumip*100,1);
+$imgwidth=floor(500*$ip[nums]/($sumip+1));
+print <<<EOT
+-->
+<tr class='f_one'><td width="15%">$ip[day]</td>
+<td><img src='$imgpath/post/vote/bar1.gif' width="$imgwidth" height=10> $ip[nums]($percent%)</td></tr>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</table>
+<!--
+EOT;
+}elseif($action=='online'){print <<<EOT
+-->
+<table width='$tablewidth' align=center cellspacing='1' cellpadding='6' $i_table>
+<tr><td class=head colspan=10><b>在线统计</b></td></tr>
+<tr class=cbg>
+<td align='center'>用户名</td>
+<td align='center'>IP</td>
+<td align='center'>级别</td>
+<td align='center'>当前动作</td>
+<td align='center'>最后活动时间</td>
+<td align='center'>所在版块</td>
+<td align='center'>所在主题</td>
+</tr>
+<!--
+EOT;
+foreach($threaddb as $thread){
+if($thread){
+print <<<EOT
+-->
+<tr height=26>
+<td align=center  bgcolor=$threadcolorone>
+<b>
+<!--
+EOT;
+if($thread[9]=='<>' && $groupid==3){
+print <<<EOT
+-->
+<a href="profile.php?action=show&uid=$thread[8]" target="_blank">$thread[username](隐身)</a>
+<!--
+EOT;
+}elseif($thread[9]=='<>' && $groupid!=3){
+print <<<EOT
+-->
+隐身会员
+<!--
+EOT;
+}else{
+print <<<EOT
+-->
+<a href="profile.php?action=show&uid=$thread[8]" target="_blank">$thread[username]</a>
+<!--
+EOT;
+}print <<<EOT
+-->
+</b></td>
+<td align=center bgcolor=$forumcolortwo>$thread[ip]</td>
+<td align=center bgcolor=$forumcolortwo>$thread[group]</td>
+<td align=center bgcolor=$forumcolortwo>$thread[action]</td>
+<td align=center  bgcolor=$threadcolorone>$thread[lasttime]</td>
+<td align=center bgcolor=$forumcolortwo>$thread[forum]</td>
+<td align=center bgcolor=$forumcolortwo>
+<!--
+EOT;
+if($thread[atc]){print <<<EOT
+-->
+<a href='read.php?tid=$thread[atc]'>进入主题</a>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td>
+</tr>
+<!--
+EOT;
+}}
+print <<<EOT
+-->
+</table>
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=0>
+<tr><td>{$pages}&nbsp;&nbsp;共{$count}人在线</td></tr></table>
+<!--
+EOT;
+}elseif($action=='team'){print <<<EOT
+-->
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=6 $i_table>
+<tr><td class=head colspan=10><b>管理团队</b></td></tr>
+<tr class=cbg align=center>
+<td>用户名</td>
+<td>系统头衔</td>
+<td>会员头衔</td>
+<td>最后登录</td>
+<td>最后发表</td>
+<td>离开天数</td>
+<td>发帖</td>
+<td>{$db_rvrcname}</td>
+<td>$db_moneyname</td>
+<td>在线时间</td>
+</tr>
+<!--
+EOT;
+foreach($teamdb as $key => $team){
+print <<<EOT
+-->
+<tr class=f_one align=center>
+<td><a href="profile.php?action=show&uid=$team[uid]" target="_blank">$team[username]</a></td>
+<td>$team[systitle]</td>
+<td>$team[memtitle]</td>
+<td>$team[lastvisit]</td>
+<td>$team[lastpost]</td>
+<td>$team[leavedays]</td>
+<td>$team[postnum]</td>
+<td>$team[rvrc]</td>
+<td>$team[money]</td>
+<td>$team[onlinetime]</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<!--
+EOT;
+} else{print <<<EOT
+-->
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=0 style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word'>
+<tr><td colspan=3 class=head><b>论坛排行榜</b></td></tr>
+<tr>
+<!--
+EOT;
+$cid=0;
+foreach($_SORTDB as $key=>$_SORT){
+$type=!is_numeric($key)?$lang[$key]:$_CREDITDB[$key][0];
+$cid++;
+print <<<EOT
+-->
+<td valign=top>
+<table width="100%" cellspacing=0 cellpadding=2 $i_table>
+<tr><td class=cbg  height=23 colspan=3> &nbsp; {$type}排行榜</td></tr>
+<!--
+EOT;
+$id=0;
+foreach($_SORT as $id=>$sort){
+if($sort[2]){
+$id++;
+print <<<EOT
+-->
+<tr>
+<td class='f_one' align="center">$id</td>
+<td class='f_one'>
+<a href='$show_url=$sort[0]' target="_blank">$sort[1]</a>
+</td>
+<!--
+EOT;
+if($key!='digest'){print <<<EOT
+-->
+<td class='f_one' align="center">$sort[2]</td>
+<!--
+EOT;
+}print <<<EOT
+-->
+</tr>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</table></td>
+<!--
+EOT;
+if($cid%3==0){print <<<EOT
+-->
+</tr>
+<tr>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</tr></table>
+<!--
+EOT;
+}?>-->

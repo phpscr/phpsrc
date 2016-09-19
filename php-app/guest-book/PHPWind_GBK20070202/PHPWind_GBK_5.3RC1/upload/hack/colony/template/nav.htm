@@ -1,0 +1,86 @@
+<!--<?php
+print <<<EOT
+-->
+<div style="float:left; width:20%;">
+<div class="t" style="width:100%; margin-left:0">
+<table cellspacing="0" cellpadding="0" width="100%"  border="0">
+<tr>
+  <td  class="h">$cydb[cname]
+<!--
+EOT;
+if($cydb[level]){
+print <<<EOT
+-->
+<span style="color:#FF0000">[高级]</span>
+<!--
+EOT;
+}else{
+print <<<EOT
+-->
+<a href="$basename&job=update&cyid=$cyid" style="color:#FF0000">[升级]</a>
+<!--
+EOT;
+}print <<<EOT
+-->
+  </td>
+</tr>
+<tr class="f_one tr3">
+  <th>成员数 $cydb[members]/$cn_memberfull
+	  </th>
+</tr>
+<tr class="f_one tr3">
+  <th>相册数 $cydb[albumnum]/$cn_albumnum</th>
+</tr>
+<!--
+EOT;
+if(!$mycydb){
+print <<<EOT
+-->
+<tr class="f_one tr3">
+  <th><a href="$basename&job=join&cyid=$cyid">加入{$cn_name}</a> [需$cydb[intomoney]$moneyname]</th>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr class="tr4"><td>{$cn_name}基本功能</td></tr>
+<tr class="f_one tr3"><th><img src="$hkimg/home.gif" width="18" height="18" hspace="10" align="absmiddle"><a href="$basename&cyid=$cyid&job=view">{$cn_name}首页</a></th></tr>
+<tr class="f_one tr3">
+  <th><img src="$hkimg/photo.gif" width="18" height="18" hspace="10" align="absmiddle"><a href="$basename&cyid=$cyid&job=album">{$cn_name}相册</a></th>
+</tr>
+<tr class="f_one tr3"><th><img src="$hkimg/board.gif" width="18" height="19" hspace="10" align="absmiddle"><a href="$basename&cyid=$cyid&job=board">讨论区</a></th></tr>
+<tr class="f_one tr3">
+  <th><img src="$hkimg/memberlist.gif" width="18" height="18" hspace="10" align="absmiddle"><a href="$basename&cyid=$cyid&job=card">成员通讯录</a></th>
+</tr>
+<tr class="f_one tr3">
+  <th><img src="$hkimg/honor.gif" width="18" height="18" hspace="10" align="absmiddle"><a href="$basename&cyid=$cyid&job=honor">荣誉排行</a></th>
+</tr>
+<tr class="f_one tr3">
+  <th><img src="$hkimg/account.gif" width="18" height="18" hspace="10"><a href="$basename&cyid=$cyid&job=donatelog">{$cn_name}帐户</a></th>
+</tr>
+<tr class="f_one tr3"><th><img src="$hkimg/quit.gif" width="18" height="19" hspace="10" align="absmiddle"><a href="$basename&cyid=$cyid&job=quit" onclick="return checkset('您确认要退出该{$cn_name}。')">退出该{$cn_name}</a></th></tr>
+<!--
+EOT;
+if($mycydb[ifadmin]==1){
+print <<<EOT
+-->
+<tr class="tr4"><td>{$cn_name}管理功能</td>
+</tr>
+<tr class="f_one tr3"><th><a href="$basename&cyid=$cyid&job=set">基本设置</a></th></tr>
+<tr class="f_one tr3"><th><a href="$basename&cyid=$cyid&job=member">成员管理</a></th></tr>
+<tr class="f_one tr3"><th><a href="$basename&cyid=$cyid&job=joinlog">会员审核记录</a></th></tr>
+<tr class="f_one tr3"><th><a href="$basename&cyid=$cyid&job=currency">{$moneyname}管理</a></th></tr>
+<tr class="f_one tr3"><th><a href="$basename&cyid=$cyid&job=currencylog">{$moneyname}记录</a></th></tr>
+<tr class="f_one tr3"><th><a href="$basename&cyid=$cyid&job=update">升级高级{$cn_name}</a></th></tr>
+<tr class="f_one tr3"><th><a href="$basename&cyid=$cyid&job=cancel" onclick="return 
+checkset('您确认要解散该{$cn_name}。')">解散该{$cn_name}</a></th></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+</div>
+</div>
+<!--
+EOT;
+?>

@@ -1,0 +1,142 @@
+<!--<?php
+include_once PrintEot('left');
+if(empty($action)){
+print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr>
+		<td class="b">
+			[<b>基本设置</b>]
+			[<a href="$basename&action=create">创建新表</a>]
+			[<a href="$basename&action=movedata">数据转移</a>]
+		</td>
+	</tr>
+</table>
+<br />
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr><td class="head" colspan="2"><b>提示信息</b></td></tr>
+	<tr>
+		<td class="b">
+<pre>
+post分表功能介绍
+</pre>
+		</td>
+	</tr>
+</table>
+<br />
+<form action="$basename" method="post">
+<input type="hidden" name="step" value="2" />
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr><td class="head" colspan="6">post列表</td></tr>
+	<tr class="head_2" align="center">
+		<td width="15%">表名</td>
+		<td width="15%">记录数</td>
+		<td width="15%">数据表大小(M)</td>
+		<td width="15%">tid范围</td>
+		<td width="*">创建时间</td>
+		<td width="10%">正在使用</td>
+	</tr>
+<!--
+EOT;
+foreach($postdb as $key=>$table){
+print <<<EOT
+-->
+	<tr class="b" align="center">
+		<td>$table[Name]</td>
+		<td>$table[Rows]</td>
+		<td>$table[Data_length]</td>
+		<td>$table[tmin] - $table[tmax]</td>
+		<td>$table[Create_time]</td>
+		<td><input type="radio" name="ktable" value="$table[key]" $table[sel] /></td>
+	</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+</table>
+<br	/>
+<center><input type="submit" value="提 交" /></center>
+</form>
+<!--
+EOT;
+}elseif($action=='create'){ print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr>
+		<td class="b">
+			[<a href="$basename">基本设置</a>]
+			[<b>创建新表</b>]
+			[<a href="$basename&action=movedata">数据转移</a>]
+		</td>
+	</tr>
+</table>
+<br />
+<form action="$basename" method="post">
+<input type="hidden" name="action" value="$action" />
+<input type="hidden" name="step" value="2" />
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr class="head">
+		<td colspan="2">提示信息</td>
+	</tr>
+	<tr class="b">
+		<td colspan="2">
+1、新建一张 post 表,自定义下标(数字);<br>
+2、为原有数据查询分担负载.</td>
+	</tr>
+	<tr class="b">
+		<td width="30%">数据表名下标: pw_posts</td>
+		<td width="*"><input type="text" name="num" size="5" /></td>
+	</tr>
+</table>
+<br	/>
+<center><input type="submit" value="提 交" /></center>
+</form>
+<!--
+EOT;
+}elseif($action=='movedata'){ print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr>
+		<td class="b">
+			[<a href="$basename">基本设置</a>]
+			[<a href="$basename&action=create">创建新表</a>]
+			[<b>数据转移</b>]
+		</td>
+	</tr>
+</table>
+<br />
+<form action="$basename" method="post">
+<input type="hidden" name="action" value="$action" />
+<input type="hidden" name="step" value="1" />
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr class="head">
+		<td colspan="2">数据转移</td>
+	</tr>
+	<tr class="b">
+		<td width="30%">源数据表</td>
+		<td width="*"><select name="tfrom">$table_sel</select></td>
+	</tr>
+	<tr class="b">
+		<td width="30%">目标数据表</td>
+		<td width="*"><select name="tto">$table_sel</select></td>
+	</tr>
+	<tr>
+		<td class="b">指定 tid 范围<br>(可只用单个条件)</td>
+		<td class="b">
+			<input type="text" name="tstart" />
+			&nbsp;-&nbsp;
+			<input type="text" name="tend" />
+		</td>
+	</tr>
+	<tr>
+		<td class="b">每次转移帖子数</td>
+		<td class="b"><input type="text" size="5" name="lines" value="200" /></td>
+	</tr>
+</table>
+<br	/>
+<center><input type="submit" value="提 交" /></center>
+</form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>-->

@@ -1,0 +1,111 @@
+<!--<?php print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center><tr><td align=left>
+<img src='$imgpath/$stylepath/index/home.gif' align=absbottom> 
+<b><a href='$db_bfn'>$db_bbsname </a> -> 管理程式</b></td></tr></table><br>
+<!--
+EOT;
+if($action=='banuser'){print <<<EOT
+-->
+<form name=ping action="masingle.php?action=banuser&uid=$uid" method=post>
+<table width='$tablewidth' cellspacing=1 cellpadding=3 $i_table align=center>
+<tr class='header'><td colspan='2' class=head>会员禁言</td></tr>
+<tr><td class='f_one' width='21%'>操作者</td>
+<td class='f_one'><a href='profile.php?action=show&uid=$winduid'>$windid</a></td></tr>
+<tr><td class='f_two' width='21%'>禁言对象</td>
+<td class='f_two'>
+<a href='profile.php?action=show&uid=$uid'>$userdb[username]</a></td></tr>
+<tr><td class='f_one' width='21%'>禁言类型</td>
+<td class='f_one'><input type=radio name=type value=1 checked>定期禁言
+<!--
+EOT;
+if($SYSTEM['bantype']){print <<<EOT
+-->
+<input type=radio name=type value=2>永久禁言(不需要设定禁言时间)
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<tr><td class='f_two' width='21%'>禁言时间</td>
+<td class='f_two'>
+<input type=text name=limit value=1> 天(最大天数<font color=blue>$SYSTEM[banmax]</font>天)
+</td></tr>
+<tr><td class='f_one' width='21%'>短消息通知</td>
+<td class='f_one'>
+<input type=radio name=ifmsg value=1 checked>是
+<input type=radio name=ifmsg value=0>否</td></tr>
+<tr><td class='f_one' width='21%'>禁言理由</td>
+<td class='f_one'>
+<textarea name='atc_content' rows='5' cols='80'></textarea>
+</td></tr></table>
+<br>
+<center><input type=submit value='提 交'></center><br>
+<input type=hidden name=fid value=$fid>
+<input type=hidden name=step value='1'></form>
+<!--
+EOT;
+}elseif($action=='delatc'){print <<<EOT
+-->
+<form name=ping action="masingle.php?" method=post>
+<input type=hidden name="action" value="delatc">
+<input type=hidden name="tid" value="$tid">
+<input type=hidden name="fid" value="$fid">
+<input type=hidden name="step" value='1'>
+<table width="$tablewidth" cellspacing=1 cellpadding=3 align=center $i_table>
+	<tr align="center" class="head">
+		<td width="5%">ID</td>
+		<td>标题</td>   
+		<td width="15%">作者</td>
+		<td width="15%">发表时间</td>
+	</tr>
+<!--
+EOT;
+$id=0;
+foreach($threaddb as $key=>$val){
+$id++;
+print <<<EOT
+-->
+	<tr align=center>
+		<td class="f_one"><input type="checkbox" name="delatc[]" value="$val[pid]" checked>$id</td>
+		<td class="f_one" align=left>
+			<a href="read.php?tid=$val[tid]" target="_blank">$val[subject]</a>
+		</td>
+		<td class="f_one">
+			<a href="profile.php?action=show&username=$val[author]" target="_blank">$val[author]</a>
+		</td>
+		<td class="f_one">$val[postdate]</td>
+	</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<br>
+<table width="$tablewidth" cellspacing=1 cellpadding=3 align=center $i_table>
+	<tr><td class="head" colspan="2">管理选项：</td></tr>
+	<tr>
+		<td class="f_one">短消息通知：</td>
+		<td class="f_one">
+			<input type=radio name=ifmsg value=1 checked>是
+			<input type=radio name=ifmsg value=0>否
+		</td>
+	</tr>
+	<tr>
+		<td class='f_one'>操作原因：</td>
+		<td class='f_one'>
+			<select name="" size='8' multiple onchange="this.form.atc_content.value=this.value">
+				<option value="">自定义</option>
+				<option value="">-------</option>
+				$reason_sel
+			</select>
+			<textarea name='atc_content' rows='8' cols='80'></textarea>
+		</td>
+	</tr>
+</table>
+<br>
+<center><input type=submit value='提 交'></center>
+</form>
+<!--
+EOT;
+}?>-->

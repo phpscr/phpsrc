@@ -1,0 +1,80 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<center>欢迎光临 <b>PHPwind</b> $wind_version  系统设置面板.版权所有&copy;2003-07,<b style="color: #FF9900">phpwind.net</b></center>
+<br>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head>PHPWind 系列产品介绍</td></tr>
+<tr><td class=b>
+
+PHPWind 系列产品：PHPWind（论坛系统），PWBlog（博客系统），VeryCMS（内容管理系统），LxShop（商城系统）
+<br><br>
+<b>PHPWind：</b>PHPWind核心产品，高质量的负载能力、高强度的稳定性、飞一般的访问速度，保证您的网站实现最佳的运行状态！
+<a href="http://www.phpwind.com/?prog=sales" target="_blank"><b>详情点击</b></a>
+<br><br>
+<b>VeryCMS：</b>整合论坛、博客轻松搭建社区门户网站；高速访问，高负载能力，国内最受欢迎的内容管理系统之一！
+<a href="http://www.phpwind.com/?prog=cms" target="_blank"><b>详情点击</b></a>
+<br><br>
+<b>PWBlog &nbsp;：</b>完美整合论坛用户数据，又可独立运行。国内首家PHP多用户博客系统，稳定，高效，功能强大！
+<a href="http://www.phpwind.com/?prog=blog" target="_blank"><b>详情点击</b></a>
+<br><br>
+<b>LxShop &nbsp;：</b>国内优秀的PHP多用户（单用户）商城系统，可完美整合PHPWind论坛用户数据，是您电子商务的最佳选择！
+<a href="http://www.phpwind.com/?prog=maxshop" target="_blank"><b>详情点击</b></a>
+<br><br>
+</td></tr></table>
+<br> 
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head>管 理 帮 助</td></tr>
+<tr><td class=b>
+	这是由 PHPWind.Net 独立开发的建站程序,如果您在使用中遇到问题:<br><br>
+
+	(1)数据库与使用上的疑问 : <a href="http://www.phpwind.net/thread.php?fid=2" target=_blank><b>请进入PHPWind 讨论区</b></a> <br>
+	(2)如果您想安装一些插件 : <a href="http://www.phpwind.net/thread.php?fid=3" target=_blank><b>请进入PHPWind 插件交流</b></a> <br>
+	(3)如果您想拥有更多皮肤 : <a href="http://www.phpwind.net/thread.php?fid=4" target=_blank><b>请进入PHPWind 风格交流</b></a> <br><br>
+<!--
+EOT;
+if(!file_exists(R_P.'require/c_search.php')){print <<<EOT
+-->
+如果您希望得到 更好的服务 与拥有 更强大的版本 与 程序保障,请购买我们的 <a href="http://www.phpwind.com/?prog=sales" target=_blank><b>商业版</b></a>
+	
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+<br>
+
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head>
+系 统 信 息</td></tr>
+<tr><td class=b>
+PHP程式版本：&nbsp; &nbsp; <font color="#000066">$sysversion</font><br>
+	MYSQL 版本：&nbsp; &nbsp;&nbsp; <font color="#000066">$dbversion</font><br>
+	服务器端信息： &nbsp;  <font color="#000066">$sysos</font><br>
+	最大上传限制： &nbsp; <font color="#000066">$max_upload</font><br>
+	最大执行时间： &nbsp; <font color="#000066">$max_ex_time</font><br>
+	邮件支持模式： &nbsp; <font color="#000066">$sys_mail</font><br>
+	Cookie 测试：&nbsp; &nbsp; <font color="#000066">$ifcookie</font><br>
+	服务器所在时间：<font color="#000066">$systemtime</font><br>
+	论坛显示时间：&nbsp;&nbsp; <font color="#000066">$altertime</font><br>
+	论坛数据库占用：&nbsp;<font color="#000066">$pw_size M</font><br>
+	非论坛数据库占用：&nbsp;<font color="#000066">$o_size M</font>
+</td></tr></table>
+<br>
+<div id="system"></div>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+if($admin_gid == '3' || $admin_name == $manager){
+@extract($db->get_one("SELECT totalmember FROM pw_bbsinfo WHERE id=1"));
+@extract($db->get_one("SELECT SUM(topic) AS threads,SUM(article) AS posts FROM pw_forumdata"));
+$s_url = rawurlencode($_SERVER['HTTP_HOST']);
+$rawbbsname = rawurlencode($db_bbsname);
+$hash=md5($_SERVER['HTTP_HOST'].$_SERVER['HTTP_USER_AGENT'].$totalmember.$threads.$posts.$wind_version.$wind_repair.$db_charset);
+print <<<EOT
+-->
+<script language="JavaScript" src="http://nt.phpwind.com/notice.php?bbsname=$rawbbsname&totalmember=$totalmember&threads=$threads&posts=$posts&version=$wind_version&repair=$wind_repair&charset=$db_charset&sysversion=$sysversion&dbversion=$dbversion&url=$s_url&hash=$hash"></script>
+<!--
+EOT;
+}?>-->

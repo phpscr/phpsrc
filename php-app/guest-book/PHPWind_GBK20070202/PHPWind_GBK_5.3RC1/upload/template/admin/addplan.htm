@@ -1,0 +1,69 @@
+<!--<?php
+include_once PrintEot('left');
+if (empty($action)){print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr><td class="head" colspan="2"><b>提示信息</b></td></tr>
+	<tr>
+		<td class="b">
+<pre>
+
+1、计划任务是一项使系统在规定时间自动执行某些特定任务的功能。
+
+2、计划任务与系统核心紧密关联，上传不当的文件可能造成论坛无法正常运行。
+
+3、关于计划任务的添加，您需要上传相应执行文件到 ./require/plan/目录下，如果需要进行详细设置的，还需要上传相应的设置文件和模版文件
+(模版文件上传到 ./template/admin/ 目录下，文件名为 *_set.htm；设置文件上传到 ./require/plan/ 目录下，文件名为 *_set.php)。
+</pre>
+		</td>
+	</tr>
+</table>
+<br />
+<form action="$basename&" method="POST">
+<input type="hidden" name="action" value="unsubmit">
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr class="head"><td colspan="2">添加新的计划任务</td></tr>
+	<tr class="b">
+		<td width="30%">任务标题</td>
+		<td width="*"><input type="text" name="title" size="40"></td>
+	</tr>
+	<tr class="b">
+		<td>每月几号执行</td>
+		<td><select name="month">$month</select></td>
+	</tr>
+	<tr class="b">
+		<td>每周星期几执行</td>
+		<td><select name="week">
+			<option value="*">*</option>
+			<option value="1">星期一</option>
+			<option value="2">星期二</option>
+			<option value="3">星期三</option>
+			<option value="4">星期四</option>
+			<option value="5">星期五</option>
+			<option value="6">星期六</option>
+			<option value="7">星期天</option>
+			</select></td>
+	</tr>
+	<tr class="b">
+		<td>每日几点执行</td>
+		<td><select name="day">$day</select></td>
+	</tr>
+	<tr class="b">
+		<td>每小时几分钟执行</td>
+		<td><select name="hours[]">$hour</select>&nbsp;<select name="hours[]">$hour</select>&nbsp;<select name="hours[]">$hour</select>&nbsp;<select name="hours[]">$hour</select></td>
+	</tr>
+	<tr class="b">
+		<td>是否开启该计划任务</td>
+		<td><input type="radio" name="ifopen" value="1" checked>是<input type="radio" name="ifopen" value="0">否</td>
+	</tr>
+	<tr class="b">
+		<td>执行文件名<br />(在./require/plan/目录下)</td>
+		<td><input type="text" name="filename">.php</td>
+	</tr>
+</table>
+<br>
+<center><input type=submit value="提 交"> <input type=reset value="重 置"></center></form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>-->

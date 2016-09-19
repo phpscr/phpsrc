@@ -1,0 +1,93 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>1.　为了保证后台的安全性,系统只允许论坛创始人和管理员删除操作日记<br>2.　系统保留三天的论坛管理日志，只允许删除三天前的日志.<br>&nbsp;</td></tr></table><br>
+<form action="$basename&" method="post">
+<table width=98% align=center cellspacing=0 cellpadding=0>
+<tr><td><table width=100% cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=5>搜索 </td></tr>
+<tr align=center class=b><td>用户名 <input type=text name='username1'></td>
+<td>管理员 <input type=text name='username2'></td>
+<td><select name="type">
+<option value="all">全 部</option>
+<option value="topped" $type_sel[topped]>{$logtype[topped]}</option>
+<option value="digest" $type_sel[digest]>{$logtype[digest]}</option>
+<option value="highlight" $type_sel[highlight]>{$logtype[highlight]}</option>
+<option value="push" $type_sel[push]>{$logtype[push]}</option>
+<option value="locked" $type_sel[locked]>{$logtype[locked]}</option>
+<option value="delete" $type_sel[delete]>{$logtype[delete]}</option>
+<option value="move" $type_sel[move]>{$logtype[move]}</option>
+<option value="copy" $type_sel[copy]>{$logtype[copy]}</option>
+<option value="edit" $type_sel[edit]>{$logtype[edit]}</option>
+<option value="credit" $type_sel[credit]>{$logtype[credit]}</option>
+<option value="deluser" $type_sel[deluser]>{$logtype[deluser]}</option>
+</select>
+</td>
+<td class=b><input type=submit value='提 交'></td></tr>
+</table></td></tr></table><br>
+</form>
+
+<form action="$basename&" method="post">
+<input type="hidden" name="action" value="del">
+<table width="98%" align=center cellpadding=6 cellspacing=1 class=i_table>
+<tr class=head><td colspan=9><b>操作日志</b></td></tr>
+<tr class="head_2" align="center">
+<td width="3%">ID</td>
+<td width="7%">类型</td>
+<td width="10%">对象</td>
+<td width="10%">管理员</td>
+<td width="10%">论坛</td>
+<td width="*">描述</td>
+<td width="15%">操作日期</td>
+<td width="10%">IP</td>
+<td width="7%">删除</td>
+</tr>
+<!--
+EOT;
+$num=($page-1)*$db_perpage;
+foreach($logdb as $key => $value){
+$num++;
+print <<<EOT
+-->
+<tr class="b" align="center">
+<td>$num</td>
+<td>{$logtype[$value[type]]}</td>
+<td><a href="profile.php?action=show&username=$value[username1]" target="_blank">$value[username1]</a></td>
+<td><a href="profile.php?action=show&username=$value[username2]" target="_blank">$value[username2]</a></td>
+<td><a href="thread.php?fid=$value[field1]" target="_blank">{$forum[$value[field1]][name]}</a></td>
+<td><div style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word' align="left">$value[descrip]</div></td>
+<td>$value[date]</td>
+<td>$value[ip]</td>
+<td>
+<!--
+EOT;
+if(($timestamp-$value[timestamp])>259100){print <<<EOT
+-->
+<input type="checkbox" name="selid[]" value="$value[id]">
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<!--
+EOT;
+}
+$j_url=EncodeUrl("$basename&action=delall");
+print <<<EOT
+-->
+</table><br>$pages
+<center>
+	<input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)">
+	<input type="submit" name="submit" value="提 交"><br><br>
+</center></form>
+<center>
+	<a href="$j_url"><b>删除多余管理日志</b></a>
+</center>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>
+-->

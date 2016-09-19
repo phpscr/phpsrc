@@ -1,0 +1,55 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<form action="$basename&" method="post">
+<input type="hidden" name="action" value="search">
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=8>{$db_currencyname}日志管理</td></tr>
+<tr class="b"><td width="20%">关键词:</td>
+<td><input type="text" name="keyword"> <input type="submit" value="提 交"></td></tr>
+</table></form><br>
+
+<form action="$basename" method="post">
+<input type="hidden" name="action" value="del">
+ &nbsp; $pages
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=8>{$db_currencyname}日志管理</td></tr>
+<tr class="c" align="center">
+<td>ID</td>
+<td width="6%">操作</td>
+<td>描述</td>
+<td width="5%">价格</td>
+<td width="5%">数量</td>
+<td width="10%">IP</td>
+<td>时间</td>
+<td width="5%">删除</td>
+</tr>
+<!--
+EOT;
+$id=($page-1)*$db_perpage;
+foreach($logdb as $key => $value){
+$id++;
+print <<<EOT
+-->
+<tr class="b" align="center">
+<td>$id</td>
+<td>$value[type]</td>
+<td align="left">$value[descrip]</td>
+<td>$value[money]</td>
+<td>$value[nums]</td>
+<td>$value[ip]</td>
+<td>$value[time]</td>
+<td><input type="checkbox" name="selid[]" value="$value[id]"></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<br><center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)"><input type=submit value='提 交'></center></form>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>
+-->

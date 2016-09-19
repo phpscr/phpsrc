@@ -1,0 +1,26 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>
+<ul>
+每行一个ip，被禁止了一个IP将无法访问论坛<br><br>可以禁止单个IP地址格式如：192.0.0.1<br><br>也可以禁止一段ip格式如：192.0.0
+</ul>
+<br></td></tr></table><br>
+<form action=$basename method=post name="submit">
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=4><b>以下为被禁止的IP:</b></td></tr>
+<tr><td class=b align=center colspan=4><textarea cols=100 rows=10 name="baninfo">$baninfo</textarea>
+</td></tr></table><br>
+<input type=hidden name="action" value="unsubmit">
+<center><input type="submit" value="提 交" name="submit"></center>
+</form>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>
+-->

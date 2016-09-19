@@ -1,0 +1,102 @@
+<!--<?php 
+print <<<EOT
+-->
+<div class="t3"><table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td align="left">
+<img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> <b><a href="./$db_bfn">$db_bbsname</a> &raquo; 论坛提示</b></td></tr></table></div>
+<div class="t" style="margin-top:15px;">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td class="h" colspan="2">$db_bbsname 提示信息</td></tr>
+<!--
+EOT;
+if($dejump!='1' && $groupid=='guest' && !strpos($REQUEST_URI,'register') && !strpos($REQUEST_URI,'login') && (!$passport_ifopen || $passport_type != 'client')){
+$db_htmifopen && strpos($REQUEST_URI,'.php?')!==false && $REQUEST_URI=str_replace('.php?',$db_dir,$REQUEST_URI);
+$jumpurl="http://$_SERVER[HTTP_HOST]".$REQUEST_URI;
+$hideback=1;
+print <<<EOT
+-->
+<tr class="tr1">
+<th><br />
+<div style="padding:0px 0px 5px 20px;">您没有登录或者您没有权限访问此页面，可能有如下几个原因:</div>
+<div style="padding:0px 0px 15px 45px; line-height:150%;">
+<ol>
+
+<li>$msg_info<br />
+<li>您还不是论坛会员,请先登录论坛<br>
+</ol>
+</div>
+<form action="login.php?" method="post" name="login">
+<fieldset style="margin:0% 22% 0% 22%;border:1px solid $tdcolor">
+<legend style="padding:0 5px 0 5px;">登录</legend>
+<table width="85%" align="center">
+<tr>
+	<td width="30%" style="height:30px;padding-left:10px;">用户名</td><td> <input class="input" type="text" size="40" tabindex="1" name="pwuser" /></td>
+</tr>
+<tr>
+	<td style="height:30px;padding-left:10px;">密码</td><td> <input class="input" type="password" size="40" tabindex="2" name="pwpwd" /></td>
+</tr>
+<!--
+EOT;
+list(,$logingd)=explode("\t",$db_gdcheck);
+if($logingd){
+print <<<EOT
+-->
+<tr>
+	<td style="height:30px;padding-left:10px;">认证码</td>
+	<td>
+		<input class="input" type="text" maxLength="4" name="gdcode" size="6" tabindex="3" />&nbsp;<img src="ck.php?" align="absmiddle" onclick="this.src='ck.php?'" />
+	</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr><td style="height:30px;padding-left:10px;">隐身登录</td>
+	<td>
+		<input name="hideid" type="radio" value="1" />          是 &nbsp
+		<input name="hideid" type="radio" value="0" checked tabindex="4" />  否 &nbsp 
+	</td>
+</tr>
+</table>
+</fieldset><br />
+<center><input class="btn" type="submit" value="登 录" tabindex="4" /></center>
+<input type="hidden" name="forward" value="$jumpurl" />
+<input type="hidden" name="jumpurl" value="$jumpurl" />
+<input type="hidden" name="step" value="2" />
+<input type="hidden" name="cktime" value="31536000" /></form><br />
+<script language="JavaScript">
+document.login.pwuser.focus();
+</script>
+</th></tr>
+<!--
+EOT;
+}else{
+$hideback=0;
+print <<<EOT
+-->
+<tr class="f_one">
+<td>
+<center><br /><br /><br />$msg_info<br />
+<!--
+EOT;
+$dejump && include_once PrintEot($dejump);
+print <<<EOT
+-->
+<br />
+</center> <br /><br />
+</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></div><br />
+<!--
+EOT;
+if(!$hideback){print <<<EOT
+-->
+<center><input class="btn" type="button" value="返 回 继 续 操 作" onclick="javascript:history.go(-1);" /></center>
+<br /><br />
+<!--
+EOT;
+}footer();
+?>-->

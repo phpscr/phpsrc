@@ -1,0 +1,208 @@
+<!--<?php
+include_once PrintEot('left');
+if(!$action){
+print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="b">
+[<b>风格列表</b>]
+[<a href="$basename&action=add">添加风格</a>]
+</td></tr></table><br />
+
+<table cellspacing="1" cellpadding="3" width="98%" align="center" class="i_table">
+<tr><td class="head" colspan="4">风格设置</td></tr>
+<tr class="head_2" align="center">
+	<td width="10%">ID</td>
+	<td width="*">风格名称</td>
+	<td width="15%">编辑</td>
+	<td width="15%">删除</td>
+</tr>
+<!--
+EOT;
+$i=0;
+foreach($styles as $key=>$value){
+$i++;
+$j_url = EncodeUrl("$basename&action=del&sid=$value");
+print <<<EOT
+-->
+<tr class="b" align="center">
+	<td>$i</td>
+	<td>$value</td>
+	<td><a href="$basename&action=edit&sid=$value">编辑</a></td>
+	<td>
+<!--
+EOT;
+if($value!='wind'){print <<<EOT
+-->
+	<a href="$j_url">删除</a>
+<!--
+EOT;
+}print <<<EOT
+-->
+	</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<!--
+EOT;
+}elseif($action=='add' || $action=='edit'){
+print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="b">
+[<a href="$basename">风格列表</a>]
+<!--
+EOT;
+if($action=='add'){ print <<<EOT
+-->
+[<b>添加风格</b>]
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+[<a href="$basename&action=add">添加风格</a>]
+[<b>编辑风格</b>]
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table><br />
+<form action="$basename" method="post">
+<input type="hidden" name="action" value="$action" />
+<input type="hidden" name="step" value="3" />
+<table cellspacing="1" cellpadding="3" width="98%" align="center" class="i_table">
+<tr><td class="head" align="center" colspan="2">
+<b>风格核心文件编辑</b></td></tr>
+<input type="hidden" name="sid" value="$sid" />
+<tr class="b"><td width="60%">编辑的风格名称</td><td>$sid</td></tr>
+<tr class="b">
+<td>此风格在image目录下的文件夹名称:<br ／>(请不要任意修改,如果需要请先手动修改image下的目录名)</td>
+<td><input value="$stylepath" name="setting[0]" /></td>
+</tr>
+<tr class="b"><td>此风格在template目录下的风格文件夹名称:</td>
+<td><input value="$tplpath" name="setting[1]" /></td>
+</tr>
+<tr class="head_2"><td colspan="2">整体风格设置</td></tr>
+<tr class="b">
+<td>表格内部样式:</td>
+<td><input type="radio" value="1" name="setting[2]" $yes_Y /> 竖线风格
+<input type="radio" value="0" name="setting[2]" $yes_N /> 横线风格</td>
+</tr>
+<tr class="b"><td>表格宽度：(例: 98% 或 920)</td>
+<td><input value="$tablewidth" name="setting[7]" /></td>
+</tr>
+<tr class="b"><td>头部和尾部表格宽度：(例: 98% 或 920)</td>
+<td><input value="$mtablewidth" name="setting[8]" /></td>
+</tr>
+<tr class="b"><td>全局背景颜色：</td>
+<td><input value="$bgcolor" name="setting[3]" /> <span style="color:$bgcolor">■■■■</span></td>
+</tr>
+<tr class="b"><td>全局链接颜色：</td>
+<td><input value="$linkcolor" name="setting[4]" /> <span style="color:$linkcolor">■■■■</span></td>
+</tr>
+<tr class="b"><td>表格外边框颜色：</td>
+<td><input value="$tablecolor" name="setting[5]" /> <span style="color:$tablecolor">■■■■</span></td>
+</tr>
+<tr class="b"><td>表格内边框颜色：</td>
+<td><input value="$tdcolor" name="setting[6]" /> <span style="color:$tdcolor">■■■■</span></td>
+</tr>
+<tr class="head_2"><td colspan="2">表格样式颜色设置</td></tr>
+<tr class="b">
+<td>表格标题栏颜色：</td>
+<td><input value="$headcolor" name="setting[9]" /> <span style="color:$headcolor">■■■■</span></td>
+</tr>
+<tr class="b">
+<td>表格标题栏下边框颜色：</td>
+<td><input value="$headborder" name="setting[10]" /> <span style="color:$headborder">■■■■</span></td>
+</tr>
+<tr class="b">
+<td>标题栏主要字体链接颜色：</td>
+<td><input value="$headfontone" name="setting[11]" /> <span style="color:$headfontone">■■■■</span></td>
+</tr>
+<tr class="b">
+<td>标题栏次要字体链接颜色：</td>
+<td><input value="$headfonttwo" name="setting[12]" /> <span style="color:$headfonttwo">■■■■</span></td>
+</tr>
+<tr class=b>
+<td>表格副标题栏颜色：</td>
+<td><input value="$cbgcolor" name="setting[13]" /> <span style="color:$cbgcolor">■■■■</span></td>
+</tr>
+<tr class=b>
+<td>表格副标题栏下边框颜色：</td>
+<td><input value="$cbgborder" name="setting[14]" /> <span style="color:$cbgborder">■■■■</span></td>
+</tr>
+<tr class=b>
+<td>表格副标题栏字体颜色：</td>
+<td><input value="$cbgfont" name="setting[15]" /> <span style="color:$cbgfont">■■■■</span></td>
+</tr>
+<tr class="b">
+<td>论坛列表颜色一：</td>
+<td><input value="$forumcolorone" name="setting[16]" /> <span style="color:$forumcolorone">■■■■</span></td>
+</tr>
+<tr class=b>
+<td>论坛列表颜色二：</td>
+<td><input value="$forumcolortwo" name="setting[17]" /> <span style="color:$forumcolortwo">■■■■</span></td>
+</tr>
+</table>
+<br />
+<center><input type="submit" value="提 交" /></center>
+</form>
+<!--
+EOT;
+if($action=='edit'){print <<<EOT
+-->
+<form action="$basename&" method="post">
+<table cellspacing="1" cellpadding="3" width="98%" align="center" class="i_table">
+<tr><td class="head" valign="middle" align="left" colspan="2">编辑风格($sid)的CSS样式</td></tr>
+<!--
+EOT;
+if($css_777){print <<<EOT
+-->
+<tr><td class="b" valign="top" align="left">
+<pre style="line-height:150%">.toptool　　顶端自定义导航样式
+.guide　　　导航栏样式
+.t 　　　　 为表格外边框样式，
+            表格外边框颜色在此设置
+.h 　　　　 为表格正标题栏样式，
+            设置背景颜色，边框样式，字体样式
+.tr2 　　　 为副标题栏样式，即原.cbg样式，
+            可使用背景图片等css样式
+.f9--.f14　 为字体大小控制，不建议修改
+.s1--.s5　　细节字体颜色
+.gray　　　 次要文字颜色
+h2　　　　　首页板块列表(index.php)板块名称样式
+h3　　　　　主题列表页文章标题名称样式
+h4          为帖子标题的字体大小
+.tpc_content帖子内容样式
+blockquote  引用内容样式
+.pages      翻页模块样式，建议只修改颜色
+.menu td与.menu li 下拉菜单内容背景色
+.f_one,.f_two, 板块列表(首页)表格背景
+.t_one,.t_two, 主题列表(thread.php)表格背景
+.r_one,.r_two, 帖子页面(read.php)表格背景
+.btn   按钮样式
+.input,textarea 输入框样式</pre>
+</td><td valign="middle" align="center" class="b">
+<textarea name="style_css" rows="32" cols="78" style="background-color:#F0F0f3; border: 1 double #B4B4B4" title="请慎重,这里的一举一动将改变论坛整个风格">
+{$style_css}</textarea>
+</td></tr>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+<tr><td align="center" class="b" style="color:blue">CSS样式文件不可写，请将“template/$tplpath/header.htm”设为777可写模式</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table><br />
+<center><input type="hidden" name="action" value="editcss" />
+<input type="hidden" name="sid" value="$sid" /><input type="submit" value="提 交" /><center>
+</form>
+<!--
+EOT;
+}}include_once PrintEot('adminbottom');
+?>-->

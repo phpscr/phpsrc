@@ -1,0 +1,31 @@
+<!--<?php print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center><tr><td align=left>
+<img src='$imgpath/$stylepath/index/home.gif' align=absbottom> 
+<b><a href='$db_bfn'>$db_bbsname </a> -> 忘记密码</b></td></tr></table><br>
+
+<form action="sendpwd.php?" method="POST">
+<input type=hidden value=2 name=step>
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=3 $i_table>
+<tr class=head>
+<td height=25 class=head><b>密码发送程序</b></td></tr>
+<tr class='f_one'><td><br>利用论坛的用户名和email发送密码，请输入您的用户名和email地址： <br><br>
+用户名 : <input type='text' name='pwuser' size='16'><br>
+Email &nbsp;: <input type='text' name='email' size='16'><br>
+<!--
+EOT;
+if($othergd){
+$rawwindid=addslashes($windid);
+print <<<EOT
+-->
+认证码 : <input type='text' maxLength=4 name='gdcode' size=8>&nbsp;<img src="ck.php?windid=$rawwindid" align=absmiddle><br><br>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+</table>
+<br><center><input type='submit' value='提 交'></center></form>
+<!--
+EOT;
+?>-->

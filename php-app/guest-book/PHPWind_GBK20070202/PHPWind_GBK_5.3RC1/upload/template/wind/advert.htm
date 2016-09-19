@@ -1,0 +1,46 @@
+<!--<?php
+print <<<EOT
+-->
+<script src="$imgpath/float.js" language="javascript"></script>
+<script language="javascript">
+<!--
+EOT;
+if($leftfloat || $rightfloat){
+$leftfloat[code] = str_replace(array("\r","\n","'"),array('','<br />',"\'"),$leftfloat[code]);
+$rightfloat[code]=str_replace(array("\r","\n","'"),array('','<br />',"\'"),$rightfloat[code]);
+print <<<EOT
+-->
+var LeftCode = '$leftfloat[code]';
+var LeftHref = '$leftfloat[link]';
+var RightCode = '$rightfloat[code]';
+var RightHref = '$rightfloat[link]';
+ShowFloat();
+<!--
+EOT;
+}if($floatAd){
+$floatAd['code']=str_replace(array("\r","\n","'"),array('','<br />',"\'"),$floatAd['code']);
+print <<<EOT
+-->
+var floatCode = '$floatAd[code]';
+ShowAd();
+<!--
+EOT;
+}if($popupAd){
+list($poptitle,$popcontent,$popheight,$popwidth,$popclose)=$popupAd[code];
+$popcontent=str_replace(array("\r","\n","'"),array('','<br />',"\'"),$popcontent);
+print <<<EOT
+-->
+var popTitle='$poptitle';
+var popCode='$popcontent';
+var popHeight=$popheight;
+var popWidth=$popwidth;
+var autoClose=$popclose;
+ShowPop();
+<!--
+EOT;
+}print <<<EOT
+-->
+</script>
+<!--
+EOT;
+?>-->

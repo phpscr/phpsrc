@@ -1,0 +1,51 @@
+<!--<?php
+if($prog=='index'){print <<<EOT
+-->
+<p align="center"><a href="index.php?prog=cate">浏览文章</a></p>
+<p align="center"><a href="post.php">发表文章</a></p>
+<p align="center"><a href="index.php?prog=bbsinfo">站点信息</a></p>
+<p align="center"><a href="msg.php">论坛短信</a></p>
+<!--
+EOT;
+}elseif($prog=='cate'){print <<<EOT
+-->
+<p>分类:</p>
+<!--
+EOT;
+foreach($forum as $key => $value){
+if(in_array($key,$fids) && !$value['cms']){
+if($value['type'] == 'category'){print <<<EOT
+-->
+<p><br/>$value[name]</p>
+<!--
+EOT;
+}else{
+$add = $value['type'] == 'forum' ? "&gt;" : ($forum[$value['fup']]['type'] == 'forum' ? "&gt;&gt;" : "&gt;&gt;&gt;");
+print <<<EOT
+-->
+<p>{$add}<a href="list.php?fid=$key">$value[name]</a></p>
+<!--
+EOT;
+}}}}elseif($prog=='bbsinfo'){print <<<EOT
+-->
+<p>在线:$total({$userinbbs}会员)</p>
+<p>主题数:$topic</p>
+<p>文章数:$article</p>
+<p>会员数:$rt[totalmember]</p>
+<p>最新会员:$rt[newmember]</p>
+<!--
+EOT;
+}elseif($prog=='login'){print <<<EOT
+-->
+<p>用户名:<input name="pwuser" type="text" /></p>
+<p>密码:<input name="pwpwd" type="password" /></p>
+<p align="center">
+<anchor title="submit">确定
+<go href="index.php?prog=login" method="post">
+<postfield name="pwuser" value="$(pwuser)" />
+<postfield name="pwpwd" value="$(pwpwd)" />
+</go></anchor>
+</p>
+<!--
+EOT;
+}?>-->

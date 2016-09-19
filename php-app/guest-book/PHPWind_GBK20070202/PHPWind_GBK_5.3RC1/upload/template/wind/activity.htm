@@ -1,0 +1,100 @@
+<!--<?php
+print <<<EOT
+-->
+<form action="active.php?action=apply" method="post">
+<div class="t">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="2">活动标题：$subject</td></tr>
+<tr class="tr3">
+	<th width="20%">活动标题：</th>
+	<th>$active_subject</th>
+</tr>
+<tr class="tr3">
+	<th width="20%">活动时间：</th>
+	<th>$active_starttime &nbsp;-&nbsp; $active_endtime</th>
+</tr>
+<tr class="tr3">
+	<th width="20%">活动地点：</th>
+	<th>$active_location</th>
+</tr>
+<tr class="tr3">
+	<th width="20%">人数限制：</th>
+	<th>$active_num</th>
+</tr>
+<tr class="tr3">
+	<th width="20%">已确认参加人数：</th>
+	<th>$act_y 人，[共计报名：$act_total]
+<!--
+EOT;
+if($authorid==$winduid){ print <<<EOT
+-->
+[<a href="active.php?action=view&tid=$tid"><font color="red">管理</font></a>]
+<!--
+EOT;
+} print <<<EOT
+-->
+	</th>
+</tr>
+<tr class="tr3">
+	<th width="20%">性别要求：</th>
+<!--
+EOT;
+if($active_sexneed=='1'){ print <<<EOT
+-->
+	<th>仅限男性</th>
+<!--
+EOT;
+}elseif($active_sexneed=='2'){ print <<<EOT
+-->
+	<th>仅限女性</th>
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+	<th>男女不限</th>
+<!--
+EOT;
+} print <<<EOT
+-->
+</tr>
+<tr class="tr3">
+	<th width="20%">活动费用：</th>
+	<th>$active_costs 元</th>
+</tr>
+<tr class="tr3">
+	<th width="20%">报名截止日期：</th>
+	<th>$active_deadline</th>
+</tr>
+</table></div>
+<div style="text-align:center;">
+<!--
+EOT;
+if(!$actmen){print <<<EOT
+-->
+<input type="hidden" name="tid" value="$tid" />
+<input type="hidden" name="fpage" value="$fpage" />
+<input class="btn" type="submit" value="我要参加" />
+<!--
+EOT;
+}elseif($actmen['state']==0){print <<<EOT
+-->
+<div>您的申请已提交，请等候回音！</div>
+<!--
+EOT;
+}elseif($actmen['state']==1){ print <<<EOT
+-->
+<div>您已被批准参加此次活动，<a href="active.php?action=view&tid=$tid"><font color="blue">查看详情</font></a></div>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+<div>您的申请没有通过！</div>
+<!--
+EOT;
+} print <<<EOT
+-->
+</div>
+</form>
+<!--
+EOT;
+?>

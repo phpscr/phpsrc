@@ -1,0 +1,57 @@
+##########################
+#     PHPWIND安装说明     #
+##########################
+
+(一) 运行环境需求: PHP+MYSQL
+
+
+(二) 安装步骤: ( 如果您在安装过程中出现问题或有疑问,请进入 http://www.phpwind.net/thread.php?fid=2 提问)
+
+(1) Linux 或 Freebsd 服务器下安装方法
+
+     第一步: 使用ftp工具中的二进制模式,将该软件包里的 upload 目录及其文件上传到您的空间
+             假设上传后目录仍旧为 upload
+
+     第二步: 先确认以下目录或文件属性为 (777) 可写模式
+     data
+     data/sql_config.php
+     data/bbscache
+     data/groupdb
+     data/style
+     attachment
+     htm_data
+     image
+     image/upload
+     image/cn_img
+
+     第三步: 运行 http://yourwebsite/upload/install.php 安装程序,填入服务器配置信息与创始人
+             相关资料, 完成安装!
+
+(2) Windows 服务器下安装方法
+
+     第一步: 将解压后的文件上传至你的空间，保持目录结构不变，假设目录为upload
+
+     第二步: 运行 http://yourwebsite/upload/install.php 安装程序,填入服务器配置信息与创始人
+             相关资料, 完成安装!
+
+
+##########################
+#     PHPWIND相关帮助     #
+##########################
+
+解答:1.	版块前面的图片如果您需要请自己添加使用命名为:比如 
+        第1个版块 图片命名为 1.gif 放在image/wind/forumlogo
+        当然你可以在后台那直接用功能实现链接图片!
+
+(1) 推荐 php+mysql+apache+zend+phpwind集成环境安装包
+    下载地址: http://www.phpwind.com/switch/wapm.php
+
+(2) 本机PHP+MYSQL环境架设教程！请参阅
+    http://www.phpwind.net/read.php?tid=9272
+
+(3) phpwind 完全图解安装过程请参阅
+    http://www.phpwind.net/read.php?tid=8913
+
+(4) phpwind 安装出错在线帮助请参阅
+    http://www.phpwind.net/read.php?tid=12166
+

@@ -1,0 +1,62 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head><b><b>提示信息</b></b></td></tr>
+<tr><td class=b><br>1.还原功能：可将被删除的帖子还原到原来的版块。<br><br>2.删除功能：这里的删除功能只是删除回收站记录，要删除回收站的帖子请进入<a href="thread.php?fid=$db_recycle" target="_blank"><b>回收站</b></a>进行删除。<br><br></td></tr>
+</table><br>
+
+<form action="$basename&" method=post>
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head>回收站</td></tr>
+<tr><td width="35%" class=b>所属分类 : <select name="fid"><option>选择分类</option>$forumcache</select> &nbsp; 
+作者 : <input type=text size=20 name="username"> &nbsp; 
+管理员 : <input type=text size=20 name="admin"> &nbsp; 
+<input type=submit value="提 交"></td></tr>
+</table>
+</form>
+
+<form action="$basename" method="post" name="form1">
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=7><b>回收站</b></td></tr>
+<tr class=head_2 align=center>
+<td width='5%'>ID</td>
+<td align=center>标题</td>
+<td width='15%'>论坛</td>
+<td width='15%'>作者</td>
+<td width='15%'>管理员</td>
+<td width='15%'>时间</td>
+<td width='5%'></td>
+</tr>
+<!--
+EOT;
+$id=($page-1)*$db_perpage;
+foreach($recycledb as $key => $value){
+$id++;
+$tid=$value[tid];
+print <<<EOT
+-->
+<tr class=b align=center>
+<td>$id</td>
+<td align=left><a href="read.php?tid=$value[tid]" target="_blank">$value[subject]</a></td>
+<td><a href="thread.php?fid=$value[fid]" target="_blank">$value[fname]</a></td>
+<td><a href="profile.php?action=show&uid=$value[authorid]" target="_blank">$value[author]</a></td>
+<td>$value[admin]</td>
+<td>$value[deltime]</td>
+<td><input type='checkbox' name='selid[$tid]' value="$value[fid]"></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table><br>$pages
+<center>
+<input type="radio" name="action" value="revert">还原
+<input type="radio" name="action" value="del" checked>删除<br><br>
+<input type='button' name='chkall' value='全 选' onclick='CheckAll(this.form)'>
+<input type="submit" name="hello" value="提 交">
+</center></form>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>-->

@@ -1,0 +1,833 @@
+<!--<?php print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center>
+	<tr>
+		<td align=left>
+			<img src='$imgpath/$stylepath/index/home.gif' align=absbottom> 
+			<b>
+				<a href='$db_bfn'>$db_bbsname </a>
+<!--
+EOT;
+if($action=='forumright'){print <<<EOT
+-->
+				-> 版块权限查看 -> <a href="thread.php?fid=$fid">$rt[name]</a>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+
+				 -&gt 信息资料
+<!--
+EOT;
+}print <<<EOT
+-->
+			</b>
+		</td>
+	</tr>
+</table>
+<br>
+
+<table width='$tablewidth' cellspacing=1 cellpadding=4 align=center $i_table style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word;'>
+	<tr align=center>
+		<td class='f_one'><a href='profile.php'>控制面板首页</a></td>
+		<td class='f_one'><a href='profile.php?action=modify'>编辑个人资料</a></td>
+		<td class='f_one'><a href="profile.php?action=show&uid=$winddb[uid]">查看个人资料</a></td>
+		<td class='f_one'><a href="profile.php?action=permission">用户权限查看</a></td>
+<!--
+EOT;
+if($_G['atclog']){print <<<EOT
+-->
+		<td class='f_one'><a href="profile.php?action=log">帖子操作记录</a></td>
+<!--
+EOT;
+}print <<<EOT
+-->
+		<td class='f_one'><a href='userpay.php'>交易币管理</a></td>
+		<td class='f_one'><a href='profile.php?action=favor'>收藏夹</a></td>
+	</tr>
+</table>
+<br>
+<!--
+EOT;
+if(!$action){print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=1 cellpadding=4 align=center>
+<tr><td width='23%' valign="top">
+<table width='100%' cellspacing=1 cellpadding=4 align=center $i_table>
+<tr><td class="head" align="center"><b>用户头像</b></td></tr>
+<tr><td class="f_one" align="center">$userface<br><br>
+<a href='search.php?authorid=$userdb[uid]'>[我的主题]</a> 
+<a href='search.php?authorid=$userdb[uid]&digest=1'>[我的精华帖]</a>
+<!--
+EOT;
+if($db_hackdb[toolcenter][4]){print <<<EOT
+-->
+<a href='hack.php?H_name=toolcenter&action=use'>[使用道具]</a>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+</table>
+<br>
+<table width='100%' cellspacing=1 cellpadding=4 align=center $i_table>
+<tr><td class="head" align="center"><b>基本信息</b></td></tr>
+<tr><td class="f_one">
+用户名: $userdb[username]
+<!--
+EOT;
+if($userdb[honor]){print <<<EOT
+-->
+($userdb[honor])
+<!--
+EOT;
+}print <<<EOT
+-->
+<br>
+<!--
+EOT;
+if($systitle){print <<<EOT
+-->
+系统头衔: $systitle<br>
+<!--
+EOT;
+}print <<<EOT
+-->
+会员头衔: $memtitle<br>
+精华: $userdb[digests]<br>
+发帖: $userdb[postnum]<br>
+$db_rvrcname: $userdb[rvrc] $db_rvrcunit<br>
+$db_creditname: $userdb[credit] $db_creditunit<br>
+$db_moneyname: $userdb[money] $db_moneyunit<br>
+活期存款: $userdb[deposit] $db_moneyunit<br>
+定期存款: $userdb[ddeposit] $db_moneyunit<br>
+在线时间: $userdb[onlinetime] 小时<br>
+注册时间: $userdb[regdate]<br>
+最后登录: $userdb[lastvisit]<br>
+</td></tr>
+</table>
+<br>
+<table width='100%' cellspacing=1 cellpadding=4 align=center $i_table>
+<tr><td class="head" align="center"><b>交易币管理</b></td></tr>
+<tr><td class="f_one">
+交易币: $userdb[currency]<br><br>
+ &nbsp; &nbsp; &nbsp; &nbsp;
+[<a href='userpay.php?action=change'>交易币转换</a>]
+[<a href='userpay.php'>交易币充值</a>]
+</td></tr>
+</table>
+<br>
+<!--
+EOT;
+if($_CREDITDB){
+print <<<EOT
+-->
+<table width='100%' cellspacing=1 cellpadding=4 align=center $i_table>
+<tr><td class="head" align="center"><b>自定义积分</b></td></tr>
+<tr><td class="f_one"><!--
+EOT;
+foreach($_CREDITDB as $key => $value){
+$usercredit = $creditdb ? $creditdb[$key][1] : 0;
+print <<<EOT
+-->
+$value[0]($value[2]): $usercredit $value[1]<br>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+<!--
+EOT;
+}print <<<EOT
+-->
+<br>
+<!--
+EOT;
+if($colonydb){
+print <<<EOT
+-->
+<table width='100%' cellspacing=1 cellpadding=4 align=center $i_table>
+<tr><td class="head" align="center"><b>加入的{$db_hackdb[colony][0]}</b></td></tr>
+<tr><td class="f_one">
+<!--
+EOT;
+foreach($colonydb as $key => $value){
+print <<<EOT
+--> 
+<a href="hack.php?H_name=colony&cyid=$value[id]&job=view&id=$value[id]" target="_blank">$value[cname]</a><br>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td><td valign="top">
+<table width='100%' cellspacing=1 cellpadding=4 align=center $i_table>
+<tr><td class="head" colspan="6"><b>最新五条短消息</b></td></tr>
+<tr class="cbg" align="center">
+<td width="5%">ID</td>
+<td width="35%">标题</td>
+<td width="15%">发件人</td>
+<td width="15%">收件人</td>
+<td width="20%">时间</td>
+<td width="5%">已读</td></tr>
+<!--
+EOT;
+$id=0;
+foreach($msgdb as $key => $value){
+$id++;
+print <<<EOT
+-->
+<tr class="f_one" align="center">
+<td>$id</td>
+<td><a href="message.php?action=read&mid=$value[mid]" target="_blank">$value[title]</a></td>
+<td><a href="profile.php?action=show&uid=$value[fromuid]">$value[username]</a></td>
+<td><a href="profile.php?action=show&uid=$value[touid]">$value[to]</a></td>
+<td>$value[mdate]</td>
+<td>
+<!--
+EOT;
+if($value['ifnew']){print <<<EOT
+-->
+<font color=red>否</font>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+是
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table><br>
+<table width='100%' cellspacing=1 cellpadding=4 align=center $i_table>
+<tr><td class="head" colspan="5"><b>最新五个收藏主题</b></td></tr>
+<tr class="cbg" align="center">
+<td width="5%">ID</td>
+<td width="35%">标题</td>
+<td width="15%">论坛</td>
+<td width="15%">作者</td>
+<td width="25%">发表时间</td>
+</tr>
+<!--
+EOT;
+$id=0;
+foreach($favordb as $key => $value){
+$id++;
+print <<<EOT
+-->
+<tr class="f_one" align="center">
+<td>$id</td>
+<td><a href="read.php?tid=$value[tid]" target="_blank">$value[subject]</a></td>
+<td><a href="thread.php?fid=$value[fid]">$value[forum]</a></td>
+<td><a href="profile.php?action=show&uid=$value[authorid]">$value[author]</a></td>
+<td>$value[postdate]</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table><br>
+</td></tr></table>
+<!--
+EOT;
+}elseif($action=='modify'){print <<<EOT
+-->
+<form action='profile.php?' method=post onSubmit='return procheck(this)' name=creator enctype='multipart/form-data'>
+<input type="hidden" name="action" value="modify">
+<table width='$tablewidth' cellspacing=1 cellpadding=4 align=center $i_table>
+<tr height=25>
+<td class=head colspan=2> 会员核心数据 </td>
+</tr>	
+<tr>
+<td width=35% class='f_one'> 原密码</td>
+<td class='f_one'>
+<input type=password size=20 maxlength=75 name=oldpwd value=''>
+修改 <font color=blue>密码</font> 或 <font color=blue>邮箱</font>时需要密码验证</td>
+</tr>
+<tr><td class='f_two'> 新密码</td>
+<td class='f_two'>
+<input type=password size=20 maxlength=75 name=propwd value=''></td></tr>
+<tr><td class='f_one'> 确认密码</td>
+<td class='f_one'>
+<input type=password size=20 maxlength=75 name=check_pwd value=''></td></tr>
+
+<tr>
+<td class='f_two'> E-MAIL</td>
+<td class='f_two'>
+<input type=text size=20 maxlength=75 name=proemail value=$userdb[email]>
+<input type=checkbox name=propublicemail value=1 $ifchecked>公开邮箱</td></tr>
+<tr height=25>
+<td class=head colspan=2> 会员基本数据 </td>
+</tr>
+<!--
+EOT;
+if($groupselect){ print <<<EOT
+-->
+<tr><td class='f_one'> 可选用户组头衔<br> -- 选择一个用户组头衔作为你在论坛上的头衔</td>
+<td class='f_one'><select name="newgroupid">$maingroup$groupselect</select></td></tr>
+<!--
+EOT;
+}if($gp_allowhonor){ print <<<EOT
+-->
+<tr>
+<td class='f_one'> 自定义头衔</td>
+<td class='f_one'>
+<input type=text size=20 name=prohonor value='$userdb[honor]'></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr>
+<td class='f_two'> QQ</td>
+<td class='f_two'>
+<input type=text size=20 maxlength=14 name=prooicq value=$userdb[oicq]></td>
+</tr>
+<tr>
+<td class='f_one'> ICQ</td>
+<td class='f_one'>
+<input type=text size=20 maxlength=14 name=proicq value=$userdb[icq]></td>
+</tr>
+<tr>
+<td class='f_two'> Yahoo</td>
+<td class='f_two'>
+<input type=text size=20 name=proyahoo value=$userdb[yahoo]></td>
+</tr>
+<tr>
+<td class='f_one'> Msn</td>
+<td class='f_one'>
+<input type=text size=20 name=promsn value=$userdb[msn]></td>
+</tr>
+<tr>
+<td class='f_two'> 来自</td>
+<td class='f_two'>
+<input type=text size=20 maxlength=14 name=profrom value=$userdb[location]></td>
+</tr>
+
+<tr>
+<td class='f_one'> 个人主页</td>
+<td class='f_one'><input type=text size=50 maxlength=75 name=prohomepage value="$userdb[site]">
+</td></tr>
+<tr>
+<td class='f_two'> 性别</td>
+<td class='f_two'><select name=progender>
+<option value=0 $sexselect[0]>保密</option>
+<option value=1 $sexselect[1]>男</option>
+<option value=2 $sexselect[2]>女</option></select></td>
+</tr>
+<tr>
+<td class='f_one'> 生日</td>
+<td class='f_one'>
+<select name=proyear>
+<option value=''></option>
+<!--
+EOT;
+for($i=1960;$i<=2004;$i++){
+print <<<EOT
+-->
+<option value=$i $yearslect[$i]>$i</option>  
+<!--
+EOT;
+} 
+print <<<EOT
+-->
+</select>年 
+<select name=promonth>
+<option value=></option>
+<!--
+EOT;
+for($i=1;$i<=12;$i++){
+print <<<EOT
+-->
+<option value=$i $monthslect[$i]>$i</option>
+<!--
+EOT;
+} 
+print <<<EOT
+-->
+</select>月 
+<select name=proday>
+<option value=></option>
+<!--
+EOT;
+for($i=1;$i<=31;$i++){
+print <<<EOT
+-->
+<option value=$i $dayslect[$i]>$i</option>
+<!--
+EOT;
+} 
+print <<<EOT
+-->
+</select>日
+</td></tr>
+<tr> 
+<td class='f_two'> 自我简介<br>--少于100字节</td>
+<td class='f_two'>
+<textarea name='prointroduce' rows='4' cols='50'>$userdb[introduce]</textarea></td>
+</tr>
+<tr height=25>
+<td class=head colspan=2> 会员可定义数据 </td>
+</tr>
+<tr class="f_one">
+	<td>交易帐号<br>用户可以通过这个帐号向您求购商品<br>您可以选择使用贝宝或支付宝来收款</td>
+	<td>
+		<input type=text size=20 maxlength=75 name="payemail" value="$payemail">
+		<input type="radio" name="pay" value="1" checked>使用贝宝收款
+	</td>
+</tr>
+<!--
+EOT;
+if($db_signmoney && strpos($db_signgroup,",$groupid,") !== false){print <<<EOT
+-->
+
+<tr><td class="f_one">签名展示设置</td><td class="f_one">如果您想在帖子中展示您的个人签名，需要开启此功能<br>签名展示一天需要支付交易币个数：{$db_signmoney} &nbsp; &nbsp; 进入 <a href="userpay.php?action=change" target="_blank"><font color="blue">交易币转换</font></a> <a href="userpay.php" target="_blank"><font color="blue">交易币充值</font></a><br><br>交易币：{$userdb[currency]}，您的签名已经展示 {$haveshow} 天，还可以展示 {$days} 天
+<!--
+EOT;
+if($userdb[currency]<=0){print <<<EOT
+-->
+ (<font color="red">您的交易币不足，不能展示签名，请先对您的交易币帐户充值</font>)
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<tr class="f_one">
+	<td>是否开启签名展示功能</td>
+	<td>
+		<input type="radio" name="showsign" value="1" $showsign_1>是
+		<input type="radio" name="showsign" value="0" $showsign_0>否
+	</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr>
+<td class='f_one'> 个性化签名<br>--少于{$gp_signnum}字节
+<!--
+EOT;
+if($db_signwindcode){print <<<EOT
+-->
+<br><a href='faq.php?faqjob=1'> <font color=blue><font color=blue>填写个性签名帮助</font></font></a>
+$windcode
+<!--
+EOT;
+}else{print <<<EOT
+-->
+<br><a href='faq.php?faqjob=1#5'>Wind Code</a>Close
+<!--
+EOT;
+}print <<<EOT
+-->
+</td>
+<td class='f_one'>
+<textarea name='prosign'  rows='4' cols='50'>$userdb[signature]</textarea></td>
+</tr>
+
+<tr>
+<td class='f_two'> 选择您的头像
+<br>
+<!--
+EOT;
+if($imgpatherror){print <<<EOT
+-->
+--图片路径发生错误,请到后台更正您的图片路径为与您论坛图片保存的目录
+<!--
+EOT;
+}print <<<EOT
+-->
+</td>
+<td class='f_two'>
+<table width=100% cellspacing=0 cellpadding=0>
+<tr><td width=22% valign=middle>论坛提供头像:
+<select name='proicon' onChange="showimage('$imgpath',this.options[this.selectedIndex].value)">
+<option value=''>不使用</option>
+$imgselect
+</select></td><td width=78% align=center valign=middle>
+
+<img src='$imgpath/face/$iconarray[0]' name=useravatars>
+</td></tr></table>
+<!--
+EOT;
+if(!$gp_allowportait){
+print <<<EOT
+-->
+<br> <b>自定义头像</b>- 您所处的用户组无权限
+<!--
+EOT;
+}else{print <<<EOT
+-->
+<br> <b>自定义头像</b>- 被管理员开启<br>
+<!--
+EOT;
+}if($db_upload && $gp_upload){
+print <<<EOT
+-->
+<br>头像上传<input type="file" class=subject name=upload>
+<!--
+EOT;
+}if($uploadimg){
+print <<<EOT
+-->
+<img src='$imgpath/upload/$uploadimg'>[<a href='job.php?action=delimg'>删除</a>]
+<!--
+EOT;
+}if($gp_allowportait){print <<<EOT
+-->
+<br><br>完整URL 头像位置<input name=proownportait[0] value='$iconarray[1]' type=text>必须以 http://开头的路径。
+<!--
+EOT;
+}if(($db_upload && $gp_upload) || $gp_allowportait){print <<<EOT
+-->
+<br>头像宽度<input name=proownportait[1] value='$iconarray[2]' type=text size=2 maxlength=3>必须是 0 -- 185 之间的一个整数。
+<br>头像高度<input name=proownportait[2] value='$iconarray[3]' type=text size=2 maxlength=3>必须是 0 -- 200 之间的一个整数。
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<tr height=25>
+<td class=head colspan=2> 论坛可控制性数据 </td>
+</tr>
+
+<tr><td class='f_one'> 选择风格</td>
+<td class='f_one'><select name=tpskin>
+<option value=''>使用默认</option>
+$choseskin</select></td></tr>
+<tr><td class='f_two'>选择您所在的时区<br>可将论坛的所有时间显示为您的当地时间</td>
+<td class='f_two'>
+<select name="timedf">
+<option value="0">使用默认</option>
+<!--
+EOT;
+include('template/admin/timezone.htm');
+print <<<EOT
+-->
+</select>
+</td></tr>
+<tr><td class='f_one'>时间格式<br>格式如:yyyy-mm-dd,yy-m-d<br>yyyy:4位数年份,yy:2位数年份<br>mm:有前导零01-12,m:没前导零1-12<br>dd:有前导零01-31,d:没前导零1-31</td>
+<td class='f_one'>
+<input type=radio name='d_type' value=0 $d_type_0>使用默认<br><br>
+<input type=radio name='d_type' value=1 $d_type_1>自定义
+<input type=text name='date_f' value=$userdb[datefm]>
+<input type=radio name='time_f' value='24' $check_24>24
+<input type=radio name='time_f' value='12' $check_12>12
+</td></tr>
+<tr><td class='f_two'>主题列表每页个数(设置为0使用默认)</td>
+<td class='f_two'>
+<select name='t_num'><option value='0'>0</option>
+<option value=10 $T_10>10</option><option value=20 $T_20>20</option>
+<option value=30 $T_30>30</option><option value=40 $T_40>40</option>
+<!--
+EOT;
+if($groupid && @in_array($groupid,array(3,4,5))){print <<<EOT
+-->
+<option value=100 $T_100>100</option>
+<!--
+EOT;
+}print <<<EOT
+-->
+</select>
+</td></tr>
+<tr><td class='f_one'>文章列表每页个数(设置为0使用默认)</td>
+<td class='f_one'>
+<select name='p_num'><option value='0'>0</option>
+<option value=10 $P_10>10</option><option value=20 $P_20>20</option>
+<option value=30 $P_30>30</option>
+<!--
+EOT;
+if($groupid && @in_array($groupid,array(3,4,5))){print <<<EOT
+-->
+<option value=100 $P_100>100</option>
+<!--
+EOT;
+}print <<<EOT
+-->
+</select>
+</td></tr>
+<tr> 
+<td class='f_two'> 是否接受邮件</td>
+<td class='f_two'><input type=radio name='proreceivemail' value='1' $email_open>
+接收邮件 
+<input type=radio name='proreceivemail' value='0' $email_close>
+不接收邮件 </td>
+</tr>
+</table><br>
+<center>
+<input type=submit name=prosubmit value='确认修改'>
+<input type=hidden value=2 name=step>
+</form><center>
+<script language=JavaScript1.2>
+function procheck(formct)
+{
+	if (formct.prointroduce.value.length>200)
+	{
+		alert('自我介绍太长，请删掉一些，控制在200个字节以内');
+		return false;
+	}
+}
+function showimage(imgpath,value)
+{
+	if(value!= '') {	
+	document.images.useravatars.src=imgpath+'/face/'+value;
+	} else{
+	document.images.useravatars.src=imgpath+'/face/none.gif';
+	}
+}
+</script>
+<!--
+EOT;
+}elseif($action=='permission'){
+$_P=array('0'=>'&#215;','1'=>'&#8730;');
+print <<<EOT
+-->
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=5 align=center $i_table style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word;'>
+	<tr><td class=head colspan=10>用户权限查看</td></tr>
+	<tr><td class=f_one colspan=10><b>基本权限</b></td></tr>
+	<tr align=center>
+		<td class='f_one'>隐身登录</td>
+		<td class='f_one'>浏览帖子</td>
+		<td class='f_one'>搜索权限</td>
+		<td class='f_one'>查看会员列表</td>
+		<td class='f_one'>查看会员资料</td>
+		<td class='f_one'>展区功能</td>
+		<td class='f_one'>报告功能</td>
+		<td class='f_one'>头像上传</td>
+		<td class='f_one'>自定义头像</td>
+		<td class='f_one'>荣誉头衔</td>
+	</tr>
+	<tr align=center>
+		<td class='f_one'>{$_P[$per[hide]]}</td>
+		<td class='f_one'>{$_P[$per[read]]}</td>
+		<td class='f_one'>{$_P[$per[search]]}</td>
+		<td class='f_one'>{$_P[$per[member]]}</td>
+		<td class='f_one'>{$_P[$per[profile]]}</td>
+		<td class='f_one'>{$_P[$per[show]]}</td>
+		<td class='f_one'>{$_P[$per[report]]}</td>
+		<td class='f_one'>{$_P[$per[upload]]}</td>
+		<td class='f_one'>{$_P[$per[portait]]}</td>
+		<td class='f_one'>{$_P[$per[honor]]}</td>
+	</tr>
+	<tr><td class=f_one colspan=10><b>帖子权限</b></td></tr>
+	<tr align=center>
+		<td class='f_one'>发表主题</td>
+		<td class='f_one'>回复主题</td>
+		<td class='f_one'>发起投票</td>
+		<td class='f_one'>参与投票</td>
+		<td class='f_one'>查看投票结果</td>
+		<td class='f_one'>发html帖</td>
+		<td class='f_one'>发隐藏帖</td>
+		<td class='f_one'>发加密帖</td>
+		<td class='f_one'>发出售帖</td>
+		<td class='f_one'>评分权限</td>
+	</tr>
+	<tr align=center>
+		<td class='f_one'>{$_P[$per[post]]}</td>
+		<td class='f_one'>{$_P[$per[rp]]}</td>
+		<td class='f_one'>{$_P[$per[newvote]]}</td>
+		<td class='f_one'>{$_P[$per[vote]]}</td>
+		<td class='f_one'>{$_P[$per[vwvt]]}</td>
+		<td class='f_one'>{$_P[$per[html]]}</td>
+		<td class='f_one'>{$_P[$per[hidden]]}</td>
+		<td class='f_one'>{$_P[$per[encode]]}</td>
+		<td class='f_one'>{$_P[$per[sell]]}</td>
+		<td class='f_one'>{$_P[$per[mark]]}</td>
+	</tr>
+	<tr><td class=f_one colspan=10><b>附件权限</b></td></tr>
+		<tr align=center>
+		<td class='f_one'>上传附件</td>
+		<td class='f_one'>下载附件</td>
+		<td class='f_one'>被扣金钱</td>
+		<td class='f_one'>附件个数(1天)</td>
+		<td class='f_one'>附件大小上限</td>
+		<td class='f_one' colspan="5" align="left">附件允许后缀</td>
+	</tr>
+	<tr align=center>
+		<td class='f_one'>{$_P[$per[attach]]}</td>
+		<td class='f_one'>{$_P[$per[down]]}</td>
+		<td class='f_one'>$gp_uploadmoney</td>
+		<td class='f_one'>$gp_allownum</td>
+		<td class='f_one'>$_G[uploadmaxsize](K)</td>
+		<td class='f_one' colspan="5" align="left">$_G[uploadtype]</td>
+	</tr>
+</table>
+<!--
+EOT;
+}elseif($action=='forumright'){
+$_P=array('0'=>'&#215;','1'=>'&#8730;');
+print <<<EOT
+-->
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=5 align=center $i_table style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word;'>
+	<tr><td class=head colspan=5>版块基本权限</td></tr>
+	<tr align=center>
+		<td class='f_one'>浏览版块</td>
+		<td class='f_one'>发表主题</td>
+		<td class='f_one'>回复主题</td>
+		<td class='f_one'>上传附件</td>
+		<td class='f_one'>下载附件</td>
+	</tr>
+	<tr align=center>
+		<td class='f_one'>{$_P[$per[visit]]}</td>
+		<td class='f_one'>{$_P[$per[post]]}</td>
+		<td class='f_one'>{$_P[$per[rp]]}</td>
+		<td class='f_one'>{$_P[$per[down]]}</td>
+		<td class='f_one'>{$_P[$per[upload]]}</td>
+	</tr>
+</table>
+<br>
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=5 align=center $i_table>
+	<tr><td class=head colspan=7>版块积分设置</td></tr>
+	<tr align=center>
+		<td class='cbg' width="8%"></td>
+		<td class='cbg' width="15%">精华主题</td>
+		<td class='cbg' width="15%">取消精华</td>
+		<td class='cbg' width="15%">发表主题</td>
+		<td class='cbg' width="15%">删除主题</td>
+		<td class='cbg'>发表十个回复</td>
+		<td class='cbg'>删除十个回复</td>
+	</tr>
+<!--
+EOT;
+foreach($creditset as $key=>$val){print <<<EOT
+-->
+	<tr align=center>
+		<td class='f_one'>{$val[name]}</td>
+		<td class='f_one'>+{$val[Digest]}</td>
+		<td class='f_one'>-{$val[Undigest]}</td>
+		<td class='f_one'>+{$val[Post]}</td>
+		<td class='f_one'>-{$val[Delete]}</td>
+		<td class='f_one'>+{$val[Reply]}</td>
+		<td class='f_one'>-{$val[Deleterp]}</td>
+	</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<!--
+EOT;
+}elseif($action=='log'){
+print <<<EOT
+-->
+ &nbsp; $pages
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=5 align=center $i_table>
+	<tr>
+		<td class=head colspan=7>
+			<div>
+				<div style="float:left;"><b>帖子操作记录</b></div>
+				<div style="float:right;">
+					<select name="type" onchange="window.location=('profile.php?action=log&type='+this.options[this.selectedIndex].value)">
+						<option value="all">全部</option>
+						<option value="topped" $type_sel[topped]>{$logtype[topped]}</option>
+						<option value="digest" $type_sel[digest]>{$logtype[digest]}</option>
+						<option value="highlight" $type_sel[highlight]>{$logtype[highlight]}</option>
+						<option value="push" $type_sel[push]>{$logtype[push]}</option>
+						<option value="locked" $type_sel[locked]>{$logtype[locked]}</option>
+						<option value="delete" $type_sel[delete]>{$logtype[delete]}</option>
+						<option value="move" $type_sel[move]>{$logtype[move]}</option>
+						<option value="copy" $type_sel[copy]>{$logtype[copy]}</option>
+						<option value="edit" $type_sel[edit]>{$logtype[edit]}</option>
+						<option value="credit" $type_sel[credit]>{$logtype[credit]}</option>
+					</select>
+				</div>
+			</div>
+		</td>
+	</tr>
+	<tr align=center>
+		<td class='cbg' width="3%">ID</td>
+		<td class='cbg' width="8%">类型</td>
+		<td class='cbg' width="15%">管理员</td>
+		<td class='cbg' width="15%">论坛</td>
+		<td class='cbg' width="15%">操作日期</td>
+		<td class='cbg'>描述</td>
+	</tr>
+<!--
+EOT;
+$num=($page-1)*$db_perpage;
+foreach($logdb as $key => $value){
+$num++;
+print <<<EOT
+-->
+<tr class="f_one" align="center">
+<td>$num</td>
+<td>{$logtype[$value[type]]}</td>
+<td><a href="profile.php?action=show&username=$value[username2]" target="_blank">$value[username2]</a></td>
+<td><a href="thread.php?fid=$value[field1]" target="_blank">{$forum[$value[field1]][name]}</a></td>
+<td>$value[date]</td>
+<td><div style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word' align="left">$value[descrip]</div></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+ &nbsp; $pages
+<script language=JavaScript>
+function Bjump(value){
+	if(value!= '') {
+		window.location=('$basename&action=log&type='+value);
+	}
+}
+</script>
+<!--
+EOT;
+}elseif($action=='favor'){print <<<EOT
+-->
+<form method=post name=form action="profile.php?action=favor">
+<input type=hidden name=job value=clear>
+<table cellspacing=1 cellpadding=5 width='$tablewidth' $i_table align=center>
+<tr class=head><td colspan="6">收藏夹</td></tr>
+<tr class=cbg align=center>
+<td width='3%'>ID</td>
+<td>标题</td>
+<td width='15%'>论坛</td>
+<td width='15%'>作者</td>
+<td width='15%'>发表时间</td>
+<td width='5%'>删除</td>
+</tr>
+<!--
+EOT;
+foreach($favordb as $id=>$favor) {
+if($favor){
+$id++;
+print <<<EOT
+-->
+<tr align=center class='f_one'>
+<td>$id</td>
+<td align=left><a href='read.php?fid=$favor[fid]&tid=$favor[tid]' target=_blank>$favor[subject]</a></td>
+<td><a href='thread.php?fid=$favor[fid]'>$favor[forum]</a></td>
+<td><a href="profile.php?action=show&uid=$favor[authorid]">$favor[author]</a></td>
+<td class='smalltxt'>$favor[postdate]</td>
+<td><input type=checkbox name='delid[]' value='$favor[tid]'></td>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</table>
+<br>
+<center>
+<input type='button' name='chkall' value='全 选' onclick='CheckAll(this.form)'>
+<input type='submit' value='提 交'>
+</center>
+</form>
+<script language=JavaScript>
+function CheckAll(form){
+	for (var i=0;i<form.elements.length;i++){
+		var e = form.elements[i];
+		e.checked == true ? e.checked = false : e.checked = true;
+	}
+}
+</script>
+<!--
+EOT;
+}?>-->

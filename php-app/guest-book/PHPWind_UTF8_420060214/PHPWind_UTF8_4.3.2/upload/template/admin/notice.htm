@@ -1,0 +1,123 @@
+<!--<?php
+include_once PrintEot('left');
+if(empty($action)){print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>
+<ul>
+公告分为三类<br><br>1.论坛公告：在论坛所有版块内显示<br><br>2.分类公告：在所属分类内的版块显示<br><br>3.版块公告：在所属的单一版块内显示
+</ul>
+<br></td></tr></table><br>
+<form method="post" action="$basename&">
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr class=i_table><td colspan="7" class=head><b>论坛公告编辑</b></td></tr>
+<tr class=head_2  align=center>
+<td width=3%>ID</td>
+<td width=10%>发布人</td>
+<td width=5%>顺序</td>
+<td width=10%>论坛</td>
+<td>标题</td>
+<td width=20%>发表时间</td>
+<td width=3%>删</td></tr>
+<!--
+EOT;
+$num=0;
+foreach($annoucedb as $key => $value){
+$num++;
+print <<<EOT
+-->
+<tr align=center>
+<td class=b>$num</td>
+<td class=b>$value[author]</td>
+<td class=b>$value[vieworder]</td>
+<td class=b>$value[name]</td>
+<td class=b><a href="$basename&action=edit&aid=$value[aid]" title='编辑该公告'>$value[subject]</a></td>
+<td class=b>$value[startdate]</td>
+<td class=b><input type='checkbox' name='selid[]' value="$value[aid]"></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></td></tr></table>
+<input name=action type=hidden value="del">
+<br><center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)"><input type="submit" name="delete" value="提 交"></center></form>
+<!--
+EOT;
+}elseif($action=='add' || $action=='edit'){print <<<EOT
+-->
+<script language="JavaScript" src="$db_bbsurl/$js_path"></script>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>添加公告说明</b></td></tr>
+<tr><td class=b><br>
+<ul>
+1.用户组成员根据用户组权限设置取得相应发布公告权限<br><br>2.版主拥有所管辖的版块（分类）发布的公告的权限
+</ul>
+<br></td></tr></table><br>
+<form name='FORM' method="post" action="$basename">
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td colspan="2" class=head><b>更新论坛公告</b></td></tr>
+
+<!--
+EOT;
+if($action=='add'){print <<<EOT
+-->
+<tr class=b><td width="21%" >公告范围：</td>
+<td width="79%"><select name=fid>
+<!--
+EOT;
+if($admin_gid!='5'){print <<<EOT
+-->
+<option value='-1'>论坛公告</option>
+<!--
+EOT;
+}print <<<EOT
+-->
+$forumcache
+<!--
+EOT;
+if($admin_gid=='3' && trim($cmscache)){print <<<EOT
+-->
+<option></option>
+<option value='-2'>文章系统公告</option>
+$cmscache
+<!--
+EOT;
+}print <<<EOT
+-->
+</select></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+
+
+<tr class=b><td width="21%" >标题</td>
+<td width="79%"><input type="text" size="45" name="newsubject" value="$subject"></td></tr>
+<!-- <tr class=b><td width="21%">起始时间：<br>格式：yyyy-mm-dd</td><td width="79%">
+<input type="text" size="45" name="newstarttime" value="$startdate"></td></tr>
+<tr class=b><td width="21%">终止时间：<br>格式：yyyy-mm-dd</td>
+<td width="79%"><input type="text" size="45" name="newendtime" value="$enddate"> 留空为不限制</td></tr>
+ -->
+ <tr class=b><td width="21%" >顺序</td>
+<td width="79%"><input type="text" size="4" name="vieworder" value="$vieworder"></td></tr>
+ <tr class=b><td width="21%" valign="top">公告内容：<br>公告中可以使用 html 代码支持换行</td>
+<td width="79%">
+<!--
+EOT;
+include_once(R_P.'template/wind/editor.htm');
+print <<<EOT
+-->
+</td></tr>
+<input type=hidden value=$aid name=aid>
+<input type=hidden value=2 name=step>
+<input name=action type=hidden value="$action">
+</table></td></tr></table><br><center><input type="submit" name="add" value="提 交"></form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>
+-->

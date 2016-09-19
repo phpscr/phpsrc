@@ -1,0 +1,89 @@
+<!--<?php
+include_once PrintEot('left');
+if(empty($action)){
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>功能介绍</b></td></tr>
+<tr><td class=b style="line-height:150%">
+<b>营销计划定义：</b><br>
+　　PHPWind“论坛营销计划”是一套基于PHPWind软件产品下的营销产品，通过平台的整合营销优势，充分挖掘站长站点资源与潜力，为站长提取更多价值；站长在安装、使用PHPWind软件产品时，可自行选择开启或关闭，当您开启此项功能时，需注意下方提示信息；
+<br><br>
+<b>平台优势：</b><br>
+　　“论坛营销计划”利用 PHPWind 平台把传统营销概念与论坛强大互动性相结合，充分挖掘论坛潜在价值，
+解决网站经济来源问题，为站长解除后顾之忧；一方面借助 PHPWind 品牌优势，吸引广大商家的加盟，解决广告来源问题；一方面 PHPWind 拥有强大
+的用户基础，论坛类型几乎覆盖所有行业，用户群集中，能满足广大商家的需求；自 PHPWind 5.0版本起，
+系统后台集成了“论坛营销计划” 功能，站长只需要在后台进行相关设置即可加入“论坛营销计划”。
+<br><br>
+<b>什么是通用密钥？</b>
+<br>
+　　通用密钥是系统自动为每个网站生成的通用营销系统密钥（包括一对密钥和一个唯一识别码），用来做为网站的唯一标识；“通用密钥”将用于部分营销模块中，如内容营销模块；请保管好您的通用密钥，以防被他人利用。
+<br><br>
+<b>提示信息：</b><br>
+　　当您开启部分需要读取页面的营销模块时，可能会耗损部分站点页面执行速度，这是由于您选择的营销模块特性及网络服务商的数据传送而产生的，正常情况下，影响并不大，如有特殊情况，导致站点访问效率明显下降是，可能由于服务商数据传送时出现网络问题，这时，我们建议您根据影响的程度考虑关闭部分营销模块，以确保站点的正常运行。
+<br><br>
+<b>战略合作伙伴：</b>
+<br>
+　　<img src="http://u.phpwind.com/adunion/partner.bmp" />
+</td></tr></table>
+<br>
+<input type=hidden name=action value='submit'>
+<table width="98%" cellspacing=1 cellpadding=6 class=i_table align="center">
+<tr><td class=head colspan=2>通用密钥</td></tr>
+<tr><td class=b colspan=2>“通用密钥”将用于部分营销模块中，如“内容营销模块”中要获得收益时需要用到此“通用密钥”</td></tr>
+<tr>
+	<td class=b width="20%">密钥一</td>
+	<td class=b>$db_siteid</td>
+</tr>
+<tr>
+	<td class=b>密钥二</td>
+	<td class=b>$db_siteownerid</td>
+</tr>
+<tr>
+	<td class=b>唯一识别码</td>
+	<td class=b>$db_sitehash</td>
+</tr>
+</table>
+<form action="$basename&" method=post>
+<input type="hidden" name="action" value="submit" />
+<table width="98%" cellspacing=1 cellpadding=6 class=i_table align="center">
+<tr><td class=head colspan=2>内容营销模块</td></tr>
+<tr>
+	<td class=b colspan=2 style="line-height:150%">
+		该模块无需注册，只要选择营销类型，点击“开启此模块”即可使用<br>
+		注：内容营销模块一旦开启，系统就会自动把您应获得的收益记录到您的“通用密钥”中，您只需要使用“通用密钥”注册一个内容营销平台，即可查看并获得内容营销模块给您带来的收益，可能部分站点已经开启此模块，您的收益在此模块开启时就已经开始计算，<a href="http://u.phpwind.com/adunion.php?charset=$db_charset" style="color:blue;">查看获得收益步骤</a>
+	</td>
+</tr>
+<tr>
+	<td class=b width="20%">营销类型</td>
+	<td class=b>
+		<input type="checkbox" name="ifopen_s" value='1' $ifopen_s>全站营销：在全站开启营销功能<br>
+		<input type="checkbox" name="ifopen_t" value='1' $ifopen_t>帖子营销：只在帖子页面开启营销功能
+	</td>
+</tr>
+<tr><td class=b colspan=2><center><input type='submit' value='开启内容营销模块'></center></td></tr>
+</table>
+</form>
+<br>
+<table width="98%" cellspacing=1 cellpadding=6 class=i_table align="center">
+<tr><td class=head colspan=2>站点营销模块</td></tr>
+<tr>
+	<td class=b colspan=2 style="line-height:150%">
+		您需要先注册一个营销平台帐号才能开始使用站点营销模块，注册成功后登录营销平台，获得广告代码，利用论坛的广告管理功能，将广告代码投放到您的网站上<br>
+		<center><a href="http://u.phpwind.com/adunion.php?charset=$db_charset&action=rich&sessionid=$sessionid" style="color:blue;font-size:14px;"><b>进入站点营销平台，查看更多信息</b></a></center>
+	</td>
+</tr>
+</table>
+<br>
+<table width="98%" cellspacing=1 cellpadding=6 class=i_table align="center">
+<tr><td class=head colspan=2>更多模块</td></tr>
+<tr>
+	<td class=b colspan=2>
+	<a href="http://u.phpwind.com/adunion.php?charset=$db_charset&action=more">点击查看更多模块</a>
+	</td>
+</tr>
+</table>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>-->

@@ -1,0 +1,42 @@
+<!--<?php 
+print <<<EOT
+-->
+<script language="JavaScript" src="$imgpath/newmsg.js"></script>
+<div id="windlocation" style="position: absolute;visibility: hidden;height: 1;width: 1;top: 100;left: 50" bgcolor="$tablecolor">
+<table width="187" height="85" cellspacing="0" cellpadding="0" bgColor="$tablecolor" onmouseover="clearpop();" onmouseout="showPopup();" background="$imgpath/$stylepath/msg/showmsg2.jpg">
+	<tr>
+		<td valign="top"><img src="$imgpath/$stylepath/msg/showmsg1.jpg" border="0" /></td>
+	</tr>
+	<tr>
+		<td height="29" align="center" background="$imgpath/$stylepath/msg/showmsg4.jpg">
+			
+
+<!--
+EOT;
+if($winddb['newpm']=='1' || $winddb['newpm']=='3'){
+print <<<EOT
+-->
+			<a href="message.php">您有新的个人消息</a>
+<!--
+EOT;
+}elseif($winddb['newpm']=='2' || $winddb['newpm']=='3'){
+print <<<EOT
+-->
+			<a href="message.php">您有新的群发消息</a>
+<!--
+EOT;
+} print <<<EOT
+-->
+		</td>
+	</tr>		
+	<tr>
+		<td>&nbsp;&nbsp;<input type="checkbox" onclick="hide();" style="background:#AEDBFF;" />不再提示</td>
+	</tr>
+	<tr>
+		<td valign="bottom"><img src="$imgpath/$stylepath/msg/showmsg3.gif" border="0" /></td>
+	</tr>
+</table>
+</div>
+<!--
+EOT;
+?>

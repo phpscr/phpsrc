@@ -1,0 +1,16 @@
+无图版 ------------ 搜索引擎接口(共 3 种, 可以在 simple/index.php 里的第二行 修改 $mod 的值为相应的值)
+
+(1) 第一种模式是默认的, 对所有的服务器都支持. 
+
+(2) 第二种模式, 绝大多数服务器都支持 .
+
+(3) 第三种模式, 效果:  http://www.phpwind.net/simple/t27764.html
+需要在 apache 的 httpd.conf 里做这样的设置
+<VirtualHost *:80>
+    DocumentRoot /www/host/phpwind
+    ServerName www.phpwind.net
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteRule ^(.*)/simple/([a-z0-9\_]+\.html)$ $1/simple/index.php?$2
+    </IfModule>
+</VirtualHost>

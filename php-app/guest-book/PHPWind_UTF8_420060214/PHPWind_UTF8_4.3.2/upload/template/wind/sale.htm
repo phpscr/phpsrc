@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>发表交易帖</title>
+</head>
+<style type="text/css">
+BODY {font-family:Verdana;FONT-SIZE: 12px;COLOR: #000000;MARGIN: 0;background: #FFFFFF;text-align: center}
+textarea,input,object{font-size: 12px;  color: #000000;font-weight: normal; background-color: #FFFFFF}
+TD { BORDER-RIGHT: 1px; BORDER-TOP: 0px; FONT-SIZE: 9pt; COLOR: #000000;}
+</style>
+<script language="JavaScript">
+var method='1';
+function setmethod(mode){
+	method = mode;
+}
+function info() {
+	var code;
+	dm=document.form;
+	if(dm.seller.value == '' || dm.subject.value == '' || dm.price.value == ''){
+		return '';
+	}
+	code  = '[payto]\n';
+	code += '(seller)' + dm.seller.value + '(/seller)\n';
+	code += '(subject)' + dm.subject.value + '(/subject)\n';
+	code += '(body)' + dm.body.value + '(/body)\n';
+	code += '(price)' + dm.price.value + '(/price)\n';
+	code += '(ordinary_fee)' + dm.ordinary_fee.value + '(/ordinary_fee)\n';
+	code += '(express_fee)' + dm.express_fee.value + '(/express_fee)\n';
+	code += '(demo)' + dm.demo.value + '(/demo)\n';
+	code += '(contact)' + dm.contact.value + '(/contact)\n';
+	code += '(method)' + method + '(/method)\n';
+	code += '[/payto]\n\n';
+	return code;
+}
+</script>
+<body bgcolor=menu topmargin="0" leftmargin="0">
+<form name="form">
+<table cellspacing="4" cellpadding="0" align="center">
+<tr>
+	<td width='20%' class='t_one'>卖家：</td>
+	<td class='t_one'><input name="seller" size=30></td>
+</tr>
+<tr>
+	<td width='20%' class='t_one'>商品名称：</td>
+	<td class='t_one'><input name="subject" size=30> 价格：<input name="price" size=7></td>
+</tr>
+<tr>
+	<td width='20%' class='t_one'>商品描述：</td>
+	<td class='t_one'><textarea name="body" rows="5" cols="45"></textarea></td>
+</tr>
+<tr>
+	<td width='20%' class='t_one'>邮费承担方：</td>
+	<td class='t_one'>
+		<input type=radio value=1 name=transport onclick="this.form.ordinary_fee.disabled=true;this.form.express_fee.disabled=true;"> 卖家承担运费&nbsp;&nbsp; 
+		<input type=radio value=2 name=transport onclick="this.form.ordinary_fee.disabled=false;this.form.express_fee.disabled=false;"> 买家承担运费<br>
+		<input type=hidden value=3>
+		平邮&nbsp;<input disabled size=7 name=ordinary_fee> 元 &nbsp;&nbsp; 
+		快递&nbsp;<input disabled size=7 name=express_fee> 元
+	</td>
+</tr>
+<tr>
+	<td width='20%' class='t_one'>演示地址：</td>
+	<td class='t_one'><input name="demo" size=30></td>
+</tr>
+<tr>
+	<td width='20%' class='t_one'>联系方式：</td>
+	<td class='t_one'><input name="contact" size=30></td>
+</tr>
+<tr>
+	<td width='20%' class='t_one'>收款方式</td>
+	<td class='t_one'>
+		<input type=radio name="md" value="1" checked onclick="setmethod(1);">使用贝宝收款
+	</td>
+</tr>
+<tr align="center"><td colspan=2>
+<br>
+<input type=button onclick='window.returnValue = info();window.close();' value='确 认'>
+<input type=button onclick="window.returnValue ='' ;window.close();" value="取消">
+</td></tr></table>
+</form></body></html>

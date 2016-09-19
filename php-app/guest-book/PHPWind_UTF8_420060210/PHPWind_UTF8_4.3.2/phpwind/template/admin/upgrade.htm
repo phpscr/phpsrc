@@ -1,0 +1,33 @@
+<!--<?php
+include_once PrintEot('left');
+if (empty($action)){
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提升方式</b></td></tr>
+<tr><td class=b><br>
+<ul>
+您可以选择 4 种会员等级提升方式! 以满足您不同需求的论坛管理模式!
+</ul>
+<br></td></tr></table><br>
+<form action="$basename" method=post>
+<input type=hidden name=action value='delete'>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+
+<tr><td class=head colspan=5><b>积分列表</b></td></tr>
+<tr><td class=b>用户提升方式</td><td class=b>
+<select name=upgrade>
+<option value=1 $select[1]>发帖数</option>
+<option value=2 $select[2]>{$db_rvrcname}</option>
+<option value=3 $select[3]>{$db_moneyname}</option>
+<option value=4 $select[4]>{$db_creditname}</option>
+<option value=5 $select[5]>在线时间</option>
+</select></td></tr>
+</table>
+<br><center><input type=submit value='提交'></center></form>
+<!--
+EOT;
+}
+include_once PrintEot('adminbottom');
+?>
+-->

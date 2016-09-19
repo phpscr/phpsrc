@@ -1,0 +1,326 @@
+<!--<?php print <<<EOT
+-->
+<div class="t3"><table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td align="left"><img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> 
+<b><a href="$db_bfn">$db_bbsname </a> -> 注册程式</b></td>
+<td align="right"></td></tr></table></div>
+<!--
+EOT;
+if(empty($step) && $rg_reg=='0'){print <<<EOT
+-->
+<form action="register.php?method=full" method="post" onSubmit="this.regsubmit.disabled=true;">
+<input type="hidden" name="step" value="1" />
+<input type="hidden" value="$forward" name="forward" />
+<input type="hidden" value="$invcode" name="invcode" />
+<div class="t" style="margin-top:15px;">
+<table width="100%" cellspacing="0" cellpadding="0" align="center" style="TABLE-LAYOUT: fixed;WORD-WRAP: break-word">
+<tr><td class="h">注册程式</td></tr>
+<tr><td class="f_one">
+<pre>$rg_rgpermit</pre>
+</td></tr></table></div>
+<div style="text-align:center;margin-bottom:25px;">
+<input class="btn" name="regsubmit" type="submit" class="bginput" value="同 意" />
+<input class="btn" type="button" value="取消" onclick="javascript:history.go(-1);" /></div>
+</form>
+<!--
+EOT;
+} elseif($_POST['step']==1 || $rg_reg=='1'){print <<<EOT
+-->
+<script language="javascript" type="text/javascript">
+var lastname = "";
+var msg=new Array(
+	"<font color=\"red\">用户名长度错误！</font>",
+	"<font color=\"red\">此用户名包含不可接受字符或被管理员屏蔽,请选择其它用户名</font>",
+	"<font color=\"red\">为了避免论坛用户名混乱,用户名中禁止使用大写字母,请使用小写字母</font>",
+	"<font color=\"red\">该用户名已经被注册，请选用其他用户名。</font>",
+	"<font color=\"green\">恭喜您，该用户名还未被注册，您可以使用这个用户名注册！</font>"
+);
+function namecheck() {
+	var username = document.getElementById("regname").value;
+	if (username == "") {
+		return false;
+	}
+	if (username == lastname) {
+		return false;
+	}
+	lastname = username;
+	document.checkForm.username.value = username;
+	document.getElementById("check_info").innerHTML = "检测中，请稍等...";
+	document.checkForm.submit();
+	return true;
+
+}
+function retmsg(id){
+	document.getElementById("check_info").innerHTML = msg[id];
+}
+</script>
+<iframe id="Checkframe" name="Checkframe" width="0" height="0"></iframe>
+<form name="checkForm" action="register.php?" method="post" target="Checkframe">
+  <input type="hidden" name="username" />
+  <input type="hidden" name="action" value="regnameck" />
+</form>
+<form action="register.php?" method="post" name="register" onSubmit="return regcheck(this);">
+<div class="t">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td colspan="2" class="h">必填信息</td></tr>
+<tr class="tr3 f_one"><th width="35%"> 用户名<font color="red">*</font><br />不能有空格，可以是中文，长度控制在 $rg_regminname - $rg_regmaxname 字节以内</th>
+<th valign="top">
+<input class="input" type="text" size="20" maxlength="14" name="regname" id="regname" /> 
+<input class="btn" type="button" value="检查用户名" onClick="return namecheck();" />
+<br />&nbsp;<div id="check_info"></div>
+</th></tr>
+<tr class="tr3 f_two"><th> 密码<font color="red">*</font><br />英文字母或数字等不少于6位</th>
+<th style="vertical-align:middle">
+<input class="input" type="password" size="20" maxlength="75" name="regpwd" id="regpwd" onchange="checkpwd();" />&nbsp;
+<span id="pwd_info"></span></th></tr>
+<tr class="tr3 f_one"><th> 确认密码<font color="red">*</font></th>
+<th><input class="input" type="password" size="20" maxlength="75" name="regpwdrepeat" id="regpwdrepeat" onchange="checkpwdrepeat();" />&nbsp;
+<span id="pwdrepeat_info"></span></th></tr>
+<!--
+EOT;
+if($reggd){
+print <<<EOT
+-->
+<tr class="tr3 f_one"><th>认证码<font color="red">*</font></th>
+<th><input class="input" type="text" maxLength="4" name="gdcode" size="10" />
+<img src="ck.php?" align="absmiddle" onclick="this.src='ck.php?'" style="cursor:pointer;" /> 请将图片中的数字或英文字母填入到文本框中</th></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr class="tr3 f_two"><th> Email<font color="red">*</font>
+<!--
+EOT;
+if($rg_email){ print <<<EOT
+-->
+<div style="overflow:hidden;margin:4px auto">为避免无法收取论坛邮件，请使用以下邮箱进行注册：<br>($rg_email)</div>
+<!--
+EOT;
+}print <<<EOT
+-->
+</th>
+<th>
+<input class="input" type="text" size="20" maxlength="75" name="regemail" value="" id="regemail" onchange="checkemail();" />
+<input type="checkbox" name="regemailtoall" value="1" checked />
+<font color="#000000">公开邮箱 </font>&nbsp;<span id="email_info"></span>
+<!--
+EOT;
+if($rg_emailcheck){print <<<EOT
+-->
+<font color="red">帐号需要EMAIL激活,请如实填写</font>
+<!--
+EOT;
+}print <<<EOT
+-->
+</th></tr>
+<!--
+EOT;
+if($inv_open){
+print <<<EOT
+-->
+<tr class="tr3 f_one"><th> 邀请注册码<br />本站开启邀请注册,请填写邀请码!<font color="red">*</font></th>
+<th><input class="input" type="text" value="$invcode" name="invcode" /></th></tr>
+<!--
+EOT;
+}if($rg_question && $rg_variable){
+print <<<EOT
+-->
+<tr class="tr3 f_one"><th> 论坛防恶意注册<font color="red">*</font><br />请输入答案： $rg_question</th>
+<th><input class="input" type="text" name="$rg_variable" /></th></tr>
+<!--
+EOT;
+}if($rg_ifcheck){print <<<EOT
+-->
+<tr class="tr3 f_one"> <th> 注册原因<font color="red">*</font></th>
+<th>
+<textarea name="regreason" rows="4" cols="50"></textarea>
+</th></tr>
+<!--
+EOT;
+}if($customfield){print <<<EOT
+-->
+<tr><td class="h" colspan="2">附加信息</td></tr>
+<!--
+EOT;
+foreach($customfield as $key=>$val){
+$field="field_".(int)$val[id];
+$required=$val[required]?'(<font color="blue">必填内容</font>)':'';
+$editable=(!$userdb[$field]||$val[editable])?'':'disabled';
+$editinfo=!$val[editable]?'<b>请认真填写该栏信息，填写后将不允许修改</b>':'';
+if($val[type]=='1'){
+$field_type="<input class=\"input\" type=\"text\" size=\"30\" name=\"$field\" />";
+}elseif($val[type]=='2'){
+$field_type="<textarea name=\"$field\" rows=\"5\" cols=\"50\"></textarea>";
+}elseif($val[type]=='3'){
+$field_type="<select name=\"$field\">";
+$options=explode("\n",$val[options]);
+foreach($options as $k=>$v){
+list($k,$v)=explode('=',$v);
+$field_type.="<option value=\"$k\">$v</option>";
+}$field_type.="</select>";
+}print <<<EOT
+-->
+<tr class="tr3 f_one">
+	<th>$val[title] {$required}<br />$val[descrip]</th>
+	<th>{$field_type} {$editinfo}</th>
+</tr>
+<!--
+EOT;
+}}if($rg_regdetail){print <<<EOT
+-->
+<tr><td colspan="2" class="h">选填信息</td></tr>
+<tr class="tr3 f_one"><th> 性别</th>
+<th>
+<select name="regsex">
+<option value="1">男</option><option value="2">女</option><option value="0" selected>保密</option>
+</select></th></tr>
+<tr class="tr3 f_one"><th> 生日</th>
+<th>
+<select name="regbirthyear">
+<option value=""></option> 
+<!--
+EOT;
+for($i=$rg_timestart;$i<=$rg_timeend;$i++){
+print <<<EOT
+-->
+<option value="$i">$i</option>  
+<!--
+EOT;
+} 
+print <<<EOT
+-->
+</select>年 
+<select name="regbirthmonth">
+<option value=""></option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+</select>月 
+<select name="regbirthday">
+<option value=""></option>
+<!--
+EOT;
+for($i=1;$i<=31;$i++){
+print <<<EOT
+-->
+<option value="$i">$i</option>  
+<!--
+EOT;
+} 
+print <<<EOT
+-->
+</select>日</font>
+</th></tr>
+<tr class="tr3 f_two"><th>OICQ</th>
+<th><input class="input" type="text" size="20" maxlength="14" name="regoicq" value="" /></th></tr>
+<tr class="tr3 f_one"><th>53kf</th>
+<th><input class="input" type="text" size="20" maxlength="14" name="regkf" value="" />
+&nbsp;<a href="http://www.53kf.com/reg.htm?from=phpwind" target="_blank">注册53kf帐号</a></th></tr>
+<tr class="tr3 f_two"><th> 个人主页</th>
+<th>
+<input class="input" type="text" size="20" maxlength="75" name="reghomepage" value="" /></th></tr>
+<tr class="tr3"><th> 来自</th>
+<th><input class="input" type="text" size="20" maxlength="20" name="regfrom" /></th></tr>
+<tr class="tr3 f_two"><th> 选择您的头像<br />
+<!--
+EOT;
+if($imgpatherror){print <<<EOT
+-->
+--图片路径发生错误,请到后台更正您的图片路径为与您论坛图片保存的目录
+<!--
+EOT;
+}print <<<EOT
+-->
+</th>
+<th><div style="margin-bottom:5px;">
+<select name="regicon" onChange="showimage('$imgpath',this.options[this.selectedIndex].value)">
+<option value="">不使用</option>
+$imgselect
+</select></div><img src="$imgpath/face/none.gif" name="useravatars" />
+</th></tr>
+<tr class="tr3 f_one"><th>个性化签名<br> 将附在每篇文章后<br />
+<a href="faq.php?faqjob=1#5"><font face="verdana">Wind Code </font></a></th>
+<th><textarea cols="50" name="regsign" rows="4"></textarea></th></tr>
+<tr class="tr3 f_two"><th> 自我简介<br>--少于100字节</th>
+<th><textarea name="regintroduce" rows="4" cols="50"></textarea></th></tr>
+<tr class="tr3 f_one"><th> 是否接受系统邮件</th>
+<th><input type="radio" name="regifemail" value="1" checked /> 接收邮件
+<input type="radio" name="regifemail" value="2" /> 不接收邮件</th></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></div>
+<input type="hidden" value="$forward" name="forward" />
+<input type="hidden" value="2" name="step" />
+<div style="text-align:center;margin-bottom:25px;">
+<input class="btn" type="submit" name="regsubmit" value="提 交" /></div></form>
+<script language="JavaScript1.2">
+document.register.regname.focus();
+function showimage(imgpath,value){
+	if(value!= '') {
+		document.images.useravatars.src=imgpath+'/face/'+value;
+	} else{
+		document.images.useravatars.src=imgpath+'/face/none.gif';
+	}
+}
+function regcheck(formct){
+	if (formct.regname.value=='' || formct.regpwd.value=='' || formct.regpwdrepeat.value==''){
+		alert('会员名或密码为空,请填写');
+		return false;
+	}
+	if (formct.regpwd.value!=formct.regpwdrepeat.value){
+		alert('两次输入的密码不一致，请检查后重试。');
+		return false;
+	}
+	if (formct.regpwd.value.length<6){
+		alert('密码太少，请用6位以上');
+		return false;
+	}
+	formct.regsubmit.disabled=true;
+}
+function checkpwd(){
+	var pwd = document.getElementById("regpwd").value;
+	var pwdrepeat = document.getElementById("regpwdrepeat").value;
+	if (pwd.length<6){
+		document.getElementById("pwd_info").innerHTML = "<font color=\"red\">密码太少，请用6位以上</font>";
+	} else{
+		document.getElementById("pwd_info").innerHTML = "";
+	}
+	if(pwdrepeat){
+		checkpwdrepeat();
+	}
+}
+function checkpwdrepeat(){
+	var pwd = document.getElementById("regpwd").value;
+	var pwdrepeat = document.getElementById("regpwdrepeat").value;
+	if (pwdrepeat==pwd){
+		document.getElementById("pwdrepeat_info").innerHTML = "";
+	} else{
+		document.getElementById("pwdrepeat_info").innerHTML = "<font color=\"red\">两次输入的密码不一致，请检查后重试。</font>";
+	}
+}
+function checkemail(){
+	var email = document.getElementById("regemail").value;
+	var myReg = /^[-a-zA-Z0-9_\.]+@([0-9A-Za-z][0-9A-Za-z-]+\.)+[A-Za-z]{2,5}$/; 
+	if(myReg.test(email)){
+		document.getElementById("email_info").innerHTML = "";
+	} else{
+		document.getElementById("email_info").innerHTML = "<font color=\"red\">Email 格式错误!</font>";
+	}
+}
+</script>
+<!--
+EOT;
+}?>
+-->
+

@@ -1,0 +1,486 @@
+<!--<?php print <<<EOT
+-->
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td align="left"><img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> 
+<b><a href="$db_bfn">$db_bbsname </a> &raquo; 
+<!--
+EOT;
+if($action=='log'){print <<<EOT
+-->
+<a href="hack.php?H_name=toolcenter&action=log">{$db_currencyname}记录</a>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+<a href="hack.php?H_name=toolcenter">道具中心</a>
+<!--
+EOT;
+}if($owner){print <<<EOT
+-->
+&raquo; $owner 的道具商店
+<!--
+EOT;
+}print <<<EOT
+-->
+</b></td>
+<td align="right"></td></tr></table></div>
+<div style="height:10px;"></div>
+<!--
+EOT;
+if($action=='use'){
+if(!$toolid){print <<<EOT
+-->
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr>
+<!--
+EOT;
+$num=0;
+foreach($tooldb as $key => $value){
+$id=$value[id];
+$num++;
+print <<<EOT
+-->
+<td width="33%" valign="top">
+<div class="t">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td class="h" colspan="3"><b>$value[name]</b></td></tr>
+<tr class="tr3">
+<!--
+EOT;
+if($value[logo]){
+print <<<EOT
+-->
+<td rowspan="5" align="center" width="40%"><a href="hack.php?H_name=toolcenter&action=use&toolid=$id&tid=$tid" onclick="return checkset('$value[descrip]')"><img src="$imgpath/$stylepath/tool/$value[logo]" /></a></td>
+<!--
+EOT;
+}print <<<EOT
+-->
+<th colspan="2">$value[descrip]</th></tr>
+<tr class="tr3"><td align="center" width="20%">价格</td><td>$value[price]</td></tr>
+<tr class="tr3"><td align="center">数量</td><td>$value[nums]</td></tr>
+<tr class="tr3"><td colspan="2"><a href="hack.php?H_name=toolcenter&action=use&toolid=$id&tid=$tid" onclick="return checkset('$value[descrip]')"><b>[使用道具]</b></a></td></tr>
+</table></div>
+</td>
+<!--
+EOT;
+if($num==3){
+$num=0;
+print <<<EOT
+-->
+</tr><tr>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</tr></table></div>
+<script language="JavaScript">
+function checkset(tool_msg){
+	if(!confirm('使用该道具' +tool_msg+'，确认要使用这个道具！')){
+		return false;
+	}
+}
+</script>
+<!--
+EOT;
+}elseif($toolid == 3){print <<<EOT
+-->
+<form action="hack.php?H_name=toolcenter&action=use&" method="post">
+<input type="hidden" name="tid" value="$tid" />
+<input type="hidden" name="toolid" value="$toolid" />
+<input type="hidden" name="step" value="2" />
+<div class="t" style="margin-top:15px;">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td class="h"><b>道具使用</b></td></tr>
+<tr class="tr1">
+<th>
+<input type="checkbox" name="title2" value="1" /><img src="$imgpath/post/editor/bold.gif" />
+<input type="checkbox" name="title3" value="1" /><img src="$imgpath/post/editor/italic.gif" />
+<input type="checkbox" name="title4" value="1" /><img src="$imgpath/post/editor/underline.gif" />
+<br /><br />
+&nbsp;颜色 
+<input name="title1" type="radio" value="" />不使用
+<input name="title1" type="radio" value="red" /><font color="red">红色</font>
+<input name="title1" type="radio" value="blue" /><font color="blue">蓝色</font>
+<input name="title1" type="radio" value="green" /><font color="green">绿色</font>
+<input name="title1" type="radio" value="orange" /><font color="orange">橙色</font>
+<input name="title1" type="radio" value="silver" /><font color="silver">银色</font>
+</th></tr>
+</table></div>
+<div style="text-align:center;margin-bottom:25px"><input class="btn" type="submit" value="提 交" /></div></form>
+<!--
+EOT;
+}elseif($toolid == 8){print <<<EOT
+-->
+<form action="hack.php?H_name=toolcenter&action=use&" method="post">
+<input type="hidden" name="toolid" value="$toolid" />
+<input type="hidden" name="step" value="2" />
+<div class="t" style="margin-top:15px">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td class="h" colspan="2"><b>道具使用</b></td></tr>
+<tr class="tr3"><th width="15%">请输入新的用户名</th><th><input type="text"  class="input" name="pwuser" /></th></tr>
+</table></div>
+<div style="text-align:center;margin-bottom:25px"><input class="btn" type="submit" value="提 交" /></div></form>
+<!--
+EOT;
+}}else{print <<<EOT
+-->
+<div class="t">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr class="tr4" style="text-align:center;">
+<td style="padding:5px 0 5px 0;"><a href="hack.php?H_name=toolcenter">系统交易中心</a></td>
+<td><a href="hack.php?H_name=toolcenter&action=user">用户交易中心</a></td>
+<td><a href="hack.php?H_name=toolcenter&action=user&uid=$winduid">我的道具商店</a></td>
+<td><a href="hack.php?H_name=toolcenter&action=mytool">我的道具箱</a></td>
+</tr></table></div>
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr>
+<td width="20%" valign="top">
+<div class="t" style="margin-left:0px;">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td class="h" style="text-align:center" colspan="2"><b>基本信息</b></td></tr>
+<tr class="tr3"><th>{$db_currencyname}</th><th>$userdb[currency]</th></tr>
+<tr class="tr3"><th width="35%">精华</th><th>$userdb[digests]</th></tr>
+<tr class="tr3"><th>发帖</th><th>$userdb[postnum]</th></tr>
+<tr class="tr3"><th>$db_rvrcname</th><th>$userrvrc $db_rvrcunit</th></tr>
+<tr class="tr3"><th>$db_creditname</th><th>$userdb[credit] $db_creditunit</th></tr>
+<tr class="tr3"><th>$db_moneyname</th><th>$userdb[money] $db_moneyunit</th></tr>
+<tr class="tr3"><td colspan="2"><a href="hack.php?H_name=toolcenter&action=use">[使用道具]</a></td></tr>
+</table></div>
+</td><td valign="top">
+<div class="t" style="width:98%;margin-right:0">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td class="h"><b><b>提示信息</b></b></td></tr>
+<tr class="tr1"><th>说明：<br>1. 论坛用户可通过道具中心进行会员道具的购买、转让等操作。<br>2. {$db_currencyname}可通过帐户充值或管理员的奖励获得。<br>3. 道具所具备的功能、价格、使用限制等可参考相应道具的详细信息中的说明。<br>4. 针对用户使用的道具通常是点击相应的用户进入该用户资料后点击使用道具连接再选择所使用的道具。<br>5. 针对帖子使用的道具在进入帖子浏览页面中选择相应的道具使用图片和道具使用连接。</th></tr>
+</table></div>
+</td></tr></table></div>
+<!--
+EOT;
+if(!$action){print <<<EOT
+-->
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr>
+<!--
+EOT;
+$num=0;
+foreach($tooldb as $key => $value){
+$id=$value[id];
+$num++;
+print <<<EOT
+-->
+<td width="33%" valign="top">
+<div class="t" style=" margin-left:0px; margin-right:0px;">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td class="h" style="text-align:center" colspan="3"><b>$value[name]</b></td></tr>
+<tr class="tr3">
+<!--
+EOT;
+if($value[logo]){
+print <<<EOT
+-->
+<td rowspan="5" width="40%"><a href="hack.php?H_name=toolcenter&action=buy&id=$id"><img src="$imgpath/$stylepath/tool/$value[logo]" /></a></td>
+<!--
+EOT;
+}print <<<EOT
+-->
+<th colspan="2">$value[descrip]</th></tr>
+<tr class="tr3"><td align="center" width="20%">价格</td><td>$value[price]</td></tr>
+<tr class="tr3"><td align="center">库存</td><td>$value[stock]</td></tr>
+<tr class="tr3" align="center"><td colspan="2"><a href="hack.php?H_name=toolcenter&action=buy&id=$id"><b>购买</b></a></td></tr>
+</table></div>
+</td>
+<!--
+EOT;
+if($num==3){
+$num=0;
+print <<<EOT
+-->
+</tr><tr>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</tr></table></div>
+<!--
+EOT;
+} elseif($action=='user'){print <<<EOT
+-->
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr>
+<!--
+EOT;
+$num=0;
+foreach($tooldb as $key => $value){
+$id=$value[toolid];
+$num++;
+print <<<EOT
+-->
+<td width="33%" valign="top">
+<div class="t" style="margin-right:0px; margin-left:0px;">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td class="h" style="text-align:center" colspan="3"><b>$value[name]</b></td></tr>
+<tr class="tr3">
+<!--
+EOT;
+if($value[logo]){
+print <<<EOT
+-->
+<td rowspan="5"><a href="hack.php?H_name=toolcenter&action=buyuser&id=$id&uid=$value[uid]"><img src="$imgpath/$stylepath/tool/$value[logo]" /></a></td>
+<!--
+EOT;
+}print <<<EOT
+-->
+<th colspan="2">$value[descrip]</th></tr>
+<tr class="tr3"><td width="20%">出售者</td><td>$value[username]</td></tr>
+<tr class="tr3"><td>转让价格</td><td>$value[sellprice]</td></tr>
+<tr class="tr3"><td>转让数量</td><td>$value[sellnums]</td></tr>
+<tr class="tr3"><td colspan="2"><a href="hack.php?H_name=toolcenter&action=buyuser&id=$id&uid=$value[uid]"><b>购买</b></a></td></tr>
+</table></div>
+</td>
+<!--
+EOT;
+if($num==3){
+$num=0;
+print <<<EOT
+-->
+</tr><tr>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</tr></table></div>
+<!--
+EOT;
+} elseif($action=='mytool'){print <<<EOT
+-->
+<div class="t">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td class="h" colspan="9"><b>$windid 的道具箱</b></td></tr>
+<tr class="tr2">
+<td>ID</td>
+<td>名称</td>
+<td>道具数量</td>
+<td>转让数量</td>
+<td>价格</td>
+<td>库存</td>
+<td>购买</td>
+<td>转让</td>
+</tr>
+<!--
+EOT;
+foreach($tooldb as $key => $value){
+$id=$value[toolid];
+print <<<EOT
+-->
+<tr class="tr3">
+<td>$id</td>
+<td><a href="hack.php?H_name=toolcenter&action=buy&id=$id">$value[name]</a></td>
+<td>$value[nums]</td>
+<td>$value[sellnums]</td>
+<td>$value[price]</td>
+<td>$value[stock]</td>
+<td><a href="hack.php?H_name=toolcenter&action=buy&id=$id">购买</a></td>
+<td><a href="hack.php?H_name=toolcenter&action=sell&id=$id">转让</a></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></div>
+<!--
+EOT;
+} elseif($action=='sell'){print <<<EOT
+-->
+<form action="hack.php?H_name=toolcenter&" method="post">
+<input type="hidden" name="action" value="sell" />
+<input type="hidden" name="step" value="2" />
+<input type="hidden" name="id" value="$id" />
+<div class="t">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="2" style="text-align:center"><b>道具交易</b></td></tr>
+<!--
+EOT;
+if($rt[logo]){
+print <<<EOT
+-->
+<tr class="tr3"><td colspan="2"><img src="$imgpath/$stylepath/tool/$rt[logo]" /></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr class="tr3"><th width="25%">名称</th><th>$rt[name]</th></tr>
+<tr class="tr3"><th>转让价格</th><th><input type="text"  class="input" name="price" value="$rt[price]" /></th></tr>
+<tr class="tr3"><th>转让数量</th><th><input type="text"  class="input" name="nums" value="1" /></th></tr></table></div>
+<div style="text-align:center;margin-bottom:25px"><input class="btn" type="submit" value="转让" /></div></form>
+<!--
+EOT;
+} elseif($action=='buy'){print <<<EOT
+-->
+<div class="t">
+<table width="100%%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="2"><b>道具资料</b></td></tr>
+<!--
+EOT;
+if($rt[logo]){
+print <<<EOT
+-->
+<tr class="tr3"><td colspan="2"><img src="$imgpath/$stylepath/tool/$rt[logo]" /></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr class="tr3"><th width="25%">名称</th><th>$rt[name]</th></tr>
+<tr class="tr3"><th>描述</th><th>$rt[descrip]</th></tr>
+<tr class="tr3"><th>价格</th><th>$rt[price]</th></tr>
+<tr class="tr3"><th>库存</th><th>$rt[stock]</th></tr>
+<tr class="tr4"><td colspan="2"><b>使用积分限制</b></th></tr>
+<tr class="tr3"><th>发帖</th><th>{$condition[credit][postnum]}</th></tr>
+<tr class="tr3"><th>精华</th><th>{$condition[credit][digests]}</th></tr>
+<tr class="tr3"><th>{$db_rvrcname}</th><th>{$condition[credit][rvrc]}</th></tr>
+<tr class="tr3"><th>{$db_moneyname}</th><th>{$condition[credit][money]}</th></tr>
+<tr class="tr3"><th>{$db_creditname}</th><th>{$condition[credit][credit]}</th></tr>
+<!--
+EOT;
+foreach($_CREDITDB as $key => $value){print <<<EOT
+-->
+<tr class="tr3"><th>$value[0]</th><th>{$condition[credit][$key]}</th></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr class="tr4"><td colspan="2"><b>用户组与版块限制</b></td></tr>
+<tr class="tr3"><th>允许使用道具的用户组</th>
+<th>
+<!--
+EOT;
+if($usergroup){print <<<EOT
+-->
+<table cellspacing="0" cellpadding="0" border="0" width="100%" align="center"><tr>$usergroup</tr></table>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+所有用户组
+<!--
+EOT;
+}print <<<EOT
+-->
+</th></tr>
+<tr class="tr3"><th>允许使用道具的版块</th>
+<th>
+<!--
+EOT;
+if($usergroup){print <<<EOT
+-->
+<table cellspacing="0" cellpadding="0" border="0" width="100%" align="center"><tr>$forumcheck</tr></table>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+所有版块
+<!--
+EOT;
+}print <<<EOT
+-->
+</th></tr></table></div>
+<form action="hack.php?H_name=toolcenter&" method="post">
+<input type="hidden" name="action" value="buy" />
+<input type="hidden" name="step" value="2" />
+<input type="hidden" name="id" value="$id" />
+<div class="t">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="2"><b>道具交易</b></td></tr>
+<tr class="tr3"><th width="25%">价格</th><th>$rt[price]</th></tr>
+<tr class="tr3"><th>库存</th><th>$rt[stock]</th></tr>
+<tr class="tr3"><th>购买数量</th><th><input type="text"  class="input" name="nums" value="1" /></th></tr></table></div>
+<div style="text-align:center;margin-bottom:25px"><input class="btn" type="submit" value="购买" /></div></form>
+<!--
+EOT;
+} elseif($action=='buyuser'){print <<<EOT
+-->
+<div class="t">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="2"><b>道具资料</b></td></tr>
+<!--
+EOT;
+if($rt[logo]){
+print <<<EOT
+-->
+<tr class="tr3"><td colspan="2"><img src="$imgpath/$stylepath/tool/$rt[logo]" /></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr class="tr3"><th width="25%">名称</th><th>$rt[name]</th></tr>
+<tr class="tr3"><th>描述</th><th>$rt[descrip]</th></tr>
+<tr class="tr3"><th>价格</th><th>$rt[price]</th></tr>
+<tr class="tr3"><th>库存</th><th>$rt[stock]</th></tr>
+<tr class="tr4"><td colspan="2"><b>使用积分限制</b></td></tr>
+<tr class="tr3"><th>发帖</th><th>{$condition[credit][postnum]}</th></tr>
+<tr class="tr3"><th>精华</th><th>{$condition[credit][digests]}</th></tr>
+<tr class="tr3"><th>{$db_rvrcname}</th><th>{$condition[credit][rvrc]}</th></tr>
+<tr class="tr3"><th>{$db_moneyname}</th><th>{$condition[credit][money]}</th></tr>
+<tr class="tr3"><th>{$db_creditname}</th><th>{$condition[credit][credit]}</th></tr>
+<!--
+EOT;
+foreach($_CREDITDB as $key => $value){print <<<EOT
+-->
+<tr class="tr3"><th>$value[0]</th><th>{$condition[credit][$key]}</th></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr class="tr4"><td colspan="2"><b>用户组与版块限制</b></td></tr>
+<tr class="tr3"><th>允许使用道具的用户组</th>
+<th>
+<!--
+EOT;
+if($usergroup){print <<<EOT
+-->
+<table cellspacing="0" cellpadding="0" border="0" width="100%" align="center"><tr>$usergroup</tr></table>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+所有用户组
+<!--
+EOT;
+}print <<<EOT
+-->
+</th></tr>
+<tr class="tr3"><th>允许使用道具的版块</th>
+<th>
+<!--
+EOT;
+if($usergroup){print <<<EOT
+-->
+<table cellspacing="0" cellpadding="0" border="0" width="100%" align="center"><tr>$forumcheck</tr></table>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+所有版块
+<!--
+EOT;
+}print <<<EOT
+-->
+</th></tr></table></div>
+<form action="hack.php?H_name=toolcenter&" method="post">
+<input type="hidden" name="action" value="buyuser" />
+<input type="hidden" name="step" value="2" />
+<input type="hidden" name="id" value="$id" />
+<input type="hidden" name="uid" value="$uid" />
+<div class="t">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="2"><b>道具交易</b></td></tr>
+<tr class="tr3"><th width="25%" class="f_one">转让价格</th><th>$rt[sellprice]</th></tr>
+<tr class="tr3"><th>转让数量</th><th>$rt[sellnums]</th></tr>
+<tr class="tr3"><th>购买数量</th><th><input type="text"  class="input" name="nums" value="1" /></th></tr></table></div>
+<div style="text-align:center;margin-bottom:25px"><input class="btn" type="submit" value="购买" /></div></form>
+<!--
+EOT;
+}}?>-->

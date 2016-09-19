@@ -1,0 +1,25 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width='98%' align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>
+可以统计每月到访的ip量，每日到访的ip量，站长可以根据统计清楚的了解站点的流量情况。
+<br><br></td></tr></table>
+<br>
+<form action="$basename" method=post name=creat>
+<table width='98%' align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>IP统计设置</b></td></tr>
+<tr class=b><td width='25%'>是否开启IP统计</td>
+<td><input type=radio value=1 $ipstates_Y name="ipstates">是 <input type=radio value=0 $ipstates_N name="ipstates">否
+</td></tr></table>
+<input type=hidden name="action" value="submit">
+<br><center>
+<input type=submit value="提 交"></center></form>
+
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>
+-->

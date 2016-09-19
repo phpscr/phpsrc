@@ -1,0 +1,67 @@
+<!--<?php
+print <<<EOT
+-->
+<form action="job.php?votejop=vote" method=post name=vote>
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=3 $i_table>
+<tr bgcolor=$forumcolorone><td class=head colspan=2>投票主题：$subject</td><td align=right class=head>
+<a href='read.php?fid=$fid&tid=$tid&viewvoter=$ifview'>查看投票的会员</a></td></tr>
+<!--
+EOT;
+foreach($votedb as $key=>$vote){
+print <<<EOT
+-->
+<tr height=30>
+<td align=left bgcolor=$forumcolorone width=30%>
+<!--
+EOT;
+if(!$havevote || $action=='modify'){
+print <<<EOT
+-->
+<input type='$votetype' value='$key' name="voteid[]">
+<!--
+EOT;
+}print <<<EOT
+-->
+
+<b>$vote[name]</b> </td>
+<td bgcolor=$forumcolorone>
+<img src='$imgpath/post/vote/bar1.gif' width=$vote[width] height=10>&nbsp;$vote[num]&nbsp;票</td>
+<td bgcolor=$forumcolorone>$vote[voter]</td>
+</tr>
+<!--
+EOT;
+}
+print <<<EOT
+-->
+<tr height=22 bgcolor=$forumcolorone align=center><td colspan=4>
+<!--
+EOT;
+if($havevote=='havevote' && $action!='modify'){print <<<EOT
+-->
+&nbsp;* <b><a href='read.php?fid=$fid&tid=$tid&action=modify'>修改投票</a></b>
+<!--
+EOT;
+}else{
+if($action=='modify'){print <<<EOT
+-->
+<input type=hidden value='modify' name=voteaction>
+<!--
+EOT;
+}if($multi){print <<<EOT
+-->
+限选个数：$multi&nbsp;&nbsp;
+<!--
+EOT;
+}print <<<EOT
+-->
+<input type=hidden value='$pollid' name=pollid>
+&nbsp;&nbsp;<input type='submit' value='提 交'>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<tr><td class=head colspan=4>总共有<b>{$votesum}</b>人参与本次投票 发起于：$tpc_date</td></tr></table></form><br>
+<!--
+EOT;
+?>

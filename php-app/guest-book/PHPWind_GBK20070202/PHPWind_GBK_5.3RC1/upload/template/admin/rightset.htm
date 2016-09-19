@@ -1,0 +1,51 @@
+<!--<?php
+include_once PrintEot('left');
+if (empty($action)){
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>
+<ul>
+说明：此功能只有论坛创始人有权限使用<br><br>1.进行此项管理前请确定您设置的用户组已经设置进后台的权限<br><br>2.可以设置拥有后台管理权限的用户组相应的管理选项（每个管理选项都对应一个管理权限控制）<br><br>
+</ul>
+<br></td></tr></table><br>
+
+<table width=70% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td class=head colspan=5>后台管理用户组</td></tr>
+<tr align=center class=head_2><td width=5%>ID</td><td>名称</td><td width=10%>编辑</td></tr>
+<!--
+EOT;
+foreach($groupdb as $group){
+print <<<EOT
+-->
+<tr align=center class=b><td>$group[gid]</td><td>$group[gptitle]</td>
+<td><input type=button value='权限' onclick=location.href='$basename&action=edit&gid=$group[gid]'>
+</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></td></tr></table>
+<!--
+EOT;
+} elseif($action=='edit'){
+print <<<EOT
+-->
+<br><br><form action="$basename&action=edit&gid=$gid&" method=post>
+<table width=60% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td class=head colspan=2>$ltitle[$gid]<b>权限控制</b></td></tr>
+$rightselect
+</table></td></tr></table>
+<br><center>
+<input type=hidden name='step' value='2'>
+<input type=submit value='提 交'></center>
+</form>
+<!--
+EOT;
+}
+include_once PrintEot('adminbottom');
+?>
+-->

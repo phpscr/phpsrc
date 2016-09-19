@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{$lang.home}{if $ur_here} - {$ur_here} {/if}</title>
+<meta name="Copyright" content="Douco Design." />
+<link href="templates/public.css" rel="stylesheet" type="text/css">
+{include file="javascript.htm"}
+</head>
+<body>
+<div id="dcWrap">
+ {include file="header.htm"}
+ <div id="dcLeft">{include file="menu.htm"}</div>
+ <div id="dcMain">
+  {include file="ur_here.htm"}
+  <div id="cloud" class="mainBox" style="{$workspace.height}">
+   <h3>{$ur_here}</h3>
+   <!-- {if $rec eq 'handle'} 扩展安装 -->
+   <div class="handle">
+   <h2><!-- {if $mode eq 'update' || $rec eq 'system_update'} -->{$lang.cloud_title_update}<!-- {else} -->{$lang.cloud_title_install}<!-- {/if} -->{$type} {$cloud_id}</h2>
+   <!-- {/if} -->
+   <!-- {if $rec eq 'order'} 扩展购买 -->
+   <div class="order">
+    {$cloud_html}
+    <!-- {if $cloud_html} if_cloud_html start -->
+    <!-- {if $action eq 'default'} -->
+    <p>
+     <form action="cloud.php?rec=order&type={$type}&action=checkout&cloud_id={$cloud_id}" method="post">
+     <input type="hidden" name="token" value="{$token}" />
+     <input name="submit" class="btn" type="submit" value="{$lang.cloud_order_submit}" />
+     </form>
+    </p>
+    <!-- {elseif $action eq 'checkout'} -->
+    <script type="text/javascript">
+    {literal}
+    $(document).ready(function(){
+      $(".btnPayment").click(function(){
+          $("#douFrame").show();
+      });
+    });
+    {/literal}
+    </script>
+    <div id="douFrame" style="display:none">
+     <div class="bg"></div>
+     <div class="frame selectBox">
+      <div class="content">
+       <a href="{$module_link}" class="btn">{$lang.cloud_pay_success}</a> <a href="{$module_link}" class="btnGray">{$lang.cloud_pay_fail}</a>
+      </div>
+     </div>
+    </div>
+    <!-- {/if} -->
+    <!-- {else} if_cloud_html else -->
+    {$lang.cloud_account_cue} ! <a href="cloud.php?rec=account" class="btn">{$lang.cloud_account}</a>
+    <!-- {/if} if_cloud_html end -->
+   </div>
+   <!-- {/if} -->
+   <!-- {if $rec eq 'account'} 云账户 -->
+   <div class="account">
+    <!-- {if $action eq 'set'} -->
+    <form action="cloud.php?rec=account_post" method="post">
+     {$lang.cloud_account_user}：<input type="text" name="cloud_user" size="30" class="inpMain" value="{$cloud_account.user}" />
+     {$lang.cloud_account_password}：<input type="password" name="cloud_password" size="30" class="inpMain" />
+     <input type="hidden" name="token" value="{$token}" />
+     <input type="submit" name="submit" class="btn" value="{$lang.btn_submit}" />
+     <input type="button" class="btnGray" value="{$lang.btn_cancel}" onclick="location.href='cloud.php?rec=account'" />
+     <p class="guide">{$lang.cloud_account_register_0} <a href="http://www.douco.com/user/register" target="_blank">{$lang.cloud_account_register}</a></p>
+    </form>
+    <!-- {else} -->
+    <em>{$lang.cloud_account_seted}：{$cloud_account.user}</em>
+    <a href="cloud.php?rec=account&action=set" class="btn">{$lang.cloud_account_reset}</a>
+    <a href="cloud.php?rec=account_clean" class="btnGray">{$lang.cloud_account_clean}</a>
+    <p class="guide">如果您已经购买授权可以 <a href="cloud.php?rec=handle&type=onedou&cloud_id=copyright">点此去除DouPHP版权信息</a></p>
+    <!-- {/if} -->
+   </div>
+   <!-- {/if} -->
+   
+<!-- {if $rec neq 'handle'} 云安装操作时信息实时输出，所以隐藏以下部分 -->
+   </div>
+  </div>
+ {include file="footer.htm"}
+</div>
+</body>
+</html>
+<!-- {/if} -->

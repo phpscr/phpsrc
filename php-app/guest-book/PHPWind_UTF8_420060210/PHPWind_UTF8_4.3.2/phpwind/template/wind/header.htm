@@ -1,0 +1,153 @@
+<!--<?php
+print <<<EOT
+-->
+<html>
+<head>$expires
+<title>$subject $forumname $db_bbsname - powered by phpwind.net</title>
+<meta http-equiv="Content-Type" content="text/html; charset=$db_charset">
+<meta name="keywords" content="$db_metakeyword" />
+<meta name="description" content="$db_metadescrip" />
+
+<!--css--><style type="text/css">
+body {font-family: Verdana;FONT-SIZE: 12px;MARGIN: 0;color: #000000;background: #ffffff;}
+td {FONT-SIZE: 12px;}
+textarea,input,select{
+	font-family: Verdana;
+	font-size: 12px;
+	background-color: #ffffff;
+}
+form{margin:0px; display:inline}
+div.quote{
+	margin:5px 5px;
+	border:1px dashed $tablecolor;
+	padding:5px;
+	background:$forumcolorone;
+	line-height:normal;
+}
+a { TEXT-DECORATION: none;}
+a:hover{text-decoration: underline;}
+img {border:0;}
+.banner{background: #84AACE;}
+.head {color: #FFFFFF;background: #84AACE;padding: 5px;font-weight:bold;}
+.head a{color: #FFFFFF;}
+.f_one {background: $forumcolorone;}
+.f_two {background: $forumcolortwo;}
+.hr  {border-top: 1px solid $tablecolor; border-bottom: 0; border-left: 0; border-right: 0; }
+.t_one {background: $threadcolorone;}
+.t_two {background: $threadcolortwo;}
+.r_one {background: $readcolorone;}
+.r_two {background: $readcolortwo;}
+.cbg { color:#000000;background: #E5E8EA;}
+.cbg a{ color:#000000;}
+.smalltxt {font-family: Tahoma, Verdana; font-size: 12px;}
+.tinytxt {font-family: Tahoma, Verdana; font-size: 11px;}
+.cfont { color:#FFFFFF; }
+.fnamecolor { color:#003366;}
+.index_font{color: #3A4F6C;background-color:#E5E8EA; font-weight:bold;padding: 5px;}
+.tpc_title { font-size: 12px;font-weight:bold;}
+.tpc_content { font-size: 13px;}
+.i_table {BORDER: $tablecolor 1px solid;background:#D6E3EF;}
+.tool {color:#84AACE;}
+
+.menu{position:absolute;}
+</style><!--css-->
+</head>
+<body vlink="#333333" link="#333333">
+$msgsound
+<table cellspacing=0 cellpadding=0 width='$tablewidth' $i_table align=center>
+<tr valign='bottom'><td align='left' class=banner>
+<a href='./'><img src='$imgpath/$stylepath/logo.gif'></a></td>
+<td class="banner" align="right" valign="middle">$header_ad &nbsp;</td></tr>
+<tr><td align='center' height=1 bgcolor=#ffffff colspan=2></td></tr>
+<tr><td align='center' class=cbg colspan=2 height=26>
+&raquo;
+<!--
+EOT;
+if($groupid=='guest'){print <<<EOT
+-->
+您尚未 <a href="login.php"><b>登录</b></a>
+&nbsp; <a href="register.php"><b>注册</b></a>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+<b>$windid</b>&nbsp;<a href="login.php?action=quit">退出</a>
+| <a href="profile.php">控制面板</a> 
+| <a href='message.php' target="_blank">
+<!--
+EOT;
+if($winddb[newpm]==1){print <<<EOT
+-->
+<font color=red>您有新消息</font></a>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+短消息</a>
+<!--
+EOT;
+}print <<<EOT
+-->
+| <a href='search.php'>搜索</a> 
+<!--
+EOT;
+if($gp_allowmember){print <<<EOT
+-->
+| <a href='member.php'>会员</a>
+<!--
+EOT;
+}if($gp_allowsort){print <<<EOT
+-->
+| <a href='sort.php'>统计与排行</a>
+<!--
+EOT;
+}if($_G['show']){print <<<EOT
+-->
+| <a href='show.php'>展区</a>
+<!--
+EOT;
+}print <<<EOT
+-->
+| <a href="#" id="td_hack" onclick="click_open('menu_hack','td_hack');"  onMouseOver="mouseover_open('menu_hack','td_hack');">插件中心</a>
+<!--
+EOT;
+}print <<<EOT
+-->
+| <a href='faq.php'>帮助</a>
+| <a href='$db_bfn'>社区</a>
+| <a href='simple/' target=_blank>无图版</a>
+<!--
+EOT;
+if($windid==$manager ||$SYSTEM['allowadmincp']){print <<<EOT
+-->
+| <a href='admin.php' target=_blank>系统设置</a>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+</table>
+<div id="showmenu" style="z-index:100;display:none;"></div>
+<div id="menu_hack" class="menu" style="display:none;">
+	<table width="120" cellspacing=1 cellpadding=5 $i_table>
+		<tr>
+			<td class="head">插件中心</td>
+		</tr>
+<!--
+EOT;
+foreach($db_hackdb as $key=>$hack){
+if($hack[4] && $hack[2]){print <<<EOT
+-->
+		<tr>
+			<td class="f_one"><a href='hack.php?H_name=$hack[1]'>$hack[0]</a></td>
+		</tr>
+<!--
+EOT;
+}}print <<<EOT
+-->
+	</table>
+</div>
+<br><br>
+<!--
+EOT;
+?>-->

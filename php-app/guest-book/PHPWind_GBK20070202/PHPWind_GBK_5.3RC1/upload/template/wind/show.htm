@@ -1,0 +1,160 @@
+<!--<?php print <<<EOT
+-->
+<div class="t3" style="margin-bottom:15px;">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td align="left"><img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> 
+<b><a href="$db_bfn">$db_bbsname </a> &raquo; <a href="show.php">论坛展区</a>
+<!--
+EOT;
+if($owner){
+if($type==1 || $action=='pic'){print <<<EOT
+-->
+&raquo; <a href="show.php?uid=$uid&type=$type">$owner 的个人展区(图片)</a>
+<!--
+EOT;
+}elseif($type==2){print <<<EOT
+-->
+&raquo; <a href="show.php?uid=$uid&type=$type">$owner 的个人展区(文件)</a>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+&raquo; <a href="show.php?uid=$uid">$owner 的个人展区</a>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</b></td></tr></table></div>
+<!--
+EOT;
+if(!$action){print <<<EOT
+-->
+<form action="show.php?" method="post" name="show">
+<input type="hidden" name="uid" value="$uid" />
+<div class="t3"><table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr><td>
+		<div class="fr">
+		用户名: <input class="input" type="text" name="pwuser" size="10" />
+		<input class="btn" type="submit" value="提 交" />
+		<select name="fid" onchange="javascript:submit()">
+		<option value=''>分类</option>
+		$forumcache
+		</select>
+		<select name="type" onchange="javascript:submit()">
+		<option value=''>类型</option>
+		<option value="1" $type_1>图片</option>
+		<option value="2" $type_2>文件</option>
+		</select></div>
+	</td></tr>
+</table></div>
+</form>
+
+<div class="t" style="margin:2px auto">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td class="h" colspan="4"><b>论坛展区</b></td></tr>
+<tr class="tr3">
+<!--
+EOT;
+$num=0;
+foreach($showdb as $key => $value){
+$id=$value[id];
+$num++;
+print <<<EOT
+-->
+<td width="25%">
+	<div style="height:130px;" class="tiptop tac">
+<!--
+EOT;
+if($value[type]=='img'){
+if($value[a_url]=='imgurl'){
+$imgurl="job.php?action=showimg&tid={$value[tid]}&pid={$value[pid]}&fid={$value[fid]}&aid={$value[aid]}&verify=".md5("showimg{$value[tid]}{$value[pid]}{$value[fid]}{$value[aid]}{$db_hash}");
+print <<<EOT
+-->
+		<img src="$imgpath/$stylepath/file/img.gif" />&nbsp;
+		<a href="$imgurl" target="_blank">$value[name]</a>
+<!--
+EOT;
+}elseif($value[a_url]=='none'){
+print <<<EOT
+-->
+		<img src="$imgpath/$stylepath/none.gif" />
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+		<a href="show.php?action=pic&aid=$value[aid]">
+		<img src="$value[a_url]" width="150" height="120" /></a>
+<!--
+EOT;
+}}else{
+if($value[a_url]=='none'){ print <<<EOT
+-->
+		<img src="$imgpath/$stylepath/none.gif" />
+<!--
+EOT;
+} else { print <<<EOT
+-->
+		<img src="$imgpath/$stylepath/file/zip.gif" />
+		<a href="job.php?action=download&pid=$value[pid]&tid=$value[tid]&aid=$value[aid]" target="_blank">
+		&nbsp;$value[name]</a>
+<!--
+EOT;
+}}print <<<EOT
+-->
+	</div>
+	<div style="text-align:left;margin-top:5px">
+	作者 : <a href="profile.php?action=show&uid=$value[uid]" target="_blank">$value[username]</a><br />
+	论坛 : <a href="thread.php?fid=$value[fid]" target="_blank">$value[fname]</a><br />
+	说明 : <a href="read.php?tid=$value[tid]" target="_blank">$value[descrip]</a><br />
+	</div>
+</td>
+<!--
+EOT;
+if($num==4){
+$num=0;
+print <<<EOT
+-->
+</tr><tr class="tr3">
+<!--
+EOT;
+}}print <<<EOT
+-->
+</tr></table></div><div class="t3" style="margin:0 auto 15px">$pages</div>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+<div class="t" style="margin-top:15px;"><table width="100%" cellspacing="0" cellpadding="0">
+	<tr class="tr2"><td>
+		<table width="100%" cellspacing="0" cellpadding="3" align="center">
+			<tr><td width="10%">
+<!--
+EOT;
+if(!$nopre){print <<<EOT
+-->
+				<a href="job.php?action=redirect&goto=pre&aid=$aid">上一张</a>
+<!--
+EOT;
+}print <<<EOT
+-->
+				</td>
+				<td align="center"><a href="read.php?tid=$rt[tid]#$rt[pid]" target="_blank">$rt[descrip]</a></td>
+				<td width="10%" align="right">
+<!--
+EOT;
+if(!$nonext){print <<<EOT
+-->
+					<a href="job.php?action=redirect&goto=next&aid=$aid">下一张</a>
+<!--
+EOT;
+}print <<<EOT
+-->
+				</td>
+			</tr>
+		</table>
+	</td></tr>
+	<tr class="f_one"><td align="center"><a href="$rt[a_url]" target="_blank"><img src="$rt[a_url]" onload="if(this.width>850)this.width=850;"></a></td></tr>
+</table></div>
+<!--
+EOT;
+}?>-->

@@ -1,0 +1,208 @@
+<!--<?php
+print <<<EOT
+-->
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td align="left"><img src="$imgpath/$stylepath/index/home.gif" align="absbottom"> <b><a href="$db_bfn">$db_bbsname</a> -> 活动中心</b></td></tr>
+</table></div>
+<div class="t" style="margin-top:15px">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="2">活动标题：$act[tsubject]</td></tr>
+<tr class="tr3">
+	<th width="20%">活动标题：</th>
+	<th><a href="read.php?tid=$tid">$act[subject]</a></th>
+</tr>
+<tr class="tr3">
+	<th width="20%">活动时间：</th>
+	<th>$act[starttime] &nbsp;-&nbsp; $act[endtime]</th>
+</tr>
+<tr class="tr3">
+	<th width="20%">活动地点：</th>
+	<th>$act[location]</th>
+</tr>
+<tr class="tr3">
+	<th width="20%">人数限制：</th>
+	<th>$act[num]</th>
+</tr>
+<tr class="tr3">
+	<th width="20%">已确认参加人数：</th>
+	<th>$act_y 人，[共计报名：$act_total]</th>
+</tr>
+<tr class="tr3">
+	<th width="20%">性别要求：</th>
+<!--
+EOT;
+if($act[sexneed]=='1'){ print <<<EOT
+-->
+	<th>仅限男性</th>
+<!--
+EOT;
+}elseif($act[sexneed]=='2'){ print <<<EOT
+-->
+	<th>仅限女性</th>
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+	<th>男女不限</th>
+<!--
+EOT;
+} print <<<EOT
+-->
+</tr>
+<tr class="tr3">
+	<th width="20%">活动费用：</th>
+	<th>$act[costs] 元</th>
+</tr>
+<tr class="tr3">
+	<th width="20%">报名截止日期：</th>
+	<th>$act[deadline]</th>
+</tr>
+<tr class="tr3">
+	<th width="20%">活动相关内容：</th>
+	<th>$act[content]</th>
+</tr>
+</table></div>
+<!--
+EOT;
+if($action=='apply'){ print <<<EOT
+-->
+<form action="active.php" method="post">
+<div class="t">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><th class="h" colspan="2">活动申请</th></tr>
+<tr class="tr3 tr">
+	<th width="20%">联系方式</th>
+	<th><input type="text" name="contact" /> &nbsp;Tel、QQ、Email 等</th>
+</tr>
+<tr class="tr3 tr">
+	<th width="20%">留言：</th>
+	<th><textarea name="message" rows="5" wrap="hard" cols="60"></textarea></th>
+</tr>
+</table></div>
+<div style="text-align:center;margin-bottom:25px;"><input type="hidden" name="action" value="apply" />
+<input type="hidden" name="step" value="2" />
+<input type="hidden" name="tid" value="$tid" />
+<input class="btn" type="submit" value="提 交" /></div></form>
+<!--
+EOT;
+}elseif($action=='view'){ print <<<EOT
+-->
+<form action="active.php" method="post">
+<div class="t">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="8">活动成员</td></tr>
+<tr class="tr2">
+	<td width="8%">序号</td>
+	<td width="12%">姓名</td>
+	<td width="6%">性别</td>
+	<td width="12%">状态</td>
+	<td width="18%">申请时间</td>
+	<td width="12%">联系方式</td>
+	<td width="*">留言</td>
+<!--
+EOT;
+if($admincheck){ print <<<EOT
+-->
+	<td width="5%"></td>
+<!--
+EOT;
+} print <<<EOT
+-->
+</tr>
+<!--
+EOT;
+$i=0;
+foreach($actdb as $key=>$value){
+$i++;
+print <<<EOT
+-->
+<tr class="tr3">
+	<td>$i</td>
+	<td><a href="profile.php?action=show&uid=$value[winduid]">$value[username]</a></td>
+<!--
+EOT;
+if($value[gender]==1){ print <<<EOT
+-->
+	<td>男</td>
+<!--
+EOT;
+}elseif($value[gender]==2){ print <<<EOT
+-->
+	<td>女</td>
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+	<td>保密</td>
+<!--
+EOT;
+}if($value[state]==1){ print <<<EOT
+-->
+	<td><font color="blue">已审核</font></td>
+<!--
+EOT;
+}elseif($value[state]==2){ print <<<EOT
+-->
+	<td><font color="red">已拒绝</font></td>
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+	<td>未审核</td>
+<!--
+EOT;
+}print <<<EOT
+-->
+	<td>$value[applydate]</td>
+	<td>$value[contact]</td>
+	<td>$value[message]</td>
+<!--
+EOT;
+if($admincheck){ print <<<EOT
+-->
+	<td><input type="checkbox" name="selid[]" value="$value[id]" /></td>
+<!--
+EOT;
+} print <<<EOT
+-->
+</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+</table></div>$pages
+<input type="hidden" name="tid" value="$tid" />
+<!--
+EOT;
+if($admincheck){ print <<<EOT
+-->
+<div style="text-align:center;margin-bottom:25px;">
+管理选项：<input type="radio" name="action" value="pass" checked />批准
+<input type="radio" name="action" value="unpass" />拒绝
+<input type="radio" name="action" value="cancle" />取消活动<br><br>
+<input class="btn" type='button' name='chkall' value='全 选' onclick='CheckAll(this.form)' />
+<input class="btn" type='submit' value='提 交' /></div>
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+<div style="text-align:center;margin-bottom:25px;"><input type="hidden" name="action" value="exit" />
+<input class="btn" type='submit' value='取消参加' /></div>
+<!--
+EOT;
+} print <<<EOT
+-->
+</form>
+<script language=JavaScript>
+function CheckAll(form){
+	for (var i=0;i<form.elements.length-5;i++){
+		var e = form.elements[i];
+		e.checked == true ? e.checked = false : e.checked = true;
+	}
+}
+</script>
+<!--
+EOT;
+}
+?>

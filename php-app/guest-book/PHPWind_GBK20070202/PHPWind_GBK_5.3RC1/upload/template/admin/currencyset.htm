@@ -1,0 +1,105 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="head" colspan="7"><b>提示信息</b></td></tr>
+<tr><td class="b">说明：<br>1. 论坛交易币是用户在论坛进行各种交易的货币，可用于购买会员道具。<br>2. 用户的交易币可通过帐户充值或管理员奖励等方式获得。<br>3. 按照系统设置的转换比例，可以通过转换交易币获得论坛积分或将论坛积分转换为交易币<br> &nbsp; &nbsp; 论坛积分：{$db_rvrcname}，{$db_moneyname}，{$db_creditname}和自定义积分等<br><br></td></tr>
+</table><br>
+<!--
+EOT;
+if (!$action){print <<<EOT
+-->
+<form action="$basename" method="post">
+<input type="hidden" name="action" value="setname">
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr><td class="head" colspan="2">交易币设置</td></tr>
+	<tr>
+		<td class="b" width="20%">交易币名称</td>
+		<td class="b">
+			<input type="text" name="config[db_currencyname]" value="$db_currencyname">
+		</td>
+	</tr>
+	<tr>
+		<td class="b" width="20%">与人民币的转化比率</td>
+		<td class="b">
+			<input type="text" name="config[db_rmbrate]" value="$db_rmbrate">&nbsp;&nbsp;通过支付 1 RMB , 可获得的交易币
+		</td>
+	</tr>
+	<tr>
+		<td class="b" width="20%">最少支付金额</td>
+		<td class="b">
+			<input type="text" name="config[db_rmblest]" value="$db_rmblest">
+		</td>
+	</tr>
+</table>
+<br><center><input type="submit" value="提 交"></center></form>
+
+<form action="$basename" method="post">
+<input type="hidden" name="action" value="virement">
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+	<tr><td class=head colspan=2>{$db_currencyname}转帐设置</td></tr>
+	<tr>
+		<td class=b width="20%">是否开启转帐功能</td>
+		<td class=b>
+			<input type="radio" name="config[cy_virement]" value="1" $virement_Y>是
+			<input type="radio" name="config[cy_virement]" value="0" $virement_N>否
+		</td>
+	</tr>
+	<tr>
+		<td class=b width="20%">转帐手续费比率(%)</td>
+		<td class=b><input type="text" name="config[cy_virerate]" value="$cy_virerate" size=20></td>
+	</tr>
+	<tr>
+		<td class=b width="20%">最低转帐{$db_currencyname}数</td>
+		<td class=b><input type="text" name="config[cy_virelimit]" value="$cy_virelimit" size=20></td>
+	</tr>
+</table>
+<br><center><input type=submit value='提 交'></center></form>
+
+<form action="$basename" method="post">
+<input type="hidden" name="action" value="currrate">
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>{$db_currencyname}转换比例</b></td></tr>
+<tr><td class=b colspan=2>以下设置为每<font color=blue><b>转换一个{$db_currencyname}</b></font>获得对应的积分数 (留空或设置为 0，不开启对应积分的转换功能)</td></tr>
+<tr><td class=b width="20%">{$db_rvrcname}</td>
+<td class=b><input type="text" name="currrate1[rvrc]" value="$currrate1[rvrc]"></td></tr>
+<tr><td class=b>{$db_moneyname}</td>
+<td class=b><input type="text" name="currrate1[money]" value="$currrate1[money]"></td></tr>
+<tr><td class=b>{$db_creditname}</td>
+<td class=b><input type="text" name="currrate1[credit]" value="$currrate1[credit]"></td></tr>
+<!--
+EOT;
+foreach($_CREDITDB as $key => $value){print <<<EOT
+-->
+<tr><td class=b>$value[0]</td>
+<td class=b><input type="text" name="currrate1[$key]" value="{$currrate1[$key]}"></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr><td class=b colspan=2>以下设置为每<font color=blue><b>获得一个{$db_currencyname}</b></font>需要对应的积分数 (留空或设置为 0，不开启对应积分的转换功能)</td></tr>
+<tr><td class=b>{$db_rvrcname}</td>
+<td class=b><input type="text" name="currrate2[rvrc]" value="$currrate2[rvrc]"></td></tr>
+<tr><td class=b>{$db_moneyname}</td>
+<td class=b><input type="text" name="currrate2[money]" value="$currrate2[money]"></td></tr>
+<tr><td class=b>{$db_creditname}</td>
+<td class=b><input type="text" name="currrate2[credit]" value="$currrate2[credit]"></td></tr>
+<!--
+EOT;
+foreach($_CREDITDB as $key => $value){print <<<EOT
+-->
+<tr><td class=b>$value[0]</td>
+<td class=b><input type="text" name="currrate2[$key]" value="{$currrate2[$key]}"></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+
+</table>
+<br><center><input type=submit value='提 交'></center></form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>
+-->

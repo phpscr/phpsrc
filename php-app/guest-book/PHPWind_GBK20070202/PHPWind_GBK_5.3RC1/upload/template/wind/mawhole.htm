@@ -1,0 +1,356 @@
+<!--<?php print <<<EOT
+-->
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td align="left">
+			<img src="$imgpath/$stylepath/index/home.gif" align="absbottom" />
+			<b>
+				<a href="$db_bfn">$db_bbsname</a> ->
+<!--
+EOT;
+if($action=='del'){print <<<EOT
+-->
+				删除文章
+<!--
+EOT;
+}elseif($action=='move'){print <<<EOT
+-->
+				移动文章
+<!--
+EOT;
+}elseif($action=='copy'){print <<<EOT
+-->
+				复制文章
+<!--
+EOT;
+}elseif($action=='headtopic'){print <<<EOT
+-->
+				文章置顶操作
+<!--
+EOT;
+}elseif($action=='digest'){print <<<EOT
+-->
+				文章精华操作
+<!--
+EOT;
+}elseif($action=='type'){print <<<EOT
+-->
+				文章分类管理
+<!--
+EOT;
+}elseif($action=='check'){print <<<EOT
+-->
+				文章审核管理
+<!--
+EOT;
+}elseif($action=='lock'){print <<<EOT
+-->
+				文章锁定操作
+<!--
+EOT;
+}elseif($action=='pushtopic'){print <<<EOT
+-->
+				提前文章
+<!--
+EOT;
+}elseif($action=='edit'){print <<<EOT
+-->
+				加亮文章标题操作
+<!--
+EOT;
+}elseif($action=='unite'){print <<<EOT
+-->
+				主题合并操作
+<!--
+EOT;
+}print <<<EOT
+-->
+			</b>
+		</td>
+	</tr>
+</table></div>
+<form name="form1" method="post" action="mawhole.php?">
+<input type="hidden" name="action" value="$action" />
+<input type="hidden" name="fid"    value="$fid" />
+<input type="hidden" name="step"   value="2" />
+<!--
+EOT;
+if($threaddb){print <<<EOT
+-->
+<div class="t" style="margin-top:15px">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td class="h" style="text-align:center" width="5%">ID</td>
+		<td class="h" style="text-align:center">标题</td>   
+		<td class="h" style="text-align:center" width="15%">论坛</td>
+		<td class="h" style="text-align:center" width="15%">作者</td>
+		<td class="h" style="text-align:center" width="8%">回复</td>
+		<td class="h" style="text-align:center" width="15%">发表时间</td>
+	</tr>
+<!--
+EOT;
+$id=0;
+foreach($threaddb as $key=>$val){
+$id++;
+print <<<EOT
+-->
+	<tr class="tr3">
+		<td><input type="checkbox" name="tidarray[]" value="$val[tid]" checked /></td>
+		<th>
+			<a href="read.php?tid=$val[tid]" target="_blank">$val[subject]</a>
+		</th>
+		<td>
+			<a href="thread.php?fid=$val[fid]" target="_blank">{$forum[$val[fid]][name]}</a>
+		</td>
+		<td>
+<!--
+EOT;
+if($val['anonymous'] && !$SYSTEM['viewhide']){ print <<<EOT
+-->
+			$db_anonymousname
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+			<a href="profile.php?action=show&username=$val[author]" target="_blank">$val[author]</a>
+<!--
+EOT;
+} print <<<EOT
+-->
+		</td>
+		<td>$val[replies]</td>
+		<td>$val[date]</td>
+	</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></div>
+<!--
+EOT;
+}print <<<EOT
+-->
+<div class="t">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr><td class="h" colspan="2">管理选项：</td></tr>
+<!--
+EOT;
+if($action=='headtopic'){
+print <<<EOT
+-->
+	<tr class="tr3 tr">
+		<th width="20%">管理选项：</th>
+		<th>
+			<input type="radio" name="topped" value="0" $topped_0 /> 取消置顶
+			<input type="radio" name="topped" value="1" $topped_1 /> 置顶1
+<!--
+EOT;
+if($groupid != 5){
+if($SYSTEM['topped']==2){print <<<EOT
+-->
+			<input type="radio" name="topped" value="2" $topped_2 /> 置顶2
+<!--
+EOT;
+} elseif($SYSTEM['topped']==3){print <<<EOT
+-->
+			<input type="radio" name="topped" value="2" $topped_2 /> 置顶2
+			<input type="radio" name="topped" value="3" $topped_3 /> 置顶3
+<!--
+EOT;
+}}print <<<EOT
+-->
+		</th>
+	</tr>
+<!--
+EOT;
+}elseif($action=='digest'){
+print <<<EOT
+-->
+	<tr class="tr3 tr">
+	<th width="20%">管理选项：</th>
+	<th>
+		<input type="radio" name="digest" value="0" $digest_0 />取消精华
+		<input type="radio" name="digest" value="1" $digest_1 />精华I
+		<input type="radio" name="digest" value="2" $digest_2 />精华II
+	</th>
+	</tr>
+<!--
+EOT;
+}elseif($action=='lock'){
+print <<<EOT
+-->
+	<tr class="tr3 tr">
+	<th width="21%">管理选项：</th>
+	<th>
+	<input type="radio" name="locked" value="0" $lock_0 />解除锁定
+	<input type="radio" name="locked" value="1" $lock_1 />锁定
+	<input type="radio" name="locked" value="2" $lock_2 />关闭
+	</th>
+	</tr>
+<!--
+EOT;
+}elseif($action=='pushtopic'){
+print <<<EOT
+-->
+<tr class="tr3 tr"><th width="21%">管理选项：</th><th>
+提前帖子
+</th></tr>
+<!--
+EOT;
+}elseif($action=='edit'){
+print <<<EOT
+-->
+	<tr class="tr3 tr">
+		<th width="21%">管理选项：</th>
+		<th>
+			<input type="checkbox" name="title2" value="1" $ifchecked[1] />
+			<img height="22" alt="粗体字" src="$imgpath/post/editor/bold.gif" width="23" />
+			<input type="checkbox" name="title3" value="1" $ifchecked[2] />
+			<img height="22" alt="斜体字" src="$imgpath/post/editor/italic.gif" width="23" />
+			<input type="checkbox" name="title4" value="1" $ifchecked[3] />
+			<img height="22" alt="下划线" src="$imgpath/post/editor/underline.gif" width="23" />
+			<br><br>
+			&nbsp;颜色 
+			<input name="title1" type="radio" value="" $ifchecked[none] />不使用
+			<input name="title1" type="radio" value="red" $ifchecked[red] />
+			<font color="red">红色</font>
+			<input name="title1" type="radio" value="blue" $ifchecked[blue] />
+			<font color="blue">蓝色</font>
+			<input name="title1" type="radio" value="green" $ifchecked[green] />
+			<font color="green">绿色</font>
+			<input name="title1" type="radio" value="orange" $ifchecked[orange] />
+			<font color="orange">橙色</font>
+			<input name="title1" type="radio" value="silver" $ifchecked[silver] />
+			<font color="silver">银色</font>
+		</th>
+	</tr>
+<!--
+EOT;
+}elseif($action=='del' && $fid!=$db_recycle){
+print <<<EOT
+-->
+	<tr class="tr3 tr">
+		<th>扣除积分：</th>
+		<th>
+			<input type="radio" name="ifdel" value="1" checked />是
+			<input type="radio" name="ifdel" value="0" />否
+		</th>
+	</tr>
+<!--
+EOT;
+}elseif($action=='unite'){
+print <<<EOT
+-->
+	<tr class="tr3 tr">
+		<th>合并本帖到：(输入目标帖子的id)</th>
+		<th>
+			<input class="input" type="text" name="totid" size="15" />
+		</th>
+	</tr>
+<!--
+EOT;
+}if($action!='del' || $fid!=$db_recycle){ print <<<EOT
+-->
+	<tr class="tr3 tr">
+		<th>短消息通知：</th>
+		<th>
+			<input type="radio" name="ifmsg" value="1" checked />是
+			<input type="radio" name="ifmsg" value="0" />否
+		</th>
+	</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+	<tr class="tr3 tr">
+		<th>操作原因：</th>
+		<th>
+<!--
+EOT;
+if($db_adminreason){print <<<EOT
+-->
+			<select name="" size="8" multiple onchange="this.form.atc_content.value=this.value">
+				<option value="">自定义</option>
+				<option value="">-------</option>
+				$reason_sel
+			</select>
+<!--
+EOT;
+}print <<<EOT
+-->
+			<textarea name="atc_content" rows="8" cols="80"></textarea>
+		</th>
+	</tr>
+</table></div>
+<!--
+EOT;
+if(($action=='edit' || $action=='digest' || $action=='headtopic' || $action=='pushtopic') && $seltid){
+${$action.'_N'}="disabled";
+print <<<EOT
+-->
+<center>后续操作：<input type="radio" name="nextto" value="digest" $digest_N />精华
+<input type="radio" name="nextto" value="headtopic" $headtopic_N />置顶
+<input type="radio" name="nextto" value="edit" $edit_N />加亮
+<input type="radio" name="nextto" value="pushtopic" $pushtopic_N />提前
+<input type="radio" name="nextto" value="" checked />无
+</center>
+<!--
+EOT;
+} print <<<EOT
+-->
+<div style="text-align:center;margin-top:15px;margin-bottom:25px;">
+<!--
+EOT;
+if($action=='type'){
+print <<<EOT
+-->
+文章分类管理 <select name="type">
+<!--
+EOT;
+foreach($t_typedb as $key=>$value){
+if($value){
+print <<<EOT
+-->
+<option value="$key">$value</option>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</select><br /><br />
+<!--
+EOT;
+}if($action=='move' || $action=='copy'){
+print <<<EOT
+-->
+选择目的版块：
+<select name="to_id">$forumcache
+<!--
+EOT;
+if($forumadd){
+print <<<EOT
+-->
+<option value="">>> 隐藏版块</option>
+$forumadd
+<!--
+EOT;
+}if(trim($cmscache)){print <<<EOT
+-->
+<option value=""></option>
+<option value="">文章分类</option>
+$cmscache
+<!--
+EOT;
+}print <<<EOT
+-->
+</select><br /><br />
+<!--
+EOT;
+}print <<<EOT
+-->
+<input class="btn" type="button" value="返 回" onclick="javascript:history.go(-1)" />
+<input class="btn" type="submit" name="Submit" value="提 交" /></div>
+</form>
+<!--
+EOT;
+?>-->

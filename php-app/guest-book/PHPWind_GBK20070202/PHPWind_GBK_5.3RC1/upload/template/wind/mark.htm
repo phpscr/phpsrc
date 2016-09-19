@@ -1,0 +1,60 @@
+<!--<?php print <<<EOT
+-->
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0" align="center"><tr><td align="left">
+<img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> 
+<b><a href="$db_bfn">$db_bbsname </a> -> 评分系统</b></td></tr></table></div>
+
+<form name="ping" action="job.php" method="post">
+<div class="t" style="margin-top:15px;">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><th colspan="2" class="h">帖子评分</th></tr>
+<tr class="tr3 tr"><th width="21%">操作者</th>
+<th class="f_one"><a href="profile.php?action=show&uid=$winduid">$windid</a></th></tr>
+<tr class="tr3 tr"><th class="f_two" width="21%">作者</th>
+<th class="f_two">
+<!--
+EOT;
+if($atc['anonymous'] && $groupid!='3'){ print <<<EOT
+-->
+$db_anonymousname
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+<a href="profile.php?action=show&uid=$atc[authorid]">$atc[author]</a>
+<!--
+EOT;
+} print <<<EOT
+-->
+</th></tr>
+<tr class="tr3 tr"><th class="f_one" width="21%">积分名称:</th>
+<th class="f_one"><select name="cid">$creditselect</select></th></tr>
+<tr class="tr3 tr"><th class="f_two" width="21%">增加单位:</th>
+<th class="f_two"><input class="input" type="text" name="addpoint" value="1" size="5" /> 点 ($minper~$maxper)</th></tr>
+<tr class="tr3 tr"><th class="f_one" width="21%">标题:</th>
+<th class="f_one"><a href="read.php?tid=$tid">$atc[subject]</a></th></tr>
+<tr class="tr3 tr"><th class="f_one">操作</th>
+<th class="f_one"><input type="radio" name="action" value="showping" checked />评分&nbsp;
+<input type="radio" name="action" value="delping" />取消评分
+<tr class="tr3 tr"><th class="f_one" width="21%">短消息通知</th>
+<th class="f_one">
+<input type="radio" name="ifmsg" value="1" $check_Y />是
+<input type="radio" name="ifmsg" value="0" $check_N />否</th></tr>
+<tr class="tr3 tr"><th class="f_one" width="21%">评分理由</th>
+<th class="f_one" style="vertical-align:top">
+<select name="" size="8" multiple onchange="this.form.atc_content.value=this.value">
+	<option value="">自定义</option>
+	<option value="">-------</option>
+	$reason_sel
+</select>
+<textarea name="atc_content" rows="8" cols="80"></textarea>
+</th></tr></table></div>
+<center><input class="btn" type="submit" value="提 交" /></center><br />
+<input type="hidden" name="page" value="$page" />
+<input type="hidden" name="pid" value="$pid" />
+<input type="hidden" name="tid" value="$tid" />
+<input type="hidden" name="step" value="1" /></form>
+<!--
+EOT;
+?>-->

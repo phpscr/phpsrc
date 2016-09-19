@@ -1,0 +1,50 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<form action="$basename&" method="post">
+<input type="hidden" name="action" value="unsubmit" />
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+	<tr class="head"><td colspan="2">管理团队工资发放设置</td></tr>
+	<tr class="b">
+		<td width="30%">是否开启</td>
+		<td><input type="radio" value="1" $open_Y name="ifopen"> 是 <input type="radio" value="0" $open_N name="ifopen"> 否</td>
+	<tr class="b">
+		<td width="30%">领取等级</td>
+		<td><table cellspacing="0" cellpadding="0" border="0" width="100%" align="center"><tr class="b">$usergroup</tr></table></td>
+	</tr>
+	<tr class="b">
+		<td>工资类型</td>
+		<td><select name="config[credittype]">
+			<option value="rvrc" $st_rvrc>$db_rvrcname</option>
+			<option value="money" $st_money>$db_moneyname</option>
+			<option value="credit" $st_credit>$db_creditname</option>
+			<option value="currency" $st_currency>{$db_currencyname}</option>
+<!--
+EOT;
+foreach($_CREDITDB as $key=>$value){
+$st=${'st_'.$key};
+print <<<EOT
+-->
+			<option value="$key" $st>$value[0]</option>
+<!--
+EOT;
+} print <<<EOT
+-->
+			</select>
+		</td>
+	</tr>
+	<tr class="b">
+		<td>工资金额</td>
+		<td><table cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
+				$usercredit
+			</table>
+		</td>
+	</tr>
+</table><br />
+<center><input type="submit" value="提 交"></center></form>
+</form>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>-->

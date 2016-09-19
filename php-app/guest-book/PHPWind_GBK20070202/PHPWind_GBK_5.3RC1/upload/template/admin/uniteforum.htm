@@ -1,0 +1,42 @@
+<!--<?php
+include_once PrintEot('left');
+if (empty($action)){
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b>
+<ul><br>
+1.源论坛将被删除，源论坛的所有帖子将移动目标论坛中<br><br>2.有子版块的论坛不能合并到其他论坛<br><br>3.分类不能使用合并功能<br><br>4.回收站不能合并到其他论坛
+</ul>
+</td></tr></table>
+<br>
+<form action="$basename" method=post>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>合并论坛</b></td></tr>
+<tr>
+	<td class=b>源论坛</td>
+	<td class=b>
+		<select name='fid'>
+			$forumcache
+			$hideforum
+		</select>
+	</td>
+</tr>
+<tr>
+	<td class=b>目标论坛</td>
+	<td class=b>
+		<select name='tofid'>
+			$forumcache
+			$hideforum
+		</select>
+	</td>
+</tr>
+</table>
+<br>
+<center><input type=hidden name=action value='unite'><input type=submit value='提 交'></center></form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>-->
