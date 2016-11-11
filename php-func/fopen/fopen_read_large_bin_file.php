@@ -11,7 +11,6 @@
 function fetch_big_file($srcPath, $dstPath)
 {
     set_time_limit(0); // 设置脚本执行时间无限长
- 
     if (!$fpSrc = fopen($srcPath, "rb"))
     {
         return false;
@@ -45,10 +44,9 @@ function fetch_big_file($srcPath, $dstPath)
     return true;
 }
  
-//$srcPath = 'd:/PHP/data/eclipse-jee-kepler-R-win32-x86_64.pdf';
-$srcPath = 'http://dl.bintray.com/gitblit/releases/gitblit-1.8.0.zip';
-
-$dstPath = './gitblit-1.8.0.zip';
+exit(22222);
+$srcPath = 'http://sina.com.cn';
+$dstPath = 'Z:/reslibCovertingfiles/eclipse-jee-kepler-R-win32-x86_64.pdf';
  
 fetch_big_file($srcPath, $dstPath);
  
