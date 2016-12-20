@@ -1,0 +1,15 @@
+/*.sublime-project
+/.project
+/.settings/
+/nbproject/
+*.sublime-project
+.idea
+/cache/cache_*.php
+/cache/*.cache
+/cache/db_update.lock
+/modules/
+/include/user/*.php
+/img/avatars/*.png
+/img/avatars/*.jpg
+/img/avatars/*.gif
+/config.php
