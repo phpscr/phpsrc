@@ -1,0 +1,41 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=3><b>用户组成员统计</b></td></tr>
+<!--
+EOT;
+foreach($groupnum as $group){print <<<EOT
+-->
+<tr align=center>
+<td class=b width=30%>$group[2]</td><td class=b>$group[0](个)</td>
+<td class=b>
+<!--
+EOT;
+if($group[1]=='-1'){print <<<EOT
+-->
+[<a href="$admin_file?adminjob=setuser&action=search&groupid=$group[1]">
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+[<a href="$admin_file?adminjob=setuser&action=search&groupid=$group[1]&orderway=username">
+<!--
+EOT;
+} print <<<EOT
+-->
+查看用户组会员
+</a>]
+</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>-->

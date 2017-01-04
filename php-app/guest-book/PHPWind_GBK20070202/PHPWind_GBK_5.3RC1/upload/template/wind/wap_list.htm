@@ -1,0 +1,18 @@
+<!--<?php print <<<EOT
+-->
+<p align="center">主题列表</p>
+<!--
+EOT;
+foreach($listdb as $key=>$val){print <<<EOT
+-->
+<p>$val[id].<a href="read.php?tid=$val[tid]">$val[subject]</a></p>
+<p>$val[postdate]<br/></p>
+<!--
+EOT;
+}print <<<EOT
+-->
+<p><a href="list.php?fid=$fid&amp;page=$pre">上页</a> <a href="list.php?fid=$fid&amp;page=$next">下页</a></p>
+<p><a href="post.php">发表文章</a></p>
+<!--
+EOT;
+?>-->

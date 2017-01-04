@@ -1,0 +1,270 @@
+<!--<?php
+print <<<EOT
+-->
+<div class="t3" style="margin-bottom:15px;">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr>
+  <td align="left"><img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> 
+<a href="$db_bfn"><b>$db_bbsname</b> </a> &raquo; <a href="$basename"><b>{$cy_name}</b></a> &raquo; <b>
+<!--
+EOT;
+if($classid){
+print <<<EOT
+--><a href="$basename&classid=$classid">$cnclassdb[$classid]</a>
+<!--
+EOT;
+}elseif($action=="my"){
+print <<<EOT
+-->
+我的{$cn_name}
+<!--
+EOT;
+}elseif($action=="search"){
+print <<<EOT
+-->
+{$cn_name}搜索
+<!--
+EOT;
+}else{
+print <<<EOT
+-->
+<a href="$basename">所有分类</a>
+<!--
+EOT;
+}print <<<EOT
+--></b>
+</td>
+</tr></table>
+</div>
+<div class="t3">
+<div style="float:left; width:20%;">
+<div class="t" style="width:100%; margin-left:0">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="h">$windid {$cn_name}欢迎您</td>
+  </tr>
+    <tr class="tr3">
+      <td><a href="$basename&action=my">我加入的{$cn_name}</a></td>
+    </tr>
+    <tr class="tr3">
+    <td><a href="$basename&job=creat">创建新{$cn_name}</a></td>
+  </tr>
+</table>
+</div>
+<div class="t"  style="margin-right:0; width:99%">
+<table cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr><td class="h">{$cn_name}分类</td>
+</tr>
+<tr class="tr3">
+<td><a href="$basename">所有分类</a></td>
+</tr>
+<!--
+EOT;
+foreach($cnclassdb as $key=>$value){
+print <<<EOT
+-->
+<tr class="tr3"><td><a href="$basename&classid=$key">
+$value
+</a></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+	</table>
+</div>
+<div class="t"  style="margin-right:0; width:99%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="h">相关帮助</td>
+  </tr>
+  <tr class="tr3">
+    <td><A HREF="$basename&job=help#1">什么是{$cn_name}</A></td>
+  </tr>
+  <tr class="tr3">
+    <td><A HREF="$basename&job=help#2">什么是高级{$cn_name}</A></td>
+  </tr>
+  <tr class="tr3">
+    <td><A HREF="$basename&job=help#3">如何创建{$cn_name}</A></td>
+  </tr>
+</table>
+</div>
+</div>
+<div style="width:79%; float:right">
+<div class="t"  style="margin-right:0; width:99%">
+	<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+<form action="$basename" method="post" name="searchcn" onsubmit="return checksearch(document.searchcn);">
+	<tr class="tr4">
+	  <td align="center">{$cn_name}搜索 
+	    <input name="searchtype" type="hidden" value="name" />
+	    <input name="keyword" type="text" id="keyword" class="input" size="10"> <input name="action" type="hidden" id="action" value="search">
+	    <input type="submit" name="Submit" value=" 搜 索 " class="btn"></td>
+	  <td style="text-align:right" >[<A HREF="$basename&action=moneytop">财富排行榜</A>] [<A HREF="$basename&action=membertop">人气排行榜</A>]</td>
+	</tr>
+</form>
+	</table>
+<script language="JavaScript" type="text/javascript">
+function checksearch(obj){
+	if(obj.keyword.value==""){
+		alert("关键字为空");
+		obj.keyword.focus();
+		return false;
+	}
+}
+</script>
+
+</div>
+<!--
+EOT;
+if(!$job){
+print <<<EOT
+-->
+<div class="t"  style="margin-right:0; width:99%">
+<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+<tr>
+  <td colspan="6" class="h">{$cn_name}列表</td>
+</tr>
+<tr class="tr2" style="text-align:center">
+<td width="15%">LOGO</td>
+<td>{$cn_name}名称</td>
+<td>创建者</td>
+<td>成员</td>
+<td>财富</td>
+<td>状态</td>
+</tr>
+<!--
+EOT;
+foreach ($colonydb as $value){print <<<EOT
+-->
+<tr class="tr3">
+<td rowspan="2" align="center">
+<!--
+EOT;
+if($value[cnimg]){print <<<EOT
+-->
+<a href="$basename&cyid=$value[id]&job=view&id=$value[id]"><img src="$imgpath/cn_img/$value[cnimg]" width="75" height="50"   alt="创建者：$value[admin]"/></a>
+<!--
+EOT;
+}print <<<EOT
+--><br></td>
+<td>
+<img src="$hkimg/group.gif" hspace="5" align="absmiddle">
+<!--
+EOT;
+if($value[ifopen]){
+print <<<EOT
+-->
+<font color="#009900">[公开]</font>
+<!--
+EOT;
+}else{
+print <<<EOT
+-->
+[关闭]
+<!--
+EOT;
+}
+$advance = $value[level] ? "color:#FF0000;" : "";
+print <<<EOT
+-->
+<a href="$basename&cyid=$value[id]&job=view" style="font-weight:bold;$advance">$value[cname]</a>
+</td>
+<td class="tac">$value[admin]</td>
+<td class="tac">$value[members]</td>
+<td class="tac">$value[cmoney]</td>
+<td class="tac">$value[stat]</td>
+</tr>
+<tr class="tr3">
+  <th colspan="5">介绍：$value[descrip]</th>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+</div>
+<div style="float:right">$pages</div>
+<!--
+EOT;
+}elseif($job=="creat"){
+print <<<EOT
+-->
+<form method="post" action="$basename&job=creat&step=2&" enctype="multipart/form-data">
+<div class="t" style="margin-right:0; width:99%">
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr><td class="h" colspan="2">注册新的{$cn_name}</td></tr>
+<tr class="tr4"><td colspan="2">创建一个{$cn_name}需要支付 {$cn_createmoney} 个{$moneyname}</td></tr>
+<tr class="f_one tr3"><td>名称</td>
+<th><input type="text" name="cnname" size="50" class="input" /></th></tr>		
+<tr class="f_one tr3"><td>描述</td>
+<th><textarea name="descrip" rows="5" cols="50"  /></textarea></th></tr>	
+<tr class="f_one tr3"><td>分类</td>
+<th>
+<select name="cn_class">
+<!--
+EOT;
+foreach ($classdb as $class){print <<<EOT
+-->	
+<option value="$class[cid]">$class[cname]
+<!--
+EOT;
+}print <<<EOT
+-->
+</select></th></tr></table>
+</div>
+<div class="tac" style="padding:5px"><input type="submit" value="提 交" class="btn" /></div></form>
+<!--
+EOT;
+}elseif($job=="help"){
+print <<<EOT
+-->
+<div class="t" style="margin-right:0; width:99%">
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr><td class="h" colspan="2">相关帮助</td></tr>
+<tr class="tr4"><td><a name="1">1</a>. 什么是{$cn_name}</td></tr>
+<tr class="tr3 f_one"><th>111111111111</th></tr>
+<tr class="tr4"><td><a name="2">2</a>. 什么是高级{$cn_name}</td></tr>
+<tr class="tr3 f_one"><th>111111111111</th></tr>
+<tr class="tr4"><td><a name="3">3</a>. 如何创建{$cn_name}</td></tr>
+<tr class="tr3 f_one"><th>111111111111</th></tr>
+</table>
+</div>
+<!--
+EOT;
+}elseif($job=="join"){
+print <<<EOT
+-->
+<form method="post" action="$basename&job=join&cyid=$cyid">
+<input type="hidden" name="step" value="2" />
+<div class="t" style="margin-right:0; width:99%">
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr><td class="h" colspan="2">{$cn_name}通讯录设置</td></tr>
+<tr class="tr2"><td colspan="2">说明：加入{$cn_name}需要支付 {$cydb[intomoney]} 个{$moneyname}。</td></tr>
+<tr class="tr3 f_one"><td width="30%">真实姓名</td>
+<th width="70%"><input type="text" name="realname" class="input" /></th></tr>
+<tr class="tr3 f_one"><td width="30%">性别</td>
+<th>
+<select name="gender">
+<option value="0">保密</option>
+<option value="1">男</option>
+<option value="2">女</option>
+</select></th></tr>
+<tr class="tr3 f_one"><td>电话</td>
+<th><input type="text" name="tel" size="50" class="input" /></th></tr>
+<tr class="tr3 f_one"><td>邮箱：</td>
+<th><input type="text" name="email" size="50" class="input" /></th></tr>
+<tr class="tr3 f_one"><td>介绍说明：</td>
+<th><textarea name="introduce" rows="5" cols="50"></textarea></th></tr>
+</table>
+</div>
+<div class="tac" style="padding:5px"><input type="reset" value="重 置" class="btn" /> <input type="submit" value="提 交" class="btn" /></div></form>
+<!--
+EOT;
+}print <<<EOT
+-->
+</div>
+</div>
+<div style="clear:both"></div>
+<!-- 
+EOT;
+?>-->

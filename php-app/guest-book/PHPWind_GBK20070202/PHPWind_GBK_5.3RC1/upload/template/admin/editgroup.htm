@@ -1,0 +1,27 @@
+<!--<?php
+include_once PrintEot('left');
+if (empty($action)){
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>
+<ul>
+1.可以批量添加用户组成员<br><br>2.先选择要编辑的用户组名称，再在文本框中输入要加入该用户组的会员名，然后提交 ( 多个会员名之间用","分隔)<br><br>3.用此功能批量禁言用户,禁言类型为<font color=blue>永久禁言</font>,要使用<font color=blue>定期禁言</font>请到会员禁言功能设置
+</ul>
+<br></td></tr></table><br>
+<form action="$basename" method=post>
+<input type=hidden name=action value='add'>
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td class=head colspan=3><b>添加用户组成员</b></td></tr>
+<tr><td class=b>用户组</td><td class=b><select name=gid>$groupselect</select></td></tr>
+<tr><td class=b>用户组成员</td><td class=b><textarea name=members rows=10 cols=50></textarea>
+</td></tr>
+</table></td></tr></table>
+<br><center><input type=submit value='提 交'></center></form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>
+-->

@@ -1,0 +1,336 @@
+<!--<?php print <<<EOT
+-->
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0" align="center"><tr><td align="left">
+<img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> 
+<b><a href="$db_bfn">$db_bbsname </a> -> 管理程式</b></td></tr></table></div>
+<!--
+EOT;
+if($action=='banuser'){print <<<EOT
+-->
+<form name="ping" action="masingle.php?action=banuser" method="post">
+<div class="t" style="margin-top:15px;">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr><td colspan="2" class="h">会员禁言</td></tr>
+	<tr class="tr3 tr f_one">
+		<th width="21%">操作者</th>
+		<th><a href="profile.php?action=show&uid=$winduid">$windid</a></th>
+	</tr>
+	<tr class="tr3 tr f_two">
+		<th width="21%">禁言对象</th>
+		<th>
+<!--
+EOT;
+if($userdb['anonymous'] && !$SYSTEM['viewhide']){ print <<<EOT
+-->
+			$db_anonymousname
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+			<a href="profile.php?action=show&uid=$userdb[uid]">$userdb[username]</a>
+<!--
+EOT;
+} print <<<EOT
+-->
+		</td>
+	</tr>
+	<tr class="tr3 tr f_one">
+		<th width="21%">禁言类型</th>
+		<th><input type="radio" name="type" value="1" checked />定期禁言
+<!--
+EOT;
+if($SYSTEM['bantype']){print <<<EOT
+-->
+			<input type="radio" name="type" value="2" />永久禁言(不需要设定禁言时间)
+<!--
+EOT;
+}print <<<EOT
+-->
+		</th>
+	</tr>
+	<tr class="tr3 tr f_two">
+		<th width="21%">禁言时间</th>
+		<th>
+			<input class="input" type="text" name="limit" value="1" /> 天(最大天数<font color=blue>$SYSTEM[banmax]</font>天)
+		</th>
+	</tr>
+	<tr class="tr3 tr f_one">
+		<th width="21%">短消息通知</th>
+		<th>
+			<input type="radio" name="ifmsg" value="1" checked />是
+			<input type="radio" name="ifmsg" value="0" />否
+		</th>
+	</tr>
+	<tr class="tr3 tr f_one">
+		<th width="21%">禁言理由</td>
+		<th>
+			<textarea name="atc_content" rows="5" cols="80"></textarea>
+		</td>
+	</tr>
+</table></div>
+<div style="text-align:center;margin-bottom:25px"><input class="btn" type="submit" value="提 交" /></div>
+<input type="hidden" name="fid" value="$fid" />
+<input type="hidden" name="tid" value="$tid" />
+<input type="hidden" name="pid" value="$pid" />
+<input type="hidden" name="step" value="3" /></form>
+<!--
+EOT;
+}elseif($action=='shield'){print <<<EOT
+-->
+<form name="shield" action="masingle.php?action=shield" method="post">
+<div class="t" style="margin-top:15px">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td class="h" style="text-align:center" width="5%">ID</td>
+		<td class="h" style="text-align:center">标题</td>   
+		<td class="h" style="text-align:center" width="15%">作者</td>
+		<td class="h" style="text-align:center" width="15%">发表时间</td>
+	</tr>
+	<tr class="tr3 f_one">
+		<td><input type="checkbox" name="pid" value="$pid" checked />$id</td>
+		<th>
+			<a href="read.php?tid=$tid#$pid" target="_blank">$readdb[subject]</a>
+		</th>
+		<td>
+<!--
+EOT;
+if($readdb['anonymous'] && !$SYSTEM['viewhide']){ print <<<EOT
+-->
+			$db_anonymousname
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+			<a href="profile.php?action=show&username=$val[author]" target="_blank">$readdb[username]</a>
+<!--
+EOT;
+} print <<<EOT
+-->
+		</td>
+		<td>$readdb[postdate]</td>
+	</tr>
+</table></div>
+<div class="t">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td class="h" colspan="2">单帖屏蔽</td>
+	</tr>
+	<tr class="tr3 tr">
+		<th width="21%">操作者</th>
+		<th width="*"><a href="profile.php?action=show&uid=$winduid">$windid</a></th>
+	</tr>
+	<tr class="tr3 tr">
+		<th>屏蔽对象</th>
+<!--
+EOT;
+if($readdb['anonymous'] && !$SYSTEM['viewhide']){ print <<<EOT
+-->
+		<th>$db_anonymousname</th>
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+		<th><a href="profile.php?action=show&uid=$readdb[uid]">$readdb[username]</a></th>
+<!--
+EOT;
+} print <<<EOT
+-->
+	</tr>
+	<tr class="tr3 tr">
+		<th>操作</th>
+		<th>
+			<input type="radio" name="step" value="3" $check_Y />单帖屏蔽
+			<input type="radio" name="step" value="5" $check_N />取消屏蔽
+		</th>
+	</tr>
+	<tr class="tr3 tr">
+		<th>短消息通知：</th>
+		<th>
+			<input type="radio" name="ifmsg" value="1" checked />是
+			<input type="radio" name="ifmsg" value="0" />否
+		</th>
+	</tr>
+	<tr class="tr3 tr">
+		<th>操作原因：</th>
+		<th>
+			<select name="" size="8" multiple onchange="this.form.atc_content.value=this.value">
+				<option value="">自定义</option>
+				<option value="">-------</option>
+				$reason_sel
+			</select>
+			<textarea name="atc_content" rows="8" cols="80"></textarea>
+		</th>
+	</tr>
+</table></div>
+<div style="text-align:center;margin-bottom:25px;"><input class="btn" type="submit" value="提 交" /></div>
+<input type="hidden" name="fid" value="$fid" />
+<input type="hidden" name="tid" value="$tid" />
+<input type="hidden" name="uid" value="$uid" />
+<input type="hidden" name="page" value="$page" />
+</form>
+<!--
+EOT;
+}elseif($action=='remind'){ print <<<EOT
+-->
+<form action="masingle.php?action=remind" method="post">
+<div class="t" style="margin-top:15px">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td class="h" style="text-align:center" width="5%">ID</td>
+		<td class="h" style="text-align:center">标题</td>   
+		<td class="h" style="text-align:center" width="15%">作者</td>
+		<td class="h" style="text-align:center" width="15%">发表时间</td>
+	</tr>
+	<tr class="tr3">
+		<td><input type="checkbox" name="pid" value="$pid" checked />$id</td>
+		<th>
+			<a href="read.php?tid=$tid#$pid" target="_blank">$readdb[subject]</a>
+		</th>
+		<td>
+<!--
+EOT;
+if($readdb['anonymous'] && !$SYSTEM['viewhide']){ print <<<EOT
+-->
+		$db_anonymousname
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+		<a href="profile.php?action=show&uid=$readdb[uid]">$readdb[username]</a>
+<!--
+EOT;
+} print <<<EOT
+-->
+		</td>
+		<td>$readdb[postdate]</td>
+	</tr>
+</table></div>
+<div class="t">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td colspan="2" class="h">帖子管理提示</td>
+	</tr>
+	<tr class="tr3 tr">
+		<th width="21%">操作者</th>
+		<th width="*"><a href="profile.php?action=show&uid=$winduid">$windid</a></th>
+	</tr>
+	<tr class="tr3 tr">
+		<th>提醒对象</th>
+<!--
+EOT;
+if($readdb['anonymous'] && !$SYSTEM['viewhide']){ print <<<EOT
+-->
+		<th>$db_anonymousname</th>
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+		<th><a href="profile.php?action=show&uid=$readdb[uid]">$readdb[username]</a></th>
+<!--
+EOT;
+} print <<<EOT
+-->
+	</tr>
+	<tr class="tr3 tr">
+		<th>操作</th>
+		<th>
+			<input type="radio" name="step" value="3" $check_Y />提醒管理
+			<input type="radio" name="step" value="5" $check_N />取消提醒
+		</th>
+	</tr>
+	<tr class="tr3 tr">
+		<th>操作原因：</th>
+		<th>
+			<select name="" size="8" multiple onchange="this.form.atc_content.value=this.value">
+				<option value="">自定义</option>
+				<option value="">-------</option>
+				$reason_sel
+			</select>
+			<textarea name="atc_content" rows="8" cols="80">$remindinfo</textarea>
+		</th>
+	</tr>
+</table></div>
+<div style="text-align:center;margin-bottom:25px"><input class="btn" type="submit" value="提 交" /></div>
+<input type="hidden" name="fid" value="$fid" />
+<input type="hidden" name="tid" value="$tid" />
+<input type="hidden" name="page" value="$page" /></form>
+<!--
+EOT;
+}elseif($action=='delatc'){print <<<EOT
+-->
+<form name="ping" action="masingle.php?" method="post">
+<input type="hidden" name="action" value="delatc" />
+<input type="hidden" name="tid" value="$tid" />
+<input type="hidden" name="fid" value="$fid" />
+<input type="hidden" name="step" value="3" />
+<div class="t" style="margin-top:15px">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td class="h" style="text-align:center" width="5%">ID</td>
+		<td class="h" style="text-align:center">标题</td>   
+		<td class="h" style="text-align:center" width="15%">作者</td>
+		<td class="h" style="text-align:center" width="15%">发表时间</td>
+	</tr>
+<!--
+EOT;
+$id=0;
+foreach($threaddb as $key=>$val){
+$id++;
+print <<<EOT
+-->
+	<tr class="tr3">
+		<td><input type="checkbox" name="delatc[]" value="$val[pid]" checked />$id</td>
+		<th>
+			<a href="read.php?tid=$val[tid]" target="_blank">$val[subject]</a>
+		</th>
+		<td>
+<!--
+EOT;
+if($val['anonymous'] && !$SYSTEM['viewhide']){ print <<<EOT
+-->
+			$db_anonymousname
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+			<a href="profile.php?action=show&username=$val[author]" target="_blank">$val[author]</a>
+<!--
+EOT;
+} print <<<EOT
+-->
+		</td>
+		<td>$val[postdate]</td>
+	</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></div>
+<div class="t">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr><td class="h" colspan="2">管理选项：</td></tr>
+	<tr class="tr3 tr">
+		<th>短消息通知：</th>
+		<th>
+			<input type="radio" name="ifmsg" value="1" checked />是
+			<input type="radio" name="ifmsg" value="0" />否
+		</th>
+	</tr>
+	<tr class="tr3 tr">
+		<th>操作原因：</th>
+		<th>
+			<select name="" size="8" multiple onchange="this.form.atc_content.value=this.value">
+				<option value="">自定义</option>
+				<option value="">-------</option>
+				$reason_sel
+			</select>
+			<textarea name="atc_content" rows="8" cols="80"></textarea>
+		</th>
+	</tr>
+</table></div>
+<div style="text-align:center;margin-bottom:25px"><input class="btn" type="submit" value="提 交" /></div>
+</form>
+<!--
+EOT;
+}?>-->

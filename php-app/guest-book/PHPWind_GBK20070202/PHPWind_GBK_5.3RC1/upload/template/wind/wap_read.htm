@@ -1,0 +1,29 @@
+<!--<?php
+if($page==1){print <<<EOT
+-->
+<p>标题:$rt[subject]</p>
+<p>作者:$rt[author]</p>
+<p>日期:$rt[postdate]</p>
+<p>内容:$rt[content]<br/></p>
+<!--
+EOT;
+}if($postdb){print <<<EOT
+-->
+<p>回复:</p>
+<!--
+EOT;
+foreach($postdb as $key=>$val){print <<<EOT
+-->
+<p>$val[id].$val[subject]</p>
+<p>$val[content]</p>
+<p>$val[postdate]</p>
+<p>$val[author]<br/></p>
+<!--
+EOT;
+}}print <<<EOT
+-->
+<p><a href="read.php?tid=$tid&amp;page=$pre">上页</a> <a href="read.php?tid=$tid&amp;page=$next">下页</a></p>
+<p><a href="post.php?action=reply&amp;tid=$tid">发表回复</a></p>
+<!--
+EOT;
+?>-->

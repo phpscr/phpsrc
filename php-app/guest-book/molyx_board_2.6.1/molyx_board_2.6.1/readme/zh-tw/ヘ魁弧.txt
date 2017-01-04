@@ -1,0 +1,6 @@
+\tools 目錄 ---- 相關工具目錄
+	\convert	目錄 ---- 數據庫恢複、轉碼工具包，如果需要使用convert工具，請將其目錄傳到論壇根目錄下運行
+	\compressed	目錄 ---- 壓縮後的js文件，覆蓋到論壇根目錄，加速JS文件下載，但會輕微增加客戶瀏覽器的負擔
+	\url_rewrite目錄 ---- 使用 URL Rewrite 實現靜態化的方法說明
+\uploads 目錄 ---- Molyx Board 主程序
+\readme  目錄 ---- 說明文件

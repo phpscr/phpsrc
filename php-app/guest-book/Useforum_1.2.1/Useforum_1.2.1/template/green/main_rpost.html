@@ -1,0 +1,27 @@
+{if is_array($add)}
+<tr><td valign="top" width="60px">
+{if ( "" != $add.replyer.avatar )}
+		<img class="avatar" src ="{$add.replyer.avatar}" width="60" align="left" />
+	{else}
+		<img src ="./template/green/images/noavatar_big.gif" width="60" class="avatar" align="left" />
+{/if}
+</td><td>
+	<p>
+	 {$num}楼
+	<b><a href ="{spUrl c=user a=profile uname=$add.uname}">{$add.uname}</a></b>
+	{if $add.replyer.admit == "1"}
+		<img class="none" src="./template/green/images/admit.png" title="认证用户"/>{/if}
+	{if $add.replyer.acl =="GBADMIN"}管理员{elseif $add.replyer.forum =="0"}普通用户{else}版主{/if}
+	{theDate time=$add.ctime}
+	 积分 {$add.replyer.credits} 精华数 {$add.replyer.digestpost}
+	{if ( "GBADMIN" == $smarty.session.userinfo.acl || $info.forum == $smarty.session.userinfo.forum )}
+	<a href="javascript:void(0);" onclick="delconfirm({$add.rid},'{$add.uname}');">删除</a>
+	{/if}
+	</p>
+<div class="content">{$add.content}</div>
+</td></tr>
+<tr><td rowspan="1" colspan="2">
+	{if $add.replyer.signature}<p class="signature">{$add.replyer.signature}</p>
+	{else}<p class="nosign"></p>{/if}
+</td></tr>
+{/if}

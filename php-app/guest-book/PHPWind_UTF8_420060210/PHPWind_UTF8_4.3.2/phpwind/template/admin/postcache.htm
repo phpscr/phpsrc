@@ -1,0 +1,103 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=5 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>
+<ul>
+1.可以添加发表帖子时的新动作和表情（同时必须将相应的动作和表情图片上传到相应的目录，否则浏览帖子时无法显示图片）<br><br><font color=blue>注</font>：动作图片目录/post/act，表情图片目录/post/smile。
+</ul>
+</td></tr></table><br>
+
+<form method="post" action="$basename">
+<table cellspacing="1" cellpadding="5" border="0" width="98%" align="center" class=i_table>
+<tr class=i_table><td colspan="6" class=head><b>发帖动作编辑</b></td></tr>
+<tr class=head_2 align=center>
+<td width="5%">ID</td><td>动作名称</td><td >动作说明</td>
+<td>图片文件名</td><td>图片</td><td width="45">删</td></tr>
+<!--
+EOT;
+$num=0;
+foreach($motiondb as $motion){
+$num++;
+print <<<EOT
+-->
+<tr align=center><td class=b>$num</td><td class=b>$motion[name]</td>
+<td class=b>$motion[descrip]</td>
+<td class=b>$motion[images]</td>
+<td class=b><img width=30 height=30 src="$imgpath/post/act/$motion[images]"></td>
+<td class=b><input type='checkbox' name='delid[]' value='$motion[id]'></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<input name=action type=hidden value="delete">
+<input name="table" type=hidden value="pw_actions">
+<br><center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)"><input type="submit" name="delete" value="提 交"></center>
+</form>
+<form method="post" action="$basename">
+<table cellspacing="1" cellpadding="5" border="0" width="50%" align="center" class=i_table>
+<tr><td colspan="2" class=head><b>添加动作</b></td></tr>
+<tr class=b>
+<td width="21%" >动作名称</td>
+<td width="79%"><input type="text" size="45" name="motion1"></td>
+</tr>
+<tr class=b>
+<td width="21%">动作说明</td><td width="79%">
+<input type="text" size="45" name="motion2"></td></tr>
+<tr class=b>
+<td width="21%">图片文件名</td>
+<td width="79%"><input type="text" size="45" name="motion3"></td>
+</tr>
+<input name=action type=hidden value="addact">
+</table>
+<center><input type="submit" name="add" value="提 交"></center></form>
+
+<form method="post" action="$basename">
+<table cellspacing="1" cellpadding="5" border="0" width="60%" align="center" class=i_table>
+<tr><td colspan="4" class=head><b>发帖表情编辑</b></td></tr>
+<tr class=head_2><td align=center width="5%">ID</td>
+<td align=center>图片文件名</td><td align=center>图片</td>
+<td align=left width="5%">删</td></tr>
+<!--
+EOT;
+$num=0;
+foreach($facedb as $face){
+$num++;
+print <<<EOT
+-->
+<tr><td class=b align=center>$num</td>
+<td class=b align=center>$face[image]</td>
+<td class=b align=center><img src="$imgpath/post/smile/$face[image]"></td>
+<td class=b ><input type='checkbox' name='delid[]' value='$face[id]'></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<input name=action type=hidden value="delete">
+<input name="table" type=hidden value="pw_smiles">
+<br><center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)"><input type="submit" name="delete" value="提 交"></center>
+</form>
+<form method="post" action="$basename">
+<table cellspacing="0" cellpadding="1" border="0" width="30%" align="center" class=i_table>
+<tr><td align="center">
+<table border="0" cellspacing="0" cellpadding="4" width="100%" class=b>
+<tr><td colspan="2" class=head><b>添加表情</b></td></tr>
+<tr class=head_2>
+<td width="40%" >图片文件名</td>
+<td width="60%"><input type="text" size="20" name="face1"></td>
+</tr>
+<input name=action type=hidden value="addface">
+</table></td></tr></table>
+<center>
+<input type="submit" name="add" value="提 交"></center>
+</form>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>
+-->

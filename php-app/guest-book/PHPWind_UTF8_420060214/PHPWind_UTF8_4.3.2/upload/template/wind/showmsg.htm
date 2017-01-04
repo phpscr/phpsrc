@@ -1,0 +1,92 @@
+<!--<?php 
+print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center><tr><td align=left>
+<img src='$imgpath/$stylepath/index/home.gif' align=absbottom> <b><a href='./$db_bfn'>$db_bbsname </a> -> 论坛提示</b></td></tr></table>
+<br>
+<table width='$tablewidth' cellspacing='1' cellpadding='3' $i_table align=center>
+<tr class=head><td colspan=2 class=head>$db_bbsname 提示信息</td></tr>
+<!--
+EOT;
+if(!$dejump && $groupid=='guest' && !strpos($REQUEST_URI,'register') && !strpos($REQUEST_URI,'login')){
+$hideback=1;print <<<EOT
+-->
+<tr class=f_one>
+<td><br>
+&nbsp; &nbsp; 您没有登录或者您没有权限访问此页面，可能有如下几个原因:
+<ol>
+<li>$msg_info
+<li>您还不是论坛会员,请先登录论坛<br>
+</ol>
+<form action="login.php?" method="post" name="login">
+<fieldset style="margin:0% 22% 0% 22%;">
+<legend>登录</legend>
+<table width="85%" cellpadding=5 cellspacing=1 align="center">
+<tr class=f_one>
+	<td width=30%>用户名</td><td> <input type=text size="40" tabindex="1" name='pwuser'></td>
+</tr>
+<tr class=f_one>
+	<td>密码</td><td> <input type='password' size="40" tabindex="2" name='pwpwd'></td>
+</tr>
+<!--
+EOT;
+list(,$logingd)=explode("\t",$db_gdcheck);
+if($logingd){
+$rawwindid=addslashes($windid);
+print <<<EOT
+-->
+<tr class=f_one>
+	<td>认证码</td>
+	<td>
+		<input type='text' maxLength=4 name='gdcode' size=8  tabindex="3">&nbsp;
+		<img src="ck.php?windid=$rawwindid" align=absmiddle>
+	</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr><td>隐身登录</td>
+	<td>
+		<input name=hideid type=radio value='1'>          是 &nbsp
+		<input name=hideid type=radio value='0' checked tabindex="4">  否 &nbsp 
+	</td>
+</tr>
+</table>
+</fieldset><br>
+<center><input type=submit value="登 录" tabindex="4" ></center>
+<input type='hidden' name='jumpurl' value='$REQUEST_URI'>
+<input type='hidden' name='step' value=2>
+<input type='hidden' name='cktime' value='31536000'></form><br><br>
+<script language="JavaScript">
+document.login.pwuser.focus();
+</script>
+<!--
+EOT;
+}else{
+$hideback=0;
+print <<<EOT
+-->
+<tr class=f_one>
+<td>
+<center><br><br><br>$msg_info<br>
+{$ifjiami}{$printmsgpwd}
+<br>
+</center> <br><br>
+</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table><br><br>
+<!--
+EOT;
+if(!$hideback){print <<<EOT
+-->
+<center><input type='submit' value='返 回 继 续 操 作' onclick='javascript:history.go(-1);'></center>
+<br><br>
+<!--
+EOT;
+}footer();
+?>
+-->

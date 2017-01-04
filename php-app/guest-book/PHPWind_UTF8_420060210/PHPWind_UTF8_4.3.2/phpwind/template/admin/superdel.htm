@@ -1,0 +1,391 @@
+<!--<?php
+include_once PrintEot('left');
+if(empty($action)){print <<<EOT
+-->
+
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>
+<ul>
+<!--
+EOT;
+if($a_type=='article'){print <<<EOT
+-->
+1.删除符合条件的帖子用于清理论坛冗余数据,此操作不可恢复,请谨慎使用！<br><br>2.用户组成员根据用户组权限设置取得相应批量删除权限<br><br>3.版主拥有所管辖的版块（分类）发布的批量删除的权限<br><br>功能说明:<br>使用<font color=blue>删除主题</font>功能可删除某个会员发表的所有主题(包括回复)<br>使用<font color=blue>删除回复</font>功能可删除某个会员发表的所有回复
+<!--
+EOT;
+}elseif($a_type=='member'){
+print <<<EOT
+-->
+删除符合条件的用户,用于清理论坛冗余数据,此操作不可恢复,请谨慎使用！
+<!--
+EOT;
+}elseif($a_type=='message'){
+print <<<EOT
+-->
+删除符合条件的短消息,用于清理论坛冗余数据,此操作不可恢复,请谨慎使用！<br><font color=blue>系统信息删除2.0之前请用"系统信息"用户名搜索，2.0开始请用"SYSTEM"用户名搜索</font>
+<!--
+EOT;
+}print <<<EOT
+-->
+</ul><br>
+</td></tr></table><br>
+<!--
+EOT;
+}if($a_type=='article'){
+if(empty($action)){print <<<EOT
+-->
+<form action="$basename&" method=post>
+<input type=hidden name=action value='deltpc'>
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td class=head colspan=2><b>删除主题</b></td></tr>
+<tr><td class=b width=30%>所属版块</td>
+<td class=b>
+<select name=fid>
+<option value='-1'>所有版块</option>$forumcache
+</select>&nbsp;&nbsp;<input type=checkbox name="ifkeep" value=1 checked>保留精华置顶</td></tr>
+<tr><td class=b >主题发表于</td>
+<td class=b><input type=text size=20 maxlength=14 name="postdate">&nbsp;天前的主题</td></tr>
+<tr><td class=b>主题最后被回复于</td>
+<td class=b><input type=text size=20 maxlength=14 name="lastpost">&nbsp;天前的主题</td></tr>
+<tr><td class=b>浏览人数小于</td>
+<td class=b><input type=text size=20 maxlength=14 name="hits">&nbsp;的主题</td></tr>
+<tr><td class=b>回复人数小于</td>
+<td class=b><input type=text size=20 maxlength=14 name="replies">&nbsp;的主题</td></tr>
+<tr><td class=b>按作者删除(<font color=blue>主题作者</font>)<br>(多个作者用","分隔)</td>
+<td class=b><input type=text size=20 name="author"> 可使用通配符 "*"</td></tr>
+<tr><td class=b>关键字包含(多个关键字用","分隔)</td>
+<td class=b><input type=text size=20 name="keyword"> 可使用通配符 "*"</td></tr>
+<tr><td class=b>内容大于</td>
+<td class=b><input type=text size=20 name="tcounts"> 字节</td></tr>
+<tr><td class=b>内容少于</td>
+<td class=b><input type=text size=20 name="counts"> 字节</td></tr>
+<tr><td class=b>根据用户IP查找</td>
+<td class=b><input type=text size=20 name="userip"> 可使用通配符 "*"</td></tr>
+<tr>
+	<td class=b><div id="info1">每页显示行数</div></td>
+	<td class=b>
+		<input type=text size=5 name="lines" value="30">
+		<input type=checkbox name="direct" value=1 onclick="deldirect(this.form,'info1','每页显示行数');">
+		直接删除(直接删除符合条件的项目)
+	</td>
+</tr>
+</table></td></tr></table>
+<br><center><input type=submit value="提 交"></center>
+</form>
+
+<form action="$basename&" method=post>
+<input type=hidden name=action value='delrpl'>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>删除回复</b></td></tr>
+<tr><td class=b width=30%>所属版块</td>
+<td class=b><select name=fid><option value='-1'>所有版块</option>$forumcache</select></td></tr>
+<tr><td class=b>所属主题ID<br>(多个主题ID用","分隔)</td>
+<td class=b><input type=text size=20 name="tid">
+<font color="red">此功能可删除单个或多个主题的所有回复</font></td></tr>
+<tr><td class=b>按作者删除(<font color=blue>回复作者</font>)<br>(多个作者用","分隔)</td>
+<td class=b><input type=text size=20 name="author"> 可使用通配符 "*"</td></tr>
+<tr><td class=b>关键字包含(多个关键字用","分隔)</td>
+<td class=b><input type=text size=20 name="keyword"> 可使用通配符 "*"</td></tr>
+<tr><td class=b>内容大于</td>
+<td class=b><input type=text size=20 name="tcounts"> 字节</td></tr>
+<tr><td class=b>内容少于</td>
+<td class=b><input type=text size=20 name="counts"> 字节</td></tr>
+<tr><td class=b>根据用户IP查找</td>
+<td class=b><input type=text size=20 name="userip"> 可使用通配符 "*"</td></tr>
+<tr>
+	<td class=b><div id="info2">每批处理的个数</div></td>
+	<td class=b>
+		<input type=text size=20 name="nums" value="30">
+		<input type=checkbox name="direct" value=1 onclick="deldirect(this.form,'info2','每批处理的个数');">
+		直接删除(直接删除符合条件的项目)
+	</td>
+</tr>
+</table>
+<br><center><input type=submit value="提 交"></center>
+</form>
+
+<!--
+EOT;
+} elseif($action=='deltpc' && empty($step)){print <<<EOT
+-->
+ &nbsp; &nbsp;$pages
+<form action="$basename&" method=post>
+<input type=hidden name=action value='$action'>
+<input type=hidden name=step value=2>
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3 style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word'>
+<tr><td class=head colspan=18><b>文章列表</b></td></tr>
+<tr align=center class=head_2><td>ID</td>
+<td colspan=6>标题</td><td colspan=2>作者</td><td colspan=2>发表时间</td>
+<td colspan=2>IP</td>
+<td colspan=2>论坛</td><td>回复</td><td>人气</td>
+<td>删除</td>
+</tr>
+<!--
+EOT;
+foreach($topicdb as $key=>$topic){
+if(!$topic[subject])continue;
+$key+=($page-1)*$lines+1;
+print <<<EOT
+-->
+<tr align=center class=b>
+<td class=b>$key</td>
+<td colspan=6><a href="read.php?fid=$topic[fid]&tid=$topic[tid]" target=_blank>$topic[subject]</a></td><td  colspan=2><a href="profile.php?action=show&uid=$topic[authorid]" target=_blank>$topic[author]</a></td><td  colspan=2>$topic[postdate]</td><td colspan=2>$topic[userip]</td>
+<td colspan=2>$topic[forumname]</td><td>$topic[replies]</td>
+<td>$topic[hits]</td>
+<td><input type=checkbox name=delid[$topic[tid]] value=$topic[fid]></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></td></tr></table>
+<br><center><input type='button' name='chkall' value='全 选' onclick='CheckAll(this.form)'>
+<input type=submit value='提 交'></center>
+</form>
+<!--
+EOT;
+} elseif($action=='delrpl' && empty($step)){print <<<EOT
+-->
+ &nbsp; $pages
+<form action="$basename&" method=post>
+<input type=hidden name=action value='$action'>
+<input type=hidden name=step value=2>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=8><b>文章列表</b></td></tr>
+<tr align=center>
+<td class=head_2  width=5%>ID</td>
+<td class=head_2>作者</td>
+<td class=head_2>IP</td>
+<td class=head_2>发表时间</td>
+<td class=head_2>论坛</td>
+<td class=head_2>内容</td>
+<td class=head_2 width=5%>删除</td>
+</tr>
+<!--
+EOT;
+$num=($page-1)*$nums;
+foreach($postdb as $key=>$post){
+if(!$post[content])continue;
+$num++;
+print <<<EOT
+-->
+<tr align=center>
+<td class=b>$num</td>
+<td class=b><a href="profile.php?action=show&uid=$post[authorid]" target=_blank>$post[author]</a></td>
+<td class=b>$post[userip]</td>
+<td class=b>$post[postdate]</td>
+<td class=b>$post[forumname]</td>
+<td class=b><a href="read.php?tid=$post[tid]" target=_blank>$post[content]</a></td>
+<td class=b><input type=checkbox name=delid[$post[pid]] value=$post[delid]></td>
+</tr>
+<!--
+EOT;
+}
+print <<<EOT
+-->
+</table>
+<br>
+<center>
+<input type='button' name='chkall' value='全 选' onclick='CheckAll(this.form)'>
+<input type=submit value='提 交'>
+</center>
+</form>
+ &nbsp; $pages
+<!--
+EOT;
+}}elseif($a_type=='member'){
+if(empty($action)){print <<<EOT
+-->
+<form action="$basename&" method=post>
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td class=head colspan=2><b>删除用户</b></td></tr>
+<tr><td class=b  width=20%>用户组</td>
+<td class=b><select name=groupid>$groupselect</select></td></tr>
+<tr><td class=b>用户名包含</td>
+<td class=b><input type=text size=20 maxlength=14 name="schname">可使用通配符 "*"</td></tr>
+<tr><td class=b>email</td>
+<td class=b><input type=text size=20 maxlength=14 name="schemail">可使用通配符 "*"</td></tr>
+<tr><td class=b>发帖数小于(帖)</td>
+<td class=b><input type=text size=20 maxlength=14 name="postnum"> </td></tr>
+<tr><td class=b>在线时间小于(小时)</td>
+<td class=b><input type=text size=20 maxlength=14 name="onlinetime"> </td></tr>
+<tr><td class=b>根据用户IP查找</td>
+<td class=b><input type=text size=20 name="userip"> 可使用通配符 "*"</td></tr>
+<tr><td class=b>注册时间大于</td>
+<td class=b><select name=regdate>
+<OPTION value="all">所有会员</OPTION>
+<OPTION value="86400">一天</OPTION>
+<OPTION value="172800">二天</OPTION>
+<OPTION value="604800">一星期</OPTION>
+<OPTION value="2592000">一个月</OPTION>
+<OPTION value="7776000">三个月</OPTION>
+<OPTION value="15552000">六个月</OPTION>
+<OPTION value="31536000">一年</OPTION></select></td></tr>
+<tr><td class=b>多久未登录</td>
+<td class=b><select name='schlastvisit'>
+<OPTION value="all">所有会员</OPTION>
+<OPTION value="86400">一天</OPTION>
+<OPTION value="172800">二天</OPTION>
+<OPTION value="604800">一星期</OPTION>
+<OPTION value="2592000">一个月</OPTION>
+<OPTION value="7776000">三个月</OPTION>
+<OPTION value="15552000">六个月</OPTION>
+<OPTION value="31536000">一年</OPTION></select></td></tr>
+<tr><td class=b>排序方式</td>
+<td class=b><select name='orderway'>
+<option value='lastvisit' checked>最后登录</option>
+<option value='regdate'>	注册时间</option>
+<option value='postnum'>	发帖</option></select>
+<input type=radio size=5 name="asc" value='' checked>升序
+<input type=radio size=5 name="asc" value='DESC'>降序</td></tr>
+<tr>
+	<td class=b><div id="info3">每页显示行数</div></td>
+	<td class=b>
+		<input type=text size=5 name="lines" value="30">
+		<input type=checkbox name="direct" value=1 onclick="deldirect(this.form,'info3','每页显示行数');">
+	直接删除(直接删除符合条件的项目)
+	</td>
+</tr>
+</table></td></tr></table>
+<br><center><input type=submit value="提 交"></center>
+<input type=hidden name=action value=del>
+</form>
+<!--
+EOT;
+} if($action=='del' && empty($step)){print <<<EOT
+-->
+ &nbsp; &nbsp; &nbsp; $pages
+<form action="$basename&" method=post>
+<input type=hidden name=action value='$action'>
+<input type=hidden name=step value=2>
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td class=head colspan=9><b>用户列表</b></td></tr>
+<tr align=center><td class=head_2>ID</td>
+<td class=head_2>用户名</td>
+<td class=head_2>Email</td>
+<td class=head_2>系统头衔</td>
+<td class=head_2>IP</td>
+<td class=head_2>注册时间</td>
+<td class=head_2>最后登录</td>
+<td class=head_2>发帖</td>
+<td class=head_2>删除</td>
+</tr>
+<!--
+EOT;
+foreach($schdb as $key=>$sch){
+if(!$sch[username])continue;
+$key+=($page-1)*$lines+1;
+print <<<EOT
+-->
+<tr align=center>
+<td class=b>$key</td>
+<td class=b>$sch[username]</td>
+<td class=b>$sch[email]</td>
+<td class=b>$sch[group]</td>
+<td class=b>$sch[onlineip]</td>
+<td class=b>$sch[regdate]</td>
+<td class=b>$sch[thisvisit]</td>
+<td class=b>$sch[postnum]</td>
+<td class=b><input type=checkbox name=delid[] value=$sch[uid]>
+</td></tr>
+<!--
+EOT;
+}
+print <<<EOT
+-->
+</table></td></tr></table>
+<br><center><input type='button' name='chkall' value='全 选' onclick='CheckAll(this.form)'>
+<input type=submit value='提 交'></center></form>
+<!--
+EOT;
+}
+}elseif($a_type=='message'){
+if(empty($action)){print <<<EOT
+-->
+<form action="$basename&" method=post>
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td class=head colspan=2><b>删除短消息</b></td></tr>
+<tr><td class=b>信箱类型</td>
+<td class=b><select name=type>
+<option value='all'>全部删除</option>
+<option value='rebox'>收件箱</option>
+<option value='sebox'>发件箱</option>
+<input type=checkbox name="keepnew" value=1 checked><font color=blue>是否保留新消息</font></select></td></tr>
+<tr><td class=b width=20%>发件人</td>
+<td class=b><input type=text size=20 name="fromuser"> 可使用通配符 "*"</td></tr>
+<tr><td class=b width=20%>收件人</td>
+<td class=b><input type=text size=20 name="touser"> 可使用通配符 "*"</td></tr>
+<tr><td class=b>删除</td>
+<td class=b><input type=text size=20 name="msgdate"> 天前的短消息
+</td></tr>
+<tr>
+	<td class=b><div id="info3">每页显示行数</div></td>
+	<td class=b>
+		<input type=text size=5 name="lines" value="30">
+		<input type=checkbox name="direct" value=1 onclick="deldirect(this.form,'info3','每批处理的个数');">
+		直接删除(直接删除符合条件的项目)
+	</td>
+</tr>
+</table></td></tr></table>
+<br><center><input type=submit value="提 交"></center>
+<input type=hidden name=action value=del>
+</form>
+<!--
+EOT;
+} if($action=='del' && empty($step)){print <<<EOT
+-->
+ &nbsp; &nbsp; &nbsp; $pages
+<form action="$basename&" method=post>
+<input type=hidden name=action value='$action'>
+<input type=hidden name=step value=2>
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr><td class=head colspan=8><b>短消息列表</b></td></tr>
+<tr class=head_2 align=center>
+<td>ID</td>
+<td>标题</td>
+<td>发件人</td>
+<td>收件人</td>
+<td>时间</td>
+<td>删除</td></tr>
+<!--
+EOT;
+foreach($messagedb as $key=>$message){
+if(!$message[title])continue;
+$key+=($page-1)*$lines+1;
+print <<<EOT
+-->
+<tr align=center>
+<td class=b>$key</td>
+<td class=b><a href="$admin_file?adminjob=content&type=message&id=$message[mid]" target="_blank">$message[title]</a></td>
+<td class=b>$message[fromuser]</td>
+<td class=b>$message[touser]</td>
+<td class=b>$message[date]</td>
+<td class=b><input type=checkbox name=delid[] value=$message[mid]></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></td></tr></table>
+<br><center><input type='button' name='chkall' value='全 选' onclick='CheckAll(this.form)'>
+<input type=submit value='提 交'></center></form>
+<!--
+EOT;
+}}include_once PrintEot('adminbottom');
+?>-->
+<script language="JavaScript">
+function deldirect(form,tar,msg){
+	if (form.direct.checked == true){
+		document.getElementById(tar).innerHTML = '<b><font color=blue>删除个数</font></b>';
+	}else{
+		document.getElementById(tar).innerHTML = msg;
+	}
+}
+</script>

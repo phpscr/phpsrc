@@ -1,0 +1,286 @@
+<!--
+<?php print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center>
+	<tr>
+		<td align=left>
+			<img src='$imgpath/$stylepath/index/home.gif' align=absbottom> 
+			<b><a href='$db_bfn'>$db_bbsname </a> -> 短消息</b>
+		</td>
+	</tr>
+</table><br>
+
+<table width='$tablewidth' cellspacing=1 cellpadding=3 align=center $i_table>
+	<tr class=head><td class=head  colspan=6>&nbsp;【信箱状态：目前有短消息<b> $msgcount </b>条；最多可存消息 <b>$gp_maxmsg</b> 条；使用率 <b>$contl%</b> 】</td></tr>
+	<tr align=center>
+		<td class='f_one'><a href='$secondurl?action=receivebox'>收件箱</a></td>
+		<td class='f_one'><a href='$secondurl?action=sendbox'>发件箱</a></td>
+		<td class='f_one' width=20%>
+			<a href='$secondurl?action=scout'>消息跟踪</a>(<font color="red">可删除已发消息</font>)
+		</td>
+		<td class='f_one'><a href='$secondurl?action=write'>写新消息</a> </td>
+		<td class='f_one'><a href='$secondurl?action=banned'>屏蔽列表</a> </td>
+		<td class='f_one'><a href='$secondurl?action=clear' onclick="return checkset();">清空</a></td>
+	</tr>
+</table>
+<br>
+<!--
+EOT;
+if($action=='read'||$action=='readsnd'||$action=="readscout"){
+print <<<EOT
+-->
+<table width="50%" cellspacing=1 cellpadding=3 align=center $i_table>
+	<tr class=head><td class=head colspan=2>查看信息</td></tr>
+	<tr class='f_one'>
+		<td width='12%'><font color=5A6633>作者:</font></td>
+		<td>$msginfo[username]</td>
+	</tr>
+	<tr class='f_one'>
+	<td width='12%'><font color=5A6633>标题:</font></td>
+		<td>
+			<table cellspacing=1 cellpadding=3 style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word'>
+				<tr class='f_one'><td>$msginfo[title]</td></tr>
+			</table>
+		</td>
+	</tr>
+	<tr class='f_one'>
+		<td width='12%'><font color=5A6633>时间:</font></td>
+		<td>$msginfo[mdate]</td>
+	</tr>
+	<tr class='f_one'>
+		<td width='12%'><font color=5A6633>内容:</font></td>
+		<td>
+			<table cellspacing=0 cellpadding=0 width='100%' height='55%' style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word'>
+				<tr><td valign=top align=left>$msginfo[content]</td></tr>
+			</table>
+		</td>
+	</tr>
+	<tr class='f_one'>
+		<td colspan=2>
+			<font color=5A6633>
+			选项:
+<!--
+EOT;
+if($action=="read"){print <<<EOT
+-->
+			[<a href='$secondurl?action=write&remid=$msginfo[mid]'>回复</a>] 
+<!--
+EOT;
+}if($action=="readsnd"){print <<<EOT
+-->
+			[<a href='$secondurl?action=write&touid=$msginfo[touid]'>另发</a>] 
+<!--
+EOT;
+}if($action=="readscout"){print <<<EOT
+-->
+			[<a href='$secondurl?action=write&touid=$msginfo[touid]'>另发</a>] 
+<!--
+EOT;
+}print <<<EOT
+-->
+			[<a href='$secondurl?action=del&delids=$msginfo[mid]'>删除</a>]
+			[<a href='message.php?action=$preaction'>返回</a>]</font>
+		</td>
+	</tr>
+</table>
+<!--
+EOT;
+}elseif($action=='receivebox'||$action=='sendbox'||$action=='scout'){
+print <<<EOT
+-->
+<form name='del' action='$secondurl' method=POST>
+<table width="$tablewidth" cellspacing=1 cellpadding=3 align=center $i_table>
+	<tr align=center>
+		<td width=6%  class=head>ID</a></td>
+		<td width=40% class=head>标题</td>
+		<td width=10% class=head>发件人</td>
+		<td width=10%  class=head>收件人</td>
+		<td width=20%  class=head>时间</td>
+		<td width=7%  class=head>已读</td>
+		<td width=7%  class=head>选定</a></td>
+	</tr>
+<!--
+EOT;
+foreach($msgdb as $key=>$message){
+$key++;
+print <<<EOT
+-->
+	<tr align=center class="f_one">
+		<td>$key</td>
+		<td align=center><a href="$secondurl?action=$readtype&mid=$message[mid]">$message[title]</a></td>
+		<td align=center><a href="profile.php?action=show&uid=$message[fromuid]">$message[from]</a></td>
+		<td align=center><a href="profile.php?action=show&uid=$message[touid]">$message[to]</a></td>
+		<td span class=smalltxt>$message[mdate]</td>
+		<td align=center>
+<!--
+EOT;
+if($action=='sendbox'){
+print <<<EOT
+-->
+	--
+<!--
+EOT;
+}elseif($message['ifnew']){print <<<EOT
+-->
+			<font color=red>否</font>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+			是
+<!--
+EOT;
+}print <<<EOT
+-->
+		</td>
+		<td align=center>
+<!--
+EOT;
+if($action=='scout' && ($message['ifnew']==0 && $message[to]!=$windid)){
+print <<<EOT
+-->
+		--
+<!--
+EOT;
+}else{
+print <<<EOT
+-->
+			<input type='checkbox' name='delid[]' value='$message[mid]'>
+<!--
+EOT;
+}print <<<EOT
+-->
+		</td>
+	</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<br>
+<center>
+	<input type='button' name='chkall' value='全选' onclick='CheckAll(this.form)'>
+	<input type=submit value='提交'>
+	<input name=towhere type=hidden value='$towhere'>
+	<input name=action type=radio value='down'>下载
+	<input name=action type=radio value='del' checked>删除
+</center>
+</form>
+<!--
+EOT;
+}elseif($action=='write'){
+print <<<EOT
+-->
+<script language="JavaScript" src="$db_bbsurl/$js_path"></script>
+<form name='FORM' action='$secondurl' method=POST>
+<table width="$tablewidth" cellspacing=1 cellpadding=3  align=center $i_table>
+	<tr class='t_one'><td class=head colspan=2><b>短消息</b></td></tr>
+	<tr class='t_one'>
+		<td width='20%'><b>用户名</b></td>
+		<td><input type=text name='msg_ruser' maxlength=100 size=73 $msgid></td>
+	</tr>
+	<tr class='t_one'>
+		<td><b>标题</b></td>
+		<td><input type=text name='msg_title' maxlength=75  size=73 value='$subject'></td>
+	</tr>
+<!--
+EOT;
+if($msggd){
+$rawwindid=addslashes($windid);
+print <<<EOT
+-->
+	<tr class='t_one'>
+		<td><b>认证码</b></td>
+		<td><input type='text' name='gdcode' size=8>&nbsp;<img src="ck.php?windid=$rawwindid" align=absmiddle></td>
+	</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+	<tr class='t_one'>
+		<td valign=top><b>内容</b></td>
+		<td>
+<!--
+EOT;
+require_once PrintEot(editor);
+print <<<EOT
+-->
+		</td>
+	</tr>
+	<tr class='t_one'>
+		<td width=26%></td>
+		<td><input type='checkbox' name='ifsave' value='Y'>保存到发件箱中</td>
+	</tr>
+</table>
+<br>
+<center>
+	按 Ctrl+Enter 直接提交   
+	<input type=submit value='提 交' name='Submit' onclick='return checkCnt();'>
+</center>
+<input type=hidden name=action value=write>
+<input type=hidden name=step value=2></form>
+<!--
+EOT;
+}elseif($action=='banned'){print <<<EOT
+-->
+<form name="FORM" action="$secondurl" method=POST>
+<input type="hidden" name="action" value="banned">
+<input type="hidden" name="step" value="2">
+<!--
+EOT;
+if($_G['msggroup']){print <<<EOT
+-->
+<table width="$tablewidth"  cellspacing=1 cellpadding=3  align=center $i_table>
+	<tr class=head><td class=head colspan=2><b>短消息用户组设置</b></td></tr>
+	<tr class='f_one'>
+		<td width='26%' valign='top'>可设置只接收指定用户组的短消息，不设置接收所有用户组的短消息</td>
+		<td>
+			<table cellspacing='0' cellpadding='0' border='0' width='100%' align='center'>
+				<tr>
+					$usergroup
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<br>
+<!--
+EOT;
+}print <<<EOT
+-->
+<table width="$tablewidth"  cellspacing=1 cellpadding=3  align=center $i_table>
+	<tr class=head><td class=head colspan=2><b>屏蔽列表</b></td></tr>
+	<tr class='f_one'>
+		<td width='26%' valign='top'>屏蔽多个用户时用逗号 "," 隔开(如:张三,李四,王五等)。<br><br>当这些被添加的屏蔽用户给您发送短消息时将不予接收。</td>
+		<td><textarea name=banidinfo rows='5' cols='80'>$banidinfo</textarea></td>
+	</tr>
+</table><br>
+<center><input type=submit value='提 交'></center></form>
+<!--
+EOT;
+}print <<<EOT
+-->
+<br><br>
+<script language=JavaScript>
+ifcheck = true;
+function CheckAll(form)
+{
+	for (var i=0;i<form.elements.length-2;i++)
+	{
+		var e = form.elements[i];
+		e.checked = ifcheck;
+	}
+	ifcheck = ifcheck == true ? false : true;
+}
+function checkset()
+{
+	if(confirm("将删除收件箱和发件箱内所有消息，请确认！")){
+		return true;
+	} else {
+		return false;
+	}
+}
+</script>
+<!--
+EOT;
+?>-->

@@ -1,0 +1,96 @@
+<!--<?php
+print <<<EOT
+-->
+<form action="job.php?votejop=vote" method="post" name="vote">
+<div class="t">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="2">投票主题：$subject
+<!--
+EOT;
+if($vote_close){ print <<<EOT
+-->
+(本次投票已结束)
+<!--
+EOT;
+} print <<<EOT
+-->
+</td><td style="text-align:right" class="h">
+<a href="read.php?fid=$fid&tid=$tid&viewvoter=$ifview">查看投票的会员</a></td></tr>
+<!--
+EOT;
+foreach($votedb as $key=>$vote){
+print <<<EOT
+-->
+<tr class="tr3">
+<th width="30%">
+<!--
+EOT;
+if(!$havevote || $action=='modify'){
+print <<<EOT
+-->
+<input type="$votetype" value="$key" name="voteid[]" />
+<!--
+EOT;
+}print <<<EOT
+-->
+<b>$vote[name]</b> </th>
+<th>
+<img src="$imgpath/post/vote/bar1.gif" width="$vote[width]" height="10" />&nbsp;$vote[num]&nbsp;票</th>
+<th>$vote[voter]<br /></th>
+</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+<tr class="tr4"><td colspan="4">总共有<b>{$votesum}</b>人参与本次投票 发起于：$tpc_date
+<!--
+EOT;
+if($tpc_endtime){ print <<<EOT
+-->
+&nbsp; 至 $tpc_endtime 结束
+<!--
+EOT;
+} print <<<EOT
+-->
+</td></tr></table></div>
+<!--
+EOT;
+if((!$havevote || $modifiable) && $vote_close==0){
+print <<<EOT
+-->
+<div style="text-align:center;">
+<!--
+EOT;
+if($havevote=='havevote' && $action!='modify' && $modifiable){print <<<EOT
+-->
+&nbsp;* <b><a href="read.php?fid=$fid&tid=$tid&action=modify">修改投票</a></b>
+<!--
+EOT;
+}else{
+if($action=='modify'){print <<<EOT
+-->
+<input type="hidden" value="modify" name="voteaction" />
+<!--
+EOT;
+}if($multi){print <<<EOT
+-->
+限选个数：$multi&nbsp;&nbsp;
+<!--
+EOT;
+}print <<<EOT
+-->
+<input type="hidden" value="$tid" name="tid" />
+&nbsp;&nbsp;<input class="btn" type="submit" value="提 交" />
+<!--
+EOT;
+}print <<<EOT
+-->
+</div>
+<!--
+EOT;
+} print <<<EOT
+-->
+</form>
+<!--
+EOT;
+?>

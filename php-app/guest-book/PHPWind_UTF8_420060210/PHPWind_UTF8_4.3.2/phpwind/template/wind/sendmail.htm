@@ -1,0 +1,73 @@
+<!--<?php print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center>
+<tr><td align=left><img src='$imgpath/$stylepath/index/home.gif' align=absbottom>
+<b><a href='$db_bfn'>$db_bbsname </a>-> 发送邮件</b></td></tr></table><br>
+
+<form method='post' action='sendemail.php?'>
+<input type="hidden" name='action' value='$action'>
+<input type="hidden" name='step' value='2'>
+<input type="hidden" name='uid' value='$userdb[uid]'>
+<table width='$tablewidth' cellspacing=1 cellpadding=3 align=center $i_table>
+<tr><td colspan='2' class=head><b>发送邮件</b></td></tr>
+<tr><td class='t_one' width='21%'>您的名字</td>
+<td class='t_one'><input type='text' name='fromname' size='25' maxlength='40' value=$windid disabled></td></tr>
+<tr><td class='t_one'>您的 Email</td>
+<td class='t_one'><input type='text' name='fromemail' size='25' value=$winddb[email]></td></tr>
+<tr><td class='t_one'>接收者名字</td>
+<td class='t_one'><input type='text' name='sendtoname' size='25' value='$to_user' $ifdisabled></td></tr>
+<tr><td class='t_one'>接收者 Email</td>
+<td class='t_one'>
+<!--
+EOT;
+if($hiddenmail){print <<<EOT
+-->
+邮箱已设置保密不影响邮件发送
+<!--
+EOT;
+}else{print <<<EOT
+-->
+<input type='text' name='sendtoemail' size='25' value='$to_mail' $ifdisabled>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<tr><td class='t_one'>标题</td>
+<td class='t_one'><input type='text' name='subject' size='65' value='$atc_name'></td></tr>
+<!--
+EOT;
+if($othergd){
+$rawwindid=addslashes($windid);
+print <<<EOT
+-->
+<tr class='t_one'><td>认证码</td>
+<td><input type='text' name='gdcode' size=8>&nbsp;<img src="ck.php?windid=$rawwindid" align=absmiddle></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr><td class='t_one' valign='top'>内容</td>
+<td class='t_one'>
+<!--
+EOT;
+if($action=='tofriend'){print <<<EOT
+-->
+<textarea rows='9' cols='65' name='atc_content'>
+您好！我在$db_bbsname($db_bbsurl/?u=$winduid)\n看到了这篇帖子，认为很有价值，特推荐给您。\n\n作者：$atcinfo[author]\n地址:{$db_bbsurl}/read.php?tid=$tid&u=$winduid\n\n希望您能喜欢。
+</textarea>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+<textarea rows='9' cols='65' name='atc_content'></textarea>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+
+<br><center><input type='submit' name='sendsubmit' value='提 交'></center></form>	
+<!--
+EOT;
+?>-->

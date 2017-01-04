@@ -1,0 +1,51 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<form action=$basename method=post name="form1">
+<input type=hidden name="action" value="del">
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td colspan=6>报告类型:
+<select name="type" onchange="report_jump('$admin_file')">
+<option value="1"></option>
+<option value="1">优秀帖子</option>
+<option value="0">不良帖子</option>
+</select>
+</td></tr>
+<tr><td class=head colspan=6><b>帖子反映管理</b></td></tr>
+<tr class=head_2>
+<td width='6%' align=center>ID</td>
+<td width='10%' align=center>论坛</td>
+<td width='10%' align=center>帖子位置</td>
+<td width='15%' align=center>反映用户</td>
+<td>&nbsp;原因</td>
+<td width='6%' align=center>删除</td>
+</tr>
+<!--
+EOT;
+$id=0;
+foreach($reportdb as $report){
+$id++;
+print <<<EOT
+-->
+<tr class=b>
+<td align=center>$id</td>
+<td align=center><a href="thread.php?fid=$report[fid]" target="_blank">$report[fname]</a></td>
+<td align=center><a href="read.php?tid=$report[tid]#$report[pid]" target="_blank">进入帖子</a></td>
+<td align=center>$report[username]</td>
+<td>&nbsp;$report[reason]</td>
+<td align=center><input type='checkbox' name='selid[]' value="$report[id]"></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table><br>$pages
+<center>
+<input type='button' name='chkall' value='全 选' onclick='CheckAll(this.form)'>
+<input type="submit" name="hello" value="提 交">
+</center></form>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>
+-->

@@ -1,0 +1,12 @@
+var lang_g = new Array();
+lang_g['g_intm'] = "Please enter a page number, maximum: ";
+lang_g['g_error'] = "AJAX can not be enabled in Opera because of lack of support.";
+lang_g['g_close'] = "Disable AJAX";
+lang_g['g_open'] = "Enable AJAX";
+lang_g['g_edv'] = "Modify Succeeded";
+lang_g['g_delt'] = "Are you sure to delete this message?";
+lang_g['g_check_email'] = "Emails mis-match!";
+lang_g['g_check_password'] = "Passwords mis-match!";
+lang_g['g_refering'] = "Submitting, please hold ...";
+lang_g['g_selectat'] = "Please selete the file to be uploaded.";
+lang_g['g_outstr'] = "Length of content out of limit";

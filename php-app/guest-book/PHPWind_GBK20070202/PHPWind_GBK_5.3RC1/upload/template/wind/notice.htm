@@ -1,0 +1,26 @@
+<!--<?php print <<<EOT
+-->
+<div class="t3" style="margin-bottom:15px">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td align="left"><b>$msg_guide</b></td></tr>
+</table></div>
+$forumlist
+<!--
+EOT;
+foreach($noticedb as $notice){print <<<EOT
+-->
+<div class="t">
+<table width="100%" cellspacing="0" cellpadding="3" style="TABLE-LAYOUT: fixed;WORD-WRAP: break-word">
+<tr align="center">
+<td class="h"><a name="$notice[aid]">&#8801; $notice[subject] &#8801;<br /></td></tr>
+<tr class="tr1">
+<th class="f_two"><br /><br />$notice[content]<br /><br /></th></tr>
+<tr class="tr1"><td style="text-align:right">
+作者:<a href="profile.php?action=show&username=$notice[rawurl]">$notice[author]</a>
+时间:$notice[startdate]
+</td></tr>
+</table></div>
+<!--
+EOT;
+}
+?>-->

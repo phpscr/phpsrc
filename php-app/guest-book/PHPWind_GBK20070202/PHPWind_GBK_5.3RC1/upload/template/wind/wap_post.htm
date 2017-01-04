@@ -1,0 +1,27 @@
+<!--<?php print <<<EOT
+-->
+<p align="center">发表文章<br/></p>
+<p>标题:<input name="subject" type="text" /></p>
+<p>内容:<input name="content" type="text" /></p>
+<!--
+EOT;
+if($action=='new'){print <<<EOT
+-->
+<p>分类:<select name="fid">
+$cates
+</select></p>
+<!--
+EOT;
+}print <<<EOT
+-->
+<p align="center">
+<anchor title="submit">确定
+<go href="$refer" method="post">
+<postfield name="subject" value="$(subject)" />
+<postfield name="content" value="$(content)" />
+<postfield name="fid" value="$(fid)" />
+</go></anchor>
+</p>
+<!--
+EOT;
+?>-->

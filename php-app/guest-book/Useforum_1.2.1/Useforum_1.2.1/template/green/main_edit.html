@@ -1,0 +1,31 @@
+{include file="header.html"}
+<div id="page">
+	<div class="post">
+		<h2 class="title">修改话题</h2>
+        <div class="entry" style="margin-top: -26px;">
+            <form action="" method="POST">
+                <p>标题：<input type="text" name="title"style="width:80%;" value="{htmlspecialchars($info.title)}"> 作者：{$info.uname}</p>
+                <textarea name="contents" style="width:100%;height:300px;visibility:hidden;">{$info.contents}</textarea><br />
+                <p><input type="submit" class="links" value="提  交" />
+                    阅读权限 <input type="number" name="authority"  value="{$info.authority}"  style="width:130px;">
+                    {if $errmsg} <span class="notice">{$errmsg}</span>{/if}</p>
+            </form>
+        </div>
+	</div>
+</div>
+<!--编辑器脚本-->
+		<link rel="stylesheet" href="{$siteurl}/include/editor/themes/default/default.css" />
+		<script charset="utf-8" src="{$siteurl}/include/editor/kindeditor-min.js"></script>
+		<script charset="utf-8" src="{$siteurl}/include/editor/lang/zh_CN.js"></script>
+		<script>
+			var editor;
+			KindEditor.ready(function(K) {
+				editor = K.create('textarea[name="contents"]', {
+					resizeType : 1,
+					allowPreviewEmoticons : false,
+					allowImageUpload : true,
+					pasteType : 1
+				});
+			});
+		</script>
+{include file="footer.html"}

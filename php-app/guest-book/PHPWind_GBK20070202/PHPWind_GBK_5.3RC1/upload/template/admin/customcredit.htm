@@ -1,0 +1,81 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=7><b>提示信息</b></td></tr>
+<tr><td class=b><br>可以查看和管理用户自定义积分</td></tr>
+</table><br>
+<!--
+EOT;
+if (!$action){print <<<EOT
+-->
+<form action="$basename&" method="post">
+<input type="hidden" name="action" value="edit">
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=9><b>自定义积分管理</b></td></tr>
+<tr><td class=b>用户名</td>
+<td class=b><input type="text" name="username"></td></tr>
+</table>
+<br><center><input type=submit value='提 交'></center></form>
+$pages
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=5><b>自定义积分管理</b></td></tr>
+<tr class="c" align="center">
+<td>ID</td>
+<td>用户名</td>
+<td>自定义积分名称</td>
+<td>自定义积分值</td>
+<td>编辑</td>
+</tr>
+<!--
+EOT;
+$id=($page-1)*$db_perpage;
+foreach($creditdb as $key => $value){
+if($value[username] && $value[name]){
+$id++;
+print <<<EOT
+-->
+<tr class=b align="center">
+<td>$id</td>
+<td>$value[username]</td>
+<td>$value[name]</td>
+<td>$value[value]</td>
+<td><a href="$basename&action=edit&uid=$value[uid]">编辑</a></td>
+</tr>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</table>
+<!--
+EOT;
+}elseif($action=='edit'){print <<<EOT
+-->
+<form action="$basename&" method="post">
+<input type="hidden" name="action" value="edit">
+<input type="hidden" name="step" value="2">
+<input type="hidden" name="uid" value="$rt[uid]">
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2 align="center"><b>自定义积分管理</b></td></tr>
+<tr><td class=b width="20%">用户名</td>
+<td class=b>$rt[username]</td></tr>
+<!--
+EOT;
+foreach($credit as $key => $value){
+if($_CREDITDB[$key]){
+print <<<EOT
+-->
+<tr><td class=b width="20%">$value[0]</td>
+<td class=b><input type="text" name="creditdb[$key]" value="$value[1]"></td></tr>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</table>
+<br><center><input type=submit value='提 交'></center></form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>
+-->

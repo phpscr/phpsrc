@@ -1,0 +1,159 @@
+<!--<?php
+include_once PrintEot('left');
+if(empty($action)){
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=b>
+[<b><a href="$basename">银行设置</a></b>]
+[<a href="$basename&action=log">日志管理</a>]
+</td></tr></table><br>
+
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>银行设置：可开启关闭银行功能，以及设置银行基本参数<br>&nbsp;</td></tr></table><br>
+
+<br><form action="$basename" method="post">
+<input type=hidden name="action" value="unsubmit">
+<table width=98% align="center" cellpadding=3 cellspacing=1 class=i_table>
+<tr class=head align=center>
+<td colspan="2"><b>银行参数设置</b></td>
+</tr>
+<tr class=b><td>是否开放银行<br>(需要到插件中心 管理中同时启用该插件方为有效)</td>
+<td><input type=radio value=1 $bk_open_1 name=config[open]> 是 <input type=radio value=0 $bk_open_0 name=config[open]> 否</td></tr>
+<tr class=b><td>是否开放转帐功能</td>
+<td><input type=radio value=1 $bk_virement_1 name=config[virement]> 是 <input type=radio value=0 $bk_virement_0 name=config[virement]> 否</td></tr>
+<tr class=b><td>银行排行榜更新时间设置</td>
+<td><input size=35 value="$bk_per" name=config[per]></td></tr>
+<tr class=b><td>银行排行榜显示个数</td>
+<td><input size=35 value="$bk_num" name=config[num]></td></tr>
+<tr class=b><td>银行转帐手续费(%)</td>
+<td><input size=35 value="$bk_virerate" name=config[virerate]></td></tr>
+<tr class=b><td>银行转帐最低限制</td>
+<td><input size=35 value="$bk_virelimit" name=config[virelimit]></td></tr>
+<tr class=b>
+<td>银行交易时间间隔限制(秒)</td>
+<td><input size=35 value="$bk_timelimit" name=config[timelimit]></td>
+</tr>
+<tr class=b>
+<td>银行活期存款利率 (%)</td>
+<td><input size=35 value="$bk_rate" name=config[rate]></td>
+</tr>
+<tr class=b>
+<td>银行定期存款利率 (%)</td>
+<td><input size=35 value="$bk_drate" name=config[drate]></td>
+</tr>
+<tr class=b>
+<td>银行定期存款期限 (月)</td>
+<td><input size=35 value="$bk_ddate" name=config[ddate]></td></tr></table>
+<br><center><input type=submit value="提 交"></center></form><br>
+
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>积分转换说明</b></td></tr>
+<tr><td class=b>
+<br><ul>
+<font color=blue>积分Ⅰ：</font>被转换的积分<br><font color=blue>积分Ⅱ：</font>转换后积分<br><font color=blue>比率Ⅰ：</font>减少Ⅰ个积分Ⅰ点数<br><font color=blue>比率Ⅱ：</font>增加Ⅱ个积分Ⅱ点数<br><font color=blue>状态：</font>是否使用这种积分转换方式
+</ul></td></tr></table><br>
+
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr class=i_table><td colspan="7" class=head><b>积分转换</b></td></tr>
+<tr class=head_2  align=center><td width=5%>ID</td><td width=20%>积分Ⅰ</td>
+<td width=20%>积分Ⅱ</td><td width=20%>比率Ⅰ</td><td width=20%>比率Ⅱ</td>
+<td width=5%>状态</td><td width=5%>删除</td></tr>
+<!--
+EOT;
+$id=1;
+foreach($bk_A as $key=>$bkinfo){
+$bkinfo[4]=$bkinfo[4]==1 ? '启用' :'禁用';
+print <<<EOT
+-->
+<tr align=center><td class=b>$id</td><td class=b>$bkinfo[0]</td><td class=b>$bkinfo[1]</td>
+<td class=b>$bkinfo[2]</td><td class=b>$bkinfo[3]</td>
+<td class=b><a href="$basename&action=change&changeid=$key" title='点击改变状态' >$bkinfo[4]</a></td>
+<td class=b><a href="$basename&action=del&delid=$key">删除</a></td></tr>
+<!--
+EOT;
+$id++;}print <<<EOT
+-->
+<form action="$basename" method=post>
+<input type=hidden name=action value='add'>
+<tr align=center><td class=b>$id</td>
+<td class=b><select name=jifen1>$jifen</select></td>
+<td class=b><select name=jifen2>$jifen</select></td>
+<td class=b><input type=text name=rate1 size=10></td>
+<td class=b><input type=text name=rate2 size=10></td>
+<td class=b><select name=ifuse><option value=1>启用</option><option value=0>禁用</option></select></td>
+<td class=b><input type='submit' value='新增'></td></tr></table>
+</form><br><br>
+<!--
+EOT;
+}elseif($action=='log'){print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=b>
+[<a href="$basename">银行设置</a>]
+[<b><a href="$basename&action=log">日志管理</a></b>]
+</td></tr></table><br>
+
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>银行日志：清晰地记录用户每一笔交易信息，方便查询<br>&nbsp;</td></tr></table><br>
+
+<form action="$basename&action=log&" method="post">
+<table width=98% align=center cellspacing=0 cellpadding=0>
+<tr><td>
+<table width=100% cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=6>搜索</td></tr>
+<tr align=center class=b>
+<td>用户名: <input type="text" size=25 name="username1" value="$username1"></td>
+<td>关键字: <input type="text" size=25 name="keyword" value="$keyword"></td>
+<td>
+<select name="type">
+<option value="all">全部</option>
+<option value="bk_save" $select[bk_save]>{$logtype[bk_save]}</option>
+<option value="bk_draw" $select[bk_draw]>{$logtype[bk_draw]}</option>
+<option value="bk_vire" $select[bk_vire]>{$logtype[bk_vire]}</option>
+<option value="bk_credit" $select[bk_credit]>{$logtype[bk_credit]}</option>
+</select>
+</td>
+<td class=b><input type=submit value='提 交'></td>
+</tr></table></td></tr></table></form>
+ &nbsp; $pages
+<form action="$basename&" method="post">
+<input type="hidden" name="action" value="dellog">
+<table width="98%" cellpadding=6 cellspacing=1 class="i_table" align="center">
+<tr class=head><td colspan=6><b>银行操作日志</b></td></tr>
+<tr class="head_2" align="center">
+<td width="5%">ID</td>
+<td width="5%">类型</td>
+<td width="*">描述</td>
+<td width="15%">操作日期</td>
+<td width="15%">IP</td>
+<td width="3%">删</td>
+</tr>
+<!--
+EOT;
+$num=($page-1)*$db_perpage;
+foreach($logdb as $key => $value){
+$num++;
+print <<<EOT
+-->
+<tr class="b" align="center">
+<td>$num</td>
+<td>{$logtype[$value[type]]}</td>
+<td><div style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word' align="left">$value[descrip]</div></td>
+<td>$value[date]</td>
+<td>$value[ip]</td>
+<td><input type="checkbox" name="selid[]" value="$value[id]"></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+<br><center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)">
+<input type="submit" name="hello" value="提 交"></center></form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>-->

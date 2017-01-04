@@ -1,0 +1,67 @@
+<!--<?php print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center><tr><td align=left>
+<img src='$imgpath/$stylepath/index/home.gif' align=absbottom> 
+<b><a href='$db_bfn'>$db_bbsname </a> -> 登录程式</b></td></tr></table><br>
+
+<form action="login.php?" method="post" name="login" onSubmit="this.submit.disabled=true;">
+<table width='$tablewidth' cellspacing=0 cellpadding=1 align=center $i_table>
+<tr><td>
+<table width=100% cellspacing=0 cellpadding=6 class='f_one'>
+<tr><td class=head colspan=2 height=27><b>登录程式</b></td></tr>
+<tr><td rowspan=7 width=3%></td>
+<td width='100%'><br>请输入您的帐号与密码，然后点击登录按钮. 如果您没有注册，请先<a href='register.php'><font color=blue><b>注册成为会员</b></font></a>。提示：您的浏览器必须支持cookie，否则将不能登录论坛。<br><b> 注意：</b>如果您在网吧，有效时间请选择即时登录; </td></tr>
+<tr><td>用户名 &nbsp;<input type="text" maxLength="20" name="pwuser" size="40" tabindex="1"></td></tr>
+<tr><td>密码  &nbsp; &nbsp; <input type="password" maxLength="20" name="pwpwd" size="40" tabindex="2"></td></tr>
+<!--
+EOT;
+if($logingd){
+$rawwindid=addslashes($windid);
+print <<<EOT
+-->
+<tr><td>认证码 &nbsp;<input type='text' maxLength=4 name='gdcode' size=8 tabindex="3">&nbsp;<img src="ck.php?windid=$rawwindid" align=absmiddle></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr><td>
+隐身登录
+<input name=hideid type=radio value='1'>          是 &nbsp
+<input name=hideid type=radio value='0' checked tabindex="4">  否 &nbsp 
+<!--
+EOT;
+if(!$db_hidelogin){print <<<EOT
+-->
+(后台已禁止普通会员使用隐身登录功能)
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<tr><td>
+Cookie 有效期:
+<input type='radio' name='cktime' value='31536000' checked tabindex="5">        一年 &nbsp;
+<input type='radio' name='cktime' value='2592000'> 一个月 &nbsp;
+<input type='radio' name='cktime' value='86400'>			一天 &nbsp;
+<input type='radio' name='cktime' value='3600'>			一小时 &nbsp;
+<input type='radio' name='cktime' value='0'>				即时 &nbsp; &nbsp;
+ </td></tr>
+<tr><td>
+如果您忘记密码或用户名，请点击 '<a href='sendpwd.php'>找回密码</a>' 并输入用户名，我们的系统将自动发送密码到您的有效邮箱中。
+</td></tr>
+</table>
+</td></tr>
+</table>
+<center>
+<br>
+<input name='submit' type='submit' value='提 交' tabindex="6">
+</center>
+<input type='hidden' value='$jumpurl' name='jumpurl'>
+<input type='hidden' value='2' name='step'>
+</form>	
+<script language="JavaScript">
+document.login.pwuser.focus();
+</script>
+<!--
+EOT;
+?>-->

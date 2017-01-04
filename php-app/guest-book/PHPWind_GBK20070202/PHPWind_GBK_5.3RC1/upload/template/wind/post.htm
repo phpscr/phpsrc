@@ -1,0 +1,512 @@
+<!--<?php 
+print <<<EOT
+-->
+<script language="JavaScript" src="$db_bbsurl/$js_path"></script>
+<div class="t3" style="margin:8px auto"><table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr><td>$msg_guide</td></tr>
+</table></div>
+$forumlist
+<!--
+EOT;
+if($action=='modify'){print <<<EOT
+-->
+<form method="post" name="form" action="post.php?">
+<div class="t"><table cellpadding="0" cellspacing="0" width="100%">
+	<tr><th class="h"><b>修改文章</b></th></tr>
+	<tr class="tr3"><th>删除帖子(此操作不可恢复，请慎重使用！)</th></tr>
+	<tr class="tr3"><th>
+		<span class="fr" style="padding-right:12px; padding-bottom:5px">
+<!--
+EOT;
+if($winddb['postnum'] < $postgd){
+print <<<EOT
+-->
+		认证码
+		<input class="input" type="text" name="gdcode" size="6" maxLength="4" />&nbsp;<img src="ck.php?" align="absmiddle" onclick="this.src='ck.php?'" style="cursor:pointer;" />
+<!--
+EOT;
+}print <<<EOT
+-->
+		<input class="btn" type="submit" value="直接删除" /></span>
+		<font color=red>注意:</font> 如果这个帖子是主题内的第一个帖子且已有人回复此帖，需拥有管理权限才能删除。
+		</th>
+	</tr>
+</table></div>
+<input type="hidden" value="1" name="step" />
+<input type="hidden" value="$action" name="action" />
+<input type="hidden" value="$fid" name="fid" />
+<input type="hidden" value="$tid" name="tid" />
+<input type="hidden" value="$pid" name="pid" />
+<input type="hidden" value="$article" name="article" />
+<input type="hidden" name="verify" value="$verify" />
+</form>
+<!--
+EOT;
+}print <<<EOT
+-->
+<form method="post" name="FORM" action="post.php?" enctype="multipart/form-data" onsubmit="return checkpost(document.FORM);">
+<input type="hidden" name="verify" value="$verify" />
+<div class="t"><table cellPadding="0" cellSpacing="0" align="center">
+<tbody>
+	<tr><td class="h" colspan="3"><b>发表帖子</b></td></tr></tbody><tbody>
+<!--
+EOT;
+if(($t_per>0 || $admincheck) && $t_exits==1){
+print <<<EOT
+-->
+	<tr class="tr3"><th>主题分类</th>
+		<th>
+			<select name="p_type">
+			<option value="0">默认分类</option>
+<!--
+EOT;
+foreach($t_typedb as $key=>$value){
+if($value){
+print <<<EOT
+-->
+			<option $t_checked[$key] value="$key">$value</option>
+<!--
+EOT;
+}
+}print <<<EOT
+-->
+			</select>
+		</th>
+	</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+	<tbody><tr class="tr3 f_one"><th width="20%" class="t_one"><b>标题</b></th>
+		<th><input class="input" name="atc_title" size="60" value="$atc_title" tabindex="1"  style="font: 14px Tahoma; padding-left:2px" /></th>
+	</tr></tbody><tbody>
+<!--
+EOT;
+if($winddb['postnum'] < $postgd){
+print <<<EOT
+-->
+	<tr class="tr3"><th><b>认证码</b></th>
+		<th><input class="input" type="text" name="gdcode" size="6" tabindex="2" maxLength="4" />&nbsp;<img src="ck.php?" align="absmiddle" onclick="this.src='ck.php?'" /></th></tr></tbody>
+<!--
+EOT;
+} print <<<EOT
+-->
+	<tbody><tr class="tr3 f_two"><th><b>Icon</b></th>
+		<th>
+<!--
+EOT;
+foreach($icondb as $key=>$icon){
+print <<<EOT
+-->
+		<input name="atc_iconid" type="radio" value="$key" /><img src="$imgpath/post/emotion/$icon" />
+<!--
+EOT;
+if($key%7==0){
+print <<<EOT
+-->
+		<br />
+<!--
+EOT;
+}} print <<<EOT
+-->
+		</th>
+	</tr></tbody>
+<!--
+EOT;
+if($special=='1'){ print <<<EOT
+-->
+	<tbody><tr class="tr3"><th>投票有效天数：</th>
+		<th><input class="input" type="text" name="timelimit" value="$timelimit" size="10" $voteable />
+<!--
+EOT;
+if(!$vote_close && $action=='modify'){ print <<<EOT
+-->
+		<input type="checkbox" name="vote_close" value="1" />结束投票
+<!--
+EOT;
+} print <<<EOT
+-->
+		</th>
+	</tr></tbody><tbody>
+	<tr class="tr3"><th>投票选项:<br>每行写一个投票选项<br>最多可以有 $db_selcount 个选项<br>多选
+		<input type="checkbox" value="1" name="multiplevote" $multi $voteable /><br />
+		最多选择个数<input class="input" maxlength="10" size="1" name="mostvotes" value="$mostnum" $voteable /><br />
+		是否允许修改投票结果<input type="checkbox" value="1" name="modifiable" $ifmodify $voteable /><br />
+		强制投票才能查看结果<input type="checkbox" value="1" name="previewable" $ifpreview $voteable />
+		
+		</th>
+		<th>
+<!--
+EOT;
+if($action=='modify'){
+foreach($votearray['options'] as $key=>$votes){
+$votes[0]=stripslashes($votes[0]);
+print <<<EOT
+-->
+<input class="input" type="text" maxLength="60" name="vt_selarray[$key]" size="60" value="$votes[0]" $voteable /><br />
+<!--
+EOT;
+}print <<<EOT
+-->
+<input class="input" type="text" maxLength="60" name="vt_selarray[]" size="60" value="" $voteable /> 新的投票项（留空忽略）<br />
+<!--
+EOT;
+}elseif($action=='new'){print <<<EOT
+-->
+<textarea name="vt_select" rows="10" wrap="hard" cols="80">$vt_select</textarea>
+<!--
+EOT;
+}print <<<EOT
+-->
+		</th>
+	</tr></tbody>
+<!--
+EOT;
+}elseif($special=='2'){ print <<<EOT
+-->
+	<tbody><tr class="tr3">
+		<th width="20%" class="t_one">活动标题：</th>
+		<th class="t_one"><input class="input" type="text" name="act_subject" value="$act[subject]" size="60" /> <font color="red">*</font>(必填)</th>
+	</tr></tbody>
+	<tr class="tr3"><tbody>
+		<th width="20%" class="t_one">活动时间：</th>
+		<th class="t_one"><input class="input" type="text" name="act_starttime" id="starttime" value="$act[starttime]" onClick="javascript:ShowCalendar(this.id)" />&nbsp;-&nbsp;<input class="input" type="text" name="act_endtime" id="endtime" value="$act[endtime]" onClick="javascript:ShowCalendar(this.id)" /> <font color="red">*</font>(必填)</th>
+	</tr></tbody><tbody>
+	<tr class="tr3">
+		<th width="20%" class="t_one">活动地点：</th>
+		<th class="t_one"><input class="input" type="text" name="act_location" value="$act[location]" size="15" /></th>
+	</tr></tbody><tbody>
+	<tr class="tr3">
+		<th width="20%" class="t_one">人数限制：</th>
+		<th class="t_one"><input class="input" type="text" name="act_num" value="$act[num]" size="5" />&nbsp;人（不限制人数，请留空）</th>
+	</tr></tbody><tbody>
+	<tr class="tr3">
+		<th width="20%" class="t_one">性别要求：</th>
+		<th class="t_one">
+			<input name="act_sex" type="radio" value="0" $sel_0 />不限
+			<input name="act_sex" type="radio" value="1" $sel_1 />男
+			<input name="act_sex" type="radio" value="2" $sel_2 />女
+		</th>
+	</tr></tbody>
+	<tr class="tr3">
+		<th width="20%" class="t_one">活动费用：</th>
+		<th class="t_one"><input class="input" type="text" name="act_costs" size="8" value="$act[costs]" /> 元</th>
+	</tr>
+	<tr class="tr3">
+		<th width="20%" class="t_one">报名截止日期：</th>
+		<th class="t_one">
+		<input class="input" name="act_deadline" id="deadline" value="$act[deadline]" type="text" onClick="javascript:ShowCalendar(this.id)" /> <font color="red">*</font>(必填)
+		</th>
+	</tr>
+<!--
+EOT;
+}elseif($special=='3' && $foruminfo['allowreward'] && $_G['allowreward']){ print <<<EOT
+-->
+	<tr class="tr3">
+		<th width="20%">悬赏贴设置</th>
+		<th>
+		最佳答案：悬赏&nbsp;<select name="ctype[best]">$creditselect</select>&nbsp;<input name="bonus[best]" value="$rw_b_val" size="4" class="input" /> 点 (最少 $rw_b_val 点)<br />
+		热心助人：悬赏&nbsp;<select name="ctype[active]">$creditselect</select>&nbsp;<input name="bonus[active]" value="$rw_a_val" size="4" class="input" /> 点 (最少 $rw_a_val 点)
+		</th>
+	</tr>
+<!--
+EOT;
+}elseif($special=='4' && $action=='new' && $forumset[allowsale]!=2){print <<<EOT
+-->
+	<tr class="tr3">
+		<th width="20%" class="t_one">卖家：</th>
+		<th class="t_one"><input class="input" name="seller" size="30" value="$winddb[email]" /></th>
+	</tr>
+	<tr class="tr3">
+		<th width="20%" class="t_one">商品名称：</th>
+		<th class="t_one"><input class="input" name="subject" size="30" /> 价格：<input class="input f14" name="price" size="7" /></th>
+	</tr>
+	<tbody id="salemethod" style="display:none">
+	<tr class="tr3">
+		<th width="20%" class="t_one">邮费承担方：</th>
+		<th class="t_one">
+			<input type="radio" value="1" name="transport" onclick="this.form.ordinary_fee.disabled=true;this.form.express_fee.disabled=true;" checked /> 卖家承担运费&nbsp;&nbsp; 
+			<input type="radio" value="2" name="transport" onclick="this.form.ordinary_fee.disabled=false;this.form.express_fee.disabled=false;" /> 买家承担运费<br />
+			平邮&nbsp;<input disabled size="7" name="ordinary_fee" class="input" /> 元 &nbsp;&nbsp; 
+			快递&nbsp;<input disabled size="7" name="express_fee"  class="input"/> 元
+		</th>
+	</tr>
+	</tbody>
+	<tr class="tr3">
+		<th width="20%" class="t_one">演示地址：</th>
+		<th class="t_one"><input class="input" name="demo" size="30" /></th>
+	</tr>
+	<tr class="tr3">
+		<th width="20%" class="t_one">联系方式：</th>
+		<th class="t_one"><input class="input" name="contact" size="30" /></th>
+	</tr>
+	<tr class="tr3">
+		<th width="20%" class="t_one">收款方式</th>
+		<th class="t_one">
+			<input type="radio" name="method" value="3" onclick="showmethod(this.value);" checked />使用快钱收款
+			<input type="radio" name="method" value="1" onclick="showmethod(this.value);" />使用贝宝收款
+			<input type="radio" name="method" value="2" onclick="showmethod(this.value);" />使用支付宝收款
+		</th>
+	</tr>
+	<script language="JavaScript">
+	function showmethod(method){
+		obj=document.getElementById("salemethod");
+		if(method==2){
+			obj.style.display="";
+		}else{
+			obj.style.display="none";
+		}
+	}
+	</script>
+<!--
+EOT;
+}print <<<EOT
+-->
+	<tr class="tr3 f_two"><th valign="top">
+		$windcode<br /><br />
+<div style="padding:3px; text-align:center; width:200px;">
+<fieldset id="smiliebox" style="border:1px solid $tdcolor">
+	<legend>表情</legend>
+	<div id="menu_show"></div>
+	<span style="float:right; margin:3px 10px 5px;"><a id="td_face" style="cursor:pointer;" onClick="showDefault();" align="absmiddle">[更多]</a></span>
+</fieldset></div>
+<div id="menu_face" class="menu" style="display:none;"></div>
+<script language="javascript">
+var imgpath='$imgpath';
+var stylepath='$stylepath';
+</script>
+<script src="data/bbscache/face.js"></script>
+<script src="$imgpath/showface.js"></script>
+<div style="padding:5px;">
+<select onchange="Addaction(this.options[this.selectedIndex].value);this.selectedIndex=0">
+<option value="" selected>使用动作:</option>
+<!--
+EOT;
+foreach($motion as $key=>$motiondb){
+print <<<EOT
+-->	
+<option value="[p:$key]">$motiondb[0]</option>
+<!--
+EOT;
+}print <<<EOT
+-->
+</select>
+</div>
+<!--
+EOT;
+if($gp_htmlcode){print <<<EOT
+-->
+		<input type="checkbox" name="atc_html" value="1" $htmcheck /><font face="verdana">使用HTML代码</font>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+		<font face="verdana">HTML 代码不可用</font>
+<!--
+EOT;
+}print <<<EOT
+--><br>
+		<input type="checkbox" name="atc_autourl" value="1" checked />自动分析url<br />
+		<input type="checkbox" name="atc_usesign" value="1" checked />使用签名<br />
+		<input type="checkbox" name="atc_convert" value="1" checked />Wind Code自动转换<br />
+		<input name="atc_email" type="checkbox"  value="1" $hideemail />新回复邮件通知
+<!--
+EOT;
+if($SYSTEM[typeadmin] && ($action=='new' || $action=='vote')){
+print <<<EOT
+-->
+		<br />
+<input name="digest" type="radio" value="0" checked />普通帖<input name="digest" type="radio" value="1" />精华1<input name="digest" type="radio" value="2" />精华2
+<!--
+EOT;
+}
+print <<<EOT
+-->
+		</th>
+		<th colspan="2">
+<!--
+EOT;
+require_once PrintEot('wysiwyg_editor');
+print <<<EOT
+-->
+[<a href="javascript:checklength(document.FORM);">查看帖子长度</a>] 最大:$db_postmax 字节<br />
+<input type="checkbox" name="atc_anonymous" value="1" $ifanonymous />
+匿名帖，普通会员将无法看到是谁发的帖<br />
+<input type="checkbox" name="atc_hide" value="1" $htmlpost />
+隐藏此帖，只有用户回复了此帖才可以查看帖子内容(请勿恶意隐藏)<br />
+<input type="checkbox" name="atc_requirervrc" value="1" $htmlhide />
+加密此帖，只对部分用户可见，用户{$db_rvrcname}需大于
+<input class="input" maxlength="6" size="6" name="atc_rvrc" value="0" /><br />
+<!--
+EOT;
+if($action=='new' || $action=='modify' && $pid=='tpc'){print <<<EOT
+-->
+<input type="checkbox" name="atc_requiresell" value="1" $htmlsell />
+出售此帖，会员需付
+<input class="input" maxlength="6" size="6" name="atc_money" value="0" />
+{$db_moneyname} 才能看到帖子内容(回复帖不能出售).(不能大于:<font color=blue>1000</font>)<br />
+<!--
+EOT;
+}print <<<EOT
+-->
+</th></tr>
+
+<!--
+EOT;
+if($foruminfo['cms'] && ($action=="new" || ($action=='modify' && $article==0))){print <<<EOT
+-->
+<tr><td class="t_one"><b>关键字</b>(<font color=blue>可不填</font>)每个不多于20字节<br>相同关键字, 将视为相关文章</td>
+<td class="t_one">
+1. <input class="input" maxLength="20" name="keyword[]" size="10" value="$kname[0]" />
+2. <input class="input" maxLength="20" name="keyword[]" size="10" value="$kname[1]" />
+3. <input class="input" maxLength="20" name="keyword[]" size="10" value="$kname[2]" /></td></tr>
+<!--
+EOT;
+}if($attach){print <<<EOT
+-->
+	<tr class="tr3"><th><b>该帖包含附件:<br>(不想保留的附件去掉√)</b></th>
+		<th valign="top">
+		<div id="ajaxtable" style="width:100%">
+<!--
+EOT;
+$num=0;
+foreach($attach as $key => $value){
+$num++;
+print <<<EOT
+-->
+		<li>
+		<input type="checkbox" name="keep[]" value="$value[aid]" checked />
+		所需{$db_rvrcname}：<input class="input" type="text" name="downrvrc[$value[aid]]" value="$value[needrvrc]" size="1" /> &nbsp;
+		描述：<input class="input" type="text" name="attdesc[$value[aid]]" value="$value[desc]" size="25" /> &nbsp;
+		附件：
+		<span id="attach_$key"><font color="red"><b>$value[name]</b></font>&nbsp;($value[size]K)&nbsp;<a href="javascript:" onclick="amodify($key)">[更新]</a></span>
+		&nbsp; &nbsp;<a href="javascript:" onclick="addattach('$value[aid]')"><b>添加到帖子中</b></a>
+		</li>
+<!--
+EOT;
+}print <<<EOT
+-->
+		</div>
+		</th>
+	</tr>
+<script type="text/javascript" language="JavaScript" src="$imgpath/ajax.js"></script>
+<script type="text/javascript" language="JavaScript" src="$imgpath/ajax_attach.js"></script>
+<!--
+EOT;
+}if($db_allowupload && $gp_allowupload){
+print <<<EOT
+-->
+	<tr class="tr3"><th valign="top">附件最大:$db_uploadmaxsize (K)</th>
+		<th valign="top">
+		<b>有效文件类型:$db_uploadfiletype</b><br />
+		<input name="muti" type="checkbox" value="1" onclick="showmuti()" />多个附件<br />
+		<input name="modify" type="checkbox" value="1" />如果附件中带有图片，并希望进行图文混排操作，请在选中此项
+		<br /><br />
+		所需{$db_rvrcname}： <input class="input" type="text" name="atc_downrvrc1" value="0" size="1" /> &nbsp;
+		描述： <input class="input" type="text" name="atc_desc1" size="25" /> &nbsp;
+		附件： <input class="input" type="file" name="atc_attachment1" />
+		<span id="attach2" style="DISPLAY: none">
+<!--
+EOT;
+for($i=2;$i<=$db_attachnum;$i++){
+print <<<EOT
+-->	
+		<br />
+		所需{$db_rvrcname}： <input class="input" type="text" name="atc_downrvrc$i" value="0" size="1" /> &nbsp;
+		描述： <input class="input" type="text" name="atc_desc$i" size="25" /> &nbsp;
+		附件： <input class="input" type="file" name="atc_attachment$i" />
+<!--
+EOT;
+}print <<<EOT
+-->
+		</span></th></tr>
+<!--
+EOT;
+}print <<<EOT
+--></tbody>
+</table></div>
+<input type="hidden" value="2" name="step" />
+<input type="hidden" value="$pid" name="pid" />
+<input type="hidden" value="$action" name="action" />
+<input type="hidden" value="$fid" name="fid" />
+<input type="hidden" value="$tid" name="tid" />
+<input type="hidden" value="$article" name="article" />
+<input type="hidden" value="$special" name="special" />
+<script language="JavaScript">
+document.FORM.atc_title.focus();
+var cate=$db_forcetype; //是否强制分类，开启设为1，关闭设为0；
+var cnt = 0;
+function checkpost(obj){
+	if(obj.p_type!=null && obj.p_type.value==0 && cate==1){
+		alert("没有选择主题分类");
+		obj.p_type.focus();
+		return false;
+	}
+	if(obj.atc_title.value==""){
+		alert("标题不能为空");
+		obj.atc_title.focus();
+		return false;
+	}else if(obj.atc_title.value.length>$db_titlemax){
+		alert("标题超过最大长度 $db_titlemax 个字节");
+		obj.atc_title.focus();
+		return false;
+	}
+	if(obj.atc_content.value.length<$db_postmin){
+		alert("文章内容少于 $db_postmin 个字节");
+		editor.focusEditor();
+		return false;
+	}else if(obj.atc_content.value.length>$db_postmax){
+		alert("文章内容大于 $db_postmax 个字节");
+		editor.focusEditor();
+		return false;
+	}
+	document.FORM.Submit.disabled=true;
+	cnt++;
+	if(cnt!=1){
+		alert('Submission Processing. Please Wait');
+		return false;
+	}
+	return true;
+}
+function showmuti(){
+	if (document.FORM.muti.checked == true){
+		attach2.style.display = '';
+	}else{
+		attach2.style.display = 'none';
+	}
+}
+function gopreview(){
+	document.preview.atc_content.value=document.FORM.atc_content.value;
+	document.preview.submit()
+}
+</script>
+<!--
+EOT;
+if($special=='2'){ print <<<EOT
+-->
+<script language="JavaScript" src="$imgpath/date.js"></script>
+<!--
+EOT;
+} print <<<EOT
+-->
+<div style="margin: 15px 0 15px 0;text-align: center;">
+<input class="btn" type="submit" value="提 交" name="Submit" tabindex="3"/> 
+<input class="btn" type="button" value="预 览" name="Button" onclick="gopreview();" /></div>
+</form>
+<form name="preview" action="job.php?previewjob=preview" method="post" target="preview_page">
+<input type="hidden" name="atc_content" value="" />
+</form>
+<!--
+EOT;
+if($action=="reply" || $action=="quote"){print <<<EOT
+-->
+<br /><center>主题回顾</center>
+$post_reply
+<!--
+EOT;
+}print <<<EOT
+-->
+<br />
+<!--
+EOT;
+?>-->

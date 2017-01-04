@@ -1,0 +1,45 @@
+{include file="subnavibar.html"}
+	<div id="page">
+		<div class="post">
+		<h2 class="title">论坛基本信息</h2>
+			<div class="entry">
+			<form action="{spUrl c=admin a=optionedited}" method="POST">
+			<p>站点名称：<input type="text" name="sitename" style="width:200px;" value="{$sitename}"></p>
+			<p>站点描述：<input type="text" name="siteinstruction" style="width:500px;" value="{$siteinstruction}"></p>
+			<p>头部信息：<input type="text" name="header" style="width:500px;" value="{$header}"></p>
+			<p>图标地址：<input type="text" name="logo" style="width:500px;" value="{$logo}"> （若开启伪静态，须为绝对路径）
+             <p>站点标题： <select name="use_logo" style="width:100px;">
+                    <option value="1" {($use_logo ==1) ? "selected=selected" : ""} >使用logo</option>
+                    <option value="0" {($use_logo ==0) ? "selected=selected" : ""} >使用站名</option>
+                </select></p>
+            <p>防盗链域名：<input type="text" name="domain_attachment" value="{$domain_attachment}"> （除此域名及相应子域名外其余域名均视为盗链，留空则不限，建议填写根域名,多个域名请用半角逗号分隔）
+			<p>浏览器描述：<input type="text" name="description" style="width:350px;" value="{$description}">
+			<p>站点关键字：<input type="text" name="keywords" style="width:350px;" value="{$keywords}">
+			<p>单页话题数：<input type="text" name="listpager" style="width:50px;" value="{$listpager}">  单页评论数：<input type="text" name="replypager" style="width:50px;" value="{$replypager}">
+			<p>防灌水时间：<input type="text" name="posttime" style="width:50px;" value="{$posttime}"> 秒 精华积分：<input type="text" name="digest" style="width:50px;" value="{$digest}">
+			<p>话题积分：<input type="text" name="newtopic" style="width:50px;" value="{$newtopic}"> 评论积分：<input type="text" name="newreply" style="width:50px;" value="{$newreply}">
+			<p>站点注册：<select name="allow_reg" style="width:70px;">
+                    <option value="1" {($allow_reg ==1) ? "selected=selected" : ""} >开放</option>
+                    <option value="0" {($allow_reg ==0) ? "selected=selected" : ""} >关闭</option>
+                </select> 注册验证码： <select name="regcode" style="width:70px;">
+                    <option value="1" {($regcode ==1) ? "selected=selected" : ""} >开启</option>
+                    <option value="0" {($regcode ==0) ? "selected=selected" : ""} >关闭</option>
+                </select>
+            </p>
+            <p>站点访问：<select name="is_close" style="width:70px;">
+                    <option value="1" {($is_close ==1) ? "selected=selected" : ""} >关闭</option>
+                    <option value="0" {($is_close ==0) ? "selected=selected" : ""} >开放</option>
+                </select> 关闭说明：<input type="text" name="close_reason" value="{$close_reason}"></p>
+                <p>默认首页：<select name="default_index" style="width:70px;">
+                    <option value="1" {($default_index ==1) ? "selected=selected" : ""} >此刻</option>
+                    <option value="0" {($default_index ==0) ? "selected=selected" : ""} >论坛</option></select></p>
+                <p>允许的图片扩展名：<input type="text" name="allow_image_types" style="width:350px;" value="{$allow_image_types}"> 半角英文逗号”,“分隔，下同
+                <p>允许的附件扩展名：<input type="text" name="allow_file_types" style="width:350px;" value="{$allow_file_types}">
+                <p>上传文件大小限制：<input type="text" name="max_upload_size" style="width:50px;" value="{$max_upload_size}"> kB（1kB=1024Bytes 1MB=1024kB 1GB=1024MB）
+				<p><input type="submit" class="links" value="提  交" /></p>			
+			</form>	
+			
+					</div>
+		</div>
+	</div>
+{include file="footer.html"}

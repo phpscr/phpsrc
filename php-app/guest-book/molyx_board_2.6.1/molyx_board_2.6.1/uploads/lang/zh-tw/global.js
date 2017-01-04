@@ -1,0 +1,12 @@
+var lang_g = new Array();
+lang_g['g_intm'] = "請輸入頁碼，最大頁數：";
+lang_g['g_error'] = "由於Opera瀏覽器並不支持AJAX技術,因此無法啟用AJAX功能。";
+lang_g['g_close'] = "關閉AJAX";
+lang_g['g_open'] = "開啟AJAX";
+lang_g['g_edv'] = "修改成功";
+lang_g['g_delt'] = "你確實要刪除這條訊息嗎?";
+lang_g['g_check_email'] = "E-Mail不吻合!";
+lang_g['g_check_password'] = "密碼不吻合!";
+lang_g['g_refering'] = "正在送出，請等候......";
+lang_g['g_selectat'] = "請選擇上載檔案。";
+lang_g['g_outstr'] = "輸入內容超出規定字數";

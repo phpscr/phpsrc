@@ -1,0 +1,68 @@
+{include file="header.html" t="QQ互联登陆"}
+<div id="page">
+    <div class="post">
+    <div class="lists">
+        <style>
+            input:focus:invalid {   color: #b94a48;border-color: #ee5f5b; }
+        </style>
+        <h2 class="title">注册新用户与QQ绑定</h2>
+            <p>{if $errmsg}<span class="notice">{$errmsg}</span>{else}如果你还没有{$sitename}账号{/if}</p>
+            <form action="{spUrl c=api a=qq_register}" method="POST" onsubmit="return aclcode();" autocomplete="off" id="Click" >
+                <p>设置账号：<input type="text" name="uname" id="uname" value="{$smarty.post.uname}" title="请选择一个2到15字符的用户名" required="required" autofocus="autofocus"> <span id="ex2result">&nbsp;</span></p>
+                <p>设置密码：<input type="password" name="upass" value="{$smarty.post.upass}" title="5到20个数字字母或符号" required="required"><span id="ex4result">&nbsp;</span></p>
+                <p>确认密码：<input type="password" name="comfirm_upass" value="{$smarty.post.comfirm_upass}" title="请重复输入密码" required="required"></p>
+                <p>您的邮箱：<input type="email" name="email" value="{$smarty.post.email}" id="email" required="required"><span id="ex3result">&nbsp;</span></p>
+                <p>自动登录：<input type="checkbox" name="autologin"></p>
+                <input type="hidden" name="type" value="2" />
+                <input type="hidden" name="access_token" value="{$access_token}" />
+                <input type="hidden" name="openid" value="{$openid}" />
+                <p><input type="submit" class="links" value="提  交" /></p>
+            </form>
+            </div>
+        <div class="lists-right">
+            <h2 class="title">已有账号？</h2>
+                <p>{if $errmsg}<span class="notice">{$errmsg}</span>{else}请直接登录绑定{/if}</p>
+                <form action="{spUrl c=api a=qq_register}" method="POST" onsubmit="return aclcode();" autocomplete="off">
+                    <p>帐　　号：<input type="text" name="uname"  value="{$smarty.post.uname}" placeholder=" 用户名或E-Mail" required="required" id="uname"></p>
+                    <p>密　　码：<input type="password" name="upass" value="{$smarty.post.upass}" required="required"></p>
+                    <p>自动登录：<input type="checkbox" name="autologin" checked="checked"></p>
+                    <p>
+                        <input type="hidden" name="type" value="1" />
+                        <input type="hidden" name="access_token" value="{$access_token}" />
+                        <input type="hidden" name="openid" value="{$openid}" />
+                        <input type="submit" class="links" value="提  交" />
+                        <a href="javascript:void(0);" onclick="findpwd();" title="请先在账号框内输入用户名再点击" >找回密码</a>
+                    </p>
+                </form>
+    </div>
+        <div class="entry"></div>
+</div>
+<script type="text/javascript" src="include/jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#uname').focusout(function(){
+            $.getJSON("{spUrl c=user a=checkName}", { 'uname': $('#uname').val() }, function(json){
+                $('#ex2result').html(json.message);
+            });
+        });
+        //电子邮箱
+        $('#email').focusout(function(){
+            $.getJSON("{spUrl c=user a=checkEmail}", { 'email': $('#email').val() }, function(json){
+                $('#ex3result').html(json.message);
+            });
+        });
+        //确认密码
+        $('#confirm_upass').focusout(function(){
+            $.getJSON("{spUrl c=user a=checkRepeat}", { 'confirm_upass': $('#confirm_upass').val(), 'upass': $('#upass').val()}, function(json){
+                $('#ex5result').html(json.message);
+            });
+        });
+    });
+    var isNotRun = true;
+    $("#Click input[name='su']").click(function(){
+        $("#Click input[name='codex']").val(event.offsetX);
+        $("#Click input[name='codey']").val(event.offsetY);
+        return isNotRun;
+    });
+</script>
+{include file="footer.html"}

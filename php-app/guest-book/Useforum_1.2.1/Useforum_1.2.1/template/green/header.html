@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>{if $t}{$t}-{/if}{$sitename}</title>
+<link href="{$siteurl}/template/green/style.css" rel="stylesheet" type="text/css" media="screen" />
+<meta name="keywords" content="{$keywords}" />
+<meta name="description" content="{$description}" />
+    {$header}
+{if $smarty.session.userinfo}
+	<link rel="stylesheet" href="{$siteurl}/include/editor/themes/default/default.css" />
+    <script type="text/javascript" src="include/jquery-1.4.2.min.js"></script>
+	<script charset="utf-8" src="{$siteurl}/include/editor/kindeditor-min.js"></script>
+	<script charset="utf-8" src="{$siteurl}/include/editor/lang/zh_CN.js"></script>
+	<script>
+			KindEditor.ready(function(K) {
+			K('#notice').click(function() {
+				
+				var dialog = K.dialog({
+					width : 600,
+					title : '提醒',
+					body : '<div style="margin:10px;">{if is_array($notice.notice)}{foreach from=$notice.notice item=result}<p>{$result}</p>{/foreach}{else}暂无新提醒{/if}<br><br><a href={spUrl c=user a=clearnotice} target=_blank>清空提醒</a></div>',
+					closeBtn : {
+						name : '关闭',
+						click : function(e) {
+							dialog.remove();
+						}
+					}
+				});
+				$.post('{spUrl c=user a=hasread}');
+				$.post('{spUrl c=user a=clearnotice}');
+			});
+		});
+	</script>
+	{/if}
+</head>
+
+<body>
+
+<div id="logo">
+    <a href="{spUrl c=main a=index}" class="first">
+        {if $use_logo == 1}
+        <img src="{$logo}"/>
+        {else}
+            <h1>{$sitename}</h1>
+        {/if}
+    </a>
+    <p><em style="text-indent:2em;">{$siteinstruction}</em></p>
+</div>
+<div id="header">
+    <div id="menu">
+        <ul>
+            <li> {if $smarty.get.a==index||!$smarty.get.a||$smarty.get.a==view ||$smarty.get.a==viewforum}<a  class="menuCurrent" href="{spUrl c=main a=index}" class="first">首页</a>{else}<a href="{spUrl c=main a=index}">首页</a>{/if}</li>
+            {if $default_index == "1"}
+            <li>{if $smarty.get.a==forum}<a href="{spUrl c=main a=forum}"  class="menuCurrent">论坛</a>
+                {else}<a href="{spUrl c=main a=forum}">论坛</a>{/if}</li>
+            {else}
+            <li>{if $smarty.get.a==now}<a href="{spUrl c=main a=now}"  class="menuCurrent">此刻</a>
+                {else}<a href="{spUrl c=main a=now}">此刻</a>{/if}</li>
+            {/if}
+            {if $smarty.session.userinfo.uname}
+            <li>{if $smarty.get.a==post}<a href="{spUrl c=main a=post}"  class="menuCurrent">新话题</a>
+                {else}<a href="{spUrl c=main a=post}">新话题</a>{/if}</li>
+            {/if}
+            <li>{if $smarty.get.a==userlist}<a href="{spUrl c=user a=userlist}"  class="menuCurrent">排行榜</a>
+                {else}<a href="{spUrl c=user a=userlist}">排行榜</a>{/if}</li>
+            <li>{if $smarty.get.a==search}<a href="{spUrl c=main a=search}"  class="menuCurrent">搜索</a>
+                {else}<a href="{spUrl c=main a=search}">搜索</a>{/if}</li>
+            {foreach from=$menus item=menu}
+                 <li><a href="{$menu.url}"{($menu.target == 1)?"target=_blank":""}>{$menu.title}</a></li>
+            {/foreach}
+
+
+        </ul>
+    </div>
+    <div class="sub">
+    <div id="navi">
+        {if $smarty.session.userinfo.uname}
+            {if $smarty.get.a==profile}<b class="current">{$smarty.session.userinfo.uname} </b>
+            {else}<a href= "{spUrl c=user a=profile uname={$smarty.session.userinfo.uname}}"><b>{$smarty.session.userinfo.uname} </b></a>{/if}
+            | 积分:{$smarty.session.userinfo.credits}
+            | {if $smarty.get.a==editprofile}<span class="current">设置</span>{else}<a href= "{spUrl c=user a=editprofile uid={$smarty.session.userinfo.uid}}">设置</a>{/if}
+            {if $notice.update ==1}| <span class="notice" id="notice"><a href= "javascript:void(0);">新提醒</a></span>
+            {else}| <span id="notice"><a href= "javascript:void(0);">提醒</a></span>{/if}
+			{if ( "GBADMIN" == $smarty.session.userinfo.acl )}
+			| {if $smarty.get.c==admin}<span class="current">管理</span>{else}<a href="{spUrl c=admin a=index}">管理</a>{/if}
+				{/if}
+			| <a href="{spUrl c=main a=logout}">退出</a>
+
+        {else}
+        	{if $smarty.get.a==register}<span class="current" >注册</span>{else}<a href="{spUrl c=user a=register backurl=$currenturl}">注册</a>{/if}
+         | {if $smarty.get.a==login}<span class="current">登录</span>{else}<a href="{spUrl c=main a=login backurl=$currenturl}">登录</a>
+        <a href="{spUrl c=api a=qq_login}"><img src="template/common/qq_login.png" style="vertical-align: middle;"></a>
+        {/if}
+
+        {/if}
+    </div>
+    </div>
+</div>

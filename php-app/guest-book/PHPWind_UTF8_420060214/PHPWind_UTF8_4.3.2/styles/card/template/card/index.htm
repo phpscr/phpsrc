@@ -1,0 +1,255 @@
+<!--<?php print <<<EOT
+-->
+<table cellspacing=0 cellpadding=0 width='$tablewidth' align=center>
+<tr><td><img src='$imgpath/$stylepath/index/home.gif' align='absbottom'>
+<b>
+<!--
+EOT;
+if($notice){print <<<EOT
+-->
+$notice
+<!--
+EOT;
+}else{print <<<EOT
+-->
+最近没有论坛公告
+<!--
+EOT;
+}print <<<EOT
+-->
+</b>
+</td>
+<td align=right>
+<table cellspacing=1 cellpadding=1 style="font-family: Tahoma, Verdana;BORDER: #8C8E7B 1px solid;background:#FFFFFF;">
+<tr>
+<td style="background:#FF6500;font-size: 7pt;color:#ffffff;">&nbsp;XML&nbsp;</td>
+<td style="background:#8C8E7B;font-size: 7pt;">&nbsp;<a href="rss.php" target="_blank" title="订阅本版面最新帖子"><font color='#ffffff'>RSS 2.0</font></a>&nbsp;</td>
+<td style="background:#8C8E7B;font-size: 7pt;">&nbsp;<a href="faq.php?faqjob=2#5" target="_blank" title="通过手机访问论坛"><font color='#ffffff'>WAP</font></a>&nbsp;</td>
+</tr>
+</table>
+</td></tr>
+<tr><td colspan=2 height=5>
+</td></tr></table>
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center>
+<tr><td valign=top></td><td align=right class=smalltxt>
+<!--
+EOT;
+if($db_todaypost==1){print <<<EOT
+-->
+今日 <b>$tposts</b> 帖 | 昨日 <b>$yposts</b> 帖 | 最高日 <b>$hposts</b> 帖 <br>
+<!--
+EOT;
+}print <<<EOT
+-->
+共 <b>$topics</b> 篇主题 | <b>$article</b>  篇帖子 | <b>$totalmember</b>  位会员<br>
+<a href='search.php?digest=1' target=_blank>精华区</a> |
+<a href='search.php?sch_time=all&orderway=lastpost&asc=desc&newatc=1' target=_blank>最新帖子</a> |
+<a href='job.php?action=sign'>标记已读</a> | 欢迎新会员
+<a href='profile.php?action=show&username=$rawnewuser' target=_blank><font color=#ff0000> $newmember</a></td></tr></table>
+<!--
+EOT;
+foreach($catedb as $cate){
+if($forumdb[$cate[fid]]){
+print <<<EOT
+-->
+<table cellspacing=1 cellpadding=5 width='$tablewidth' $i_table align=center>
+<tr><td class=head colspan=6 align=left>
+<a style="float:right" href="#" onclick="return IndexDeploy('$cate[fid]',0)"><img id="img_$cate[fid]" src="$imgpath/$stylepath/index/cate_$cate[deploy_img].gif" alt='open'></a>
+<b><a href="$db_bfn?cateid=$cate[fid]" class='cfont'>≡ $cate[name]</a></b>&nbsp; 
+<!--
+EOT;
+if($cate[admin]){print <<<EOT
+-->
+<b>分类版主：</b>$cate[admin]
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<tr height=23 align=center class='cbg'><td width=5%></td>
+<td width=50%>论坛</td>
+<td width=6%>主题</td>
+<td width=6%>文章</td>
+<td width=21%>最后发表</td>
+<td width=12%>版主</td></tr>
+<tbody id="cate_$cate[fid]" style="$cate[tbody_style]">
+<!--
+EOT;
+foreach($forumdb[$cate[fid]] as $forums){
+print <<<EOT
+-->
+<tr><td align=center valign=middle class=f_two>
+<a href='thread.php?fid=$forums[fid]' TARGET=_blank><img src='$imgpath/$stylepath/$forums[pic].gif'></a></td>
+<td class=f_one align=left>
+<a href='thread.php?fid=$forums[fid]' TARGET=_blank>$forums[llogo]</a>&nbsp;
+<a href='thread.php?fid=$forums[fid]' class='fnamecolor'>
+<b>$forums[name]</b></a><br>
+<span class=smalltxt>$forums[descrip]</span></td>
+<td class=f_two align=center>
+$forums[topics]</td>
+<td class=f_two align=center>
+$forums[article]</td>
+<td class='smalltxt' bgcolor=$forumcolorone>
+<!--
+EOT;
+if($forums[au]){print <<<EOT
+-->
+主题: <a href='$forums[ft]'>$forums[t]</a><br>作者: $forums[au]<br>
+时间: $forums[newtitle]
+<!--
+EOT;
+}if($forums[pic]=='lock'){print <<<EOT
+-->
+认证论坛
+<!--
+EOT;
+}print <<<EOT
+-->
+</td><td class=f_two align=center style='word-break: keep-all'>
+<!--
+EOT;
+if($db_adminshow && $forums[admin]){print <<<EOT
+-->
+<select name='admin' onchange='Ajump(this.options[this.selectedIndex].value)'>
+<option value=''> 版主列表</option>
+$forums[admin]
+</select>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+$forums[admin]
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</tbody></table><br>
+<!--
+EOT;
+}}print <<<EOT
+-->
+<script language="JavaScript" src="$imgpath/Deploy.js"></script>
+<table cellpadding=5 cellspacing=1 width='$tablewidth' $i_table align=center>
+<tr><td colspan=2 class=head>
+<a style="float:right" href="#" onclick="return IndexDeploy('info',0)"><img id="img_info" src="$imgpath/$stylepath/index/cate_$cate_img.gif" alt='open'></a><b>-=>论坛相关</b></td></tr>
+<tr>
+<td colspan=2 class=cbg>-=>我的信息</td>
+</tr>
+<tr height=40>
+<td class=f_two align=center width=5% rowspan=1><img src='$imgpath/$stylepath/index/msg.gif'></td>
+<td class=f_one width=95%>
+<!--
+EOT;
+if($groupid=='guest'){print <<<EOT
+-->
+请先登陆论坛,等级: <b>游客</b><br>
+<table cellpadding=0 cellspacing=0>
+<form action='login.php' method=post>
+<tr><td>
+用户名: <input type=text size=8 name='pwuser'>
+密码: <input type='password' size=8 name='pwpwd'>
+<!--
+EOT;
+list(,$logingd)=explode("\t",$db_gdcheck);
+if($logingd){
+$rawwindid=addslashes($windid);
+print <<<EOT
+-->
+认证码: <input type='text' maxLength=4 name='gdcode' size=8>&nbsp;<img src="ck.php?windid=$rawwindid" align=absmiddle>
+<!--
+EOT;
+}print <<<EOT
+-->
+<input type='hidden' name='jumpurl' value='$db_bfn'>
+<input type='hidden' name='step' value=2>
+<input type='hidden' name='cktime' value='31536000'>
+<input type=submit value='登 录'></td>
+</tr>
+</form>
+</table>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+您的等级:<b>$level</b> / $db_rvrcname: <b>$userrvrc $db_rvrcunit</b> / $db_moneyname: <b>$winddb[money] $db_moneyunit</b> / $db_creditname: <b>$winddb[credit] $db_creditunit</b> / 
+共发表帖子: <b>$winddb[postnum]</b><br>
+您上次登陆时间:{$lastlodate} | 您的IP : $onlineip | 
+<a href='search.php?authorid=$winddb[uid]'><b>查看我的主题</b></a>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<tbody id="cate_info" style="$cate_info">
+<!--
+EOT;
+if($db_indexshowbirth==1){include_once(R_P.'require/birth.php');print <<<EOT
+-->
+<tr>
+<td colspan=2 class=cbg>-=&gt;生日会员</td>
+</tr>
+<tr>
+<td class=f_two align=center width=5%><img src='$imgpath/$stylepath/index/birth.gif'></td>
+<td class=f_one width=95%>$index_birth</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<!--
+EOT;
+if($db_indexlink==1){print <<<EOT
+-->
+<tr><td colspan=2 class=cbg>-=&gt;友情链接</td></tr>
+<tr height=40><td class=f_two align=center width=5% rowspan=1>
+<img src='$imgpath/$stylepath/index/share.gif'></td>
+<td class=f_one width=95%>$sharelink</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</tbody>
+<tr><td colspan=2 class=cbg>-=&gt;在线用户<a name=online></a> -  共 $usertotal 人在线,$userinbbs 位会员,$guestinbbs 位访客,最多 $higholnum 人发生在 $mostinbbstime </td></tr>
+<tr><td class=f_two align=center width='5%'><img src='$imgpath/$stylepath/index/online.gif'></td>
+<td class=f_one><table align=center cellspacing=0 cellpadding=0 width=99%>
+<tr><td colspan=7>
+<!--
+EOT;
+foreach($showgroup as $value){
+if($value){print <<<EOT
+-->
+<img src='$imgpath/$stylepath/group/$value.gif'>$ltitle[$value]
+<!--
+EOT;
+}}print <<<EOT
+-->
+<img src='$imgpath/$stylepath/group/6.gif'>普通会员
+<!--
+EOT;
+if($doonlinefu){
+$pw_forum='论坛';$pw_time='时间';$pw_hide='隐身';$pw_hideman='隐身会员';
+include_once(R_P.'require/showonline.php');
+print <<<EOT
+-->
+<a name='online'></a> [<a href='index.php?online=no#online'>关闭在线列表</a>]
+</td></tr><tr><td colspan=7><hr class='hr' size=1></td>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+<a name='online'></a> [<a href='index.php?online=yes#online'>打开在线列表</a>]
+</td>
+<!--
+EOT;
+}print <<<EOT
+-->
+$index_whosonline
+</tr></table></td></tr></table>
+<!--
+EOT;
+$head_pop && require_once PrintEot($head_pop);
+?>-->

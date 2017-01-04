@@ -1,0 +1,65 @@
+<!--<?php
+include_once PrintEot('left');
+$c_notice=readover(R_P.'data/bbscache/notice.txt');
+if($c_notice){
+$c_notice=explode("\t",$c_notice);
+if($c_notice[0]==$wind_repair){$c_notice=$c_notice[2];}else{$c_notice=$c_notice[1];}
+}print <<<EOT
+-->
+<center>欢迎光临 <b>PHPwind</b> $wind_version  系统设置面板.版权所有&copy;2003-06,<b style="color: #FF9900">phpwind.net</b></center>
+<br>
+<!--
+EOT;
+if($c_notice){print <<<EOT
+-->
+$c_notice
+<!--
+EOT;
+}print <<<EOT
+-->
+
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head>管 理 帮 助</td></tr>
+<tr><td class=b>
+	这是由 PHPWind.Net 独立开发的建站程序,如果您在使用中遇到问题:<br><br>
+
+	(1)数据库与使用上的疑问 : <a href="http://www.phpwind.net/thread.php?fid=2" target=_blank><b>请进入PHPWind 讨论区</b></a> <br>
+	(2)如果您想安装一些插件 : <a href="http://www.phpwind.net/thread.php?fid=3" target=_blank><b>请进入PHPWind 插件交流</b></a> <br>
+	(3)如果您想拥有更多皮肤 : <a href="http://www.phpwind.net/thread.php?fid=4" target=_blank><b>请进入PHPWind 风格交流</b></a> <br><br>
+
+	如果您希望得到更好的技术服务、更完善的建站方案与技术保障,请购买我们的 <a href="http://www.phpwind.com/?prog=sales" target=_blank><b>商业版授权</b></a>
+	</td></tr></table>
+<br>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head>
+系 统 信 息</td></tr>
+<tr><td class=b>
+PHP程式版本：&nbsp; &nbsp; <font color="#000066">$sysversion</font><br>
+	MYSQL 版本：&nbsp; &nbsp;&nbsp; <font color="#000066">$dbversion</font><br>
+	服务器端信息： &nbsp;  <font color="#000066">$sysos</font><br>
+	最大上传限制： &nbsp; <font color="#000066">$max_upload</font><br>
+	最大执行时间： &nbsp; <font color="#000066">$max_ex_time</font><br>
+	邮件支持模式： &nbsp; <font color="#000066">$sys_mail</font><br>
+	Cookie 测试：&nbsp; &nbsp; <font color="#000066">$ifcookie</font><br>
+	论坛显示时间：&nbsp;&nbsp; <font color="#000066">$altertime</font><br>
+	论坛数据库占用：&nbsp;<font color="#000066">$pw_size M</font><br>
+	非论坛数据库占用：&nbsp;<font color="#000066">$o_size M</font>
+</td></tr></table>
+<br>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head>
+开 发 团 队</td></tr>
+<tr><td class=b>
+官方网站：&nbsp; &nbsp; <a href="http://www.phpwind.com" target=_blank>http://www.phpwind.com</a>
+<br>官方论坛：&nbsp; &nbsp; <a href="http://www.phpwind.net" target=_blank>http://www.phpwind.net</a>
+<br>系统开发：&nbsp; &nbsp; <a href="http://www.phpwind.net" target=_blank>Fengyu</a>,<a href="http://www.ofstar.com" target=_blank>Yuling</a>
+<br>团队管理：&nbsp; &nbsp; <a href="http://www.ofstar.com" target=_blank>Yuling</a>
+<br>管理人员：&nbsp; &nbsp; <a href="http://www.phpwind.net/profile.php?action=show&uid=7780" target=_blank>xianqu</a>,<a href="http://www.phpwind.net/profile.php?action=show&uid=62584" target=_blank>hbcity</a>
+<br>界面设计：&nbsp; &nbsp; <a href="http://www.phpwind.net/profile.php?action=show&uid=4604" target=_blank>Wookoo</a>
+<br>协作发展：&nbsp; &nbsp; <a href="http://www.ofstar.net" target=_blank>Ofstar Group</a>
+</td></tr></table>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>
+-->

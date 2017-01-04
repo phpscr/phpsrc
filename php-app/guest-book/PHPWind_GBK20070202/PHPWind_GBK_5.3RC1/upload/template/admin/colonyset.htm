@@ -1,0 +1,221 @@
+<!-- <?php
+include_once PrintEot('left');
+if(!$action){print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr>
+	<td class=b>
+		[<b>基本设置</b>]
+		[<a href="$amind_file?adminjob=hack&hackset=colony&id=colony&action=classset">分类管理</a>]
+		[<a href="$amind_file?adminjob=hack&hackset=colony&id=colony&action=colonyset">{$cn_name}管理</a>]
+		[<a href="$amind_file?adminjob=hack&hackset=colony&id=colony&action=log">日志管理</a>]
+	</td>
+</tr>
+</table>
+<br>
+<form method="post" action="$basename&">
+<input type="hidden" name="action" value="submit">
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head align=center colspan=2>基本设置</td></tr>
+<tr class=b><td width="40%">{$cn_name}是否开启<br>(需要到插件中心 管理中同时启用该插件方为有效)</td><td>
+<input type="radio" name="config[cn_open]" value="1" $open_Y>是
+<input type="radio" name="config[cn_open]" value="0" $open_N>否</td></tr>
+<tr class=b><td>是否允许创始人解散{$cn_name}：</td><td>
+<input type="radio" name="config[cn_remove]" value="1" $remove_Y>是
+<input type="radio" name="config[cn_remove]" value="0" $remove_N>否</td></tr>
+<tr class=b><td>是否允许注册新{$cn_name}：</td><td>
+<input type="radio" name="config[cn_newcolony]" value="1" $newcolony_Y>是
+<input type="radio" name="config[cn_newcolony]" value="0" $newcolony_N>否</td></tr>
+
+<tr class=b><td>是否开启{$db_currencyname}管理功能：<br>创建者可以把{$cn_name}的{$db_currencyname}转帐给有贡献的会员</td><td>
+<input type="radio" name="config[cn_virement]" value="1" $virement_Y>是
+<input type="radio" name="config[cn_virement]" value="0" $virement_N>否</td></tr>
+<tr class=b><td>转帐手续费(%)</td>
+<td><input type="text" name="config[cn_rate]" value="$cn_rate"></td></tr>
+
+<tr class=b><td>{$cn_name}名称</td>
+<td><input type="text" name="config[cn_name]" size=30 value="$cn_name"></td></tr>
+<tr class=b><td>允许创建{$cn_name}的用户组：（留空不限制）</td><td>
+<table cellspacing='0' cellpadding='0' border='0' width='100%' align='center'><tr class=b>$usergroup</tr></table>
+</td></tr>
+<tr class=b><td>创建一个{$cn_name}所需的{$db_currencyname}个数：</td>
+<td><input type="text" name="config[cn_createmoney]" size=30 value="$cn_createmoney"></td></tr>
+<tr class=b><td>会员加入{$cn_name}至少需要的{$db_currencyname}个数：</td>
+<td><input type="text" name="config[cn_joinmoney]" size=30 value="$cn_joinmoney"></td></tr>
+<tr class=b><td>一个会员最多能建{$cn_name}的个数（ 0 表示没限制）：</td>
+<td><input type="text" name="config[cn_allowcreate]" size=30 value="$cn_allowcreate"></td></tr>
+<tr class=b><td>一个会员最多能加入{$cn_name}的个数（ 0 表示没限制）：</td>
+<td><input type="text" name="config[cn_allowjoin]" size=30 value="$cn_allowjoin"></td></tr>
+<tr class=b><td>一个{$cn_name}最多能拥有的会员数（ 0 表示没限制）：</td>
+<td><input type="text" name="config[cn_memberfull]" size=30 value="$cn_memberfull"></td></tr>
+<tr class=b><td>{$cn_name}标志图片最大值（0 表示没限制）(k)：</td>
+<td><input type="text" name="config[cn_imgsize]" size=30 value="$cn_imgsize"></td></tr>
+<tr class=b><td>{$cn_name}标志图片宽度（留空不限制）：</td>
+<td><input type="text" name="config[cn_imgwidth]" size=30 value="$cn_imgwidth"></td></tr>
+<tr class=b><td>{$cn_name}标志图片高度（留空不限制）：</td>
+<td><input type="text" name="config[cn_imgheight]" size=30 value="$cn_imgheight"></td></tr>
+</table>
+<br><center><input type="submit" value="提 交"></center></form>
+<!--
+EOT;
+}elseif($action=='classset'){print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr>
+	<td class=b>
+		[<a href="$amind_file?adminjob=hack&hackset=colony&id=colony">基本设置</a>]
+		[<b>分类管理</b>]
+		[<a href="$amind_file?adminjob=hack&hackset=colony&id=colony&action=colonyset">{$cn_name}管理</a>]
+		[<a href="$amind_file?adminjob=hack&hackset=colony&id=colony&action=log">日志管理</a>]
+	</td>
+</tr>
+</table>
+<br>
+<table width="60%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr class=head><td colspan=3>分类管理</td></tr>
+<tr class=head_2 align=center><td>ID</td><td>分类名称</td><td>删除</td></tr>
+<!--
+EOT;
+$id=0;
+foreach($cnclass as $key => $value){
+$id++;
+print <<<EOT
+-->
+<tr class=b align=center><td>$id</td><td>$value[cname]</td><td><a href="$basename&action=delclass&id=$value[cid]">删除</a></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+
+<form method=post action="$basename&">
+<input type="hidden" name="action" value="addclass">
+<table width="60%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr class=head><td colspan=2>添加分类</td></tr>
+<tr class=b><td width="35%">分类名称</td>
+<td><input type="text" name="cname" size=50></td></tr></table>
+<br><center><input type="submit" value="提 交"></center></form>
+<!--
+EOT;
+}elseif($action=='colonyset'){print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr>
+	<td class=b>
+		[<a href="$amind_file?adminjob=hack&hackset=colony&id=colony">基本设置</a>]
+		[<a href="$amind_file?adminjob=hack&hackset=colony&id=colony&action=classset">分类管理</a>]
+		[<b>{$cn_name}管理</b>]
+		[<a href="$amind_file?adminjob=hack&hackset=colony&id=colony&action=log">日志管理</a>]
+	</td>
+</tr>
+</table>
+<br>
+<table width="60%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr class=head><td colspan=4>{$cn_name}管理</td></tr>
+<tr class=head_2 align=center>
+	<td>ID</td>
+	<td>{$cn_name}名称</td>
+	<td>分类名称</td>
+	<td>删除</td>
+</tr>
+<!--
+EOT;
+$num=($page-1)*$db_perpage;
+foreach($colonys as $key => $value){
+$num++;
+print <<<EOT
+-->
+<tr class=b align=center>
+<td>$num</td>
+<td>$value[cname]</td>
+<td>$value[classname]</td>
+<td><a href="$basename&action=delcolony&id=$value[id]">删除</a></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<center>$pages</center>
+<!--
+EOT;
+}elseif($action=='log'){print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr>
+	<td class=b>
+		[<a href="$amind_file?adminjob=hack&hackset=colony&id=colony">基本设置</a>]
+		[<a href="$amind_file?adminjob=hack&hackset=colony&id=colony&action=classset">分类管理</a>]
+		[<a href="$amind_file?adminjob=hack&hackset=colony&id=colony&action=colonyset">{$cn_name}管理</a>]
+		[<b>日志管理</b>]
+	</td>
+</tr>
+</table>
+<br>
+<form action="$basename&" method=post>
+<table width=98% align=center cellspacing=0 cellpadding=0>
+<tr><td><table width=100% cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=5><b>搜索</b></td></tr>
+<tr align=center>
+<td class=b>关键字</td>
+<td class=b><input type=text name=keyword></td>
+<td class=b><input type=submit value='提 交'></td></tr>
+</table></td></tr></table></form>
+<br>
+<form method=post action="$basename&">
+<input type="hidden" name="job" value="del">
+<table width="$tablewidth" cellspacing="1" cellpadding="5" align="center" class="i_table">
+<tr class=head><td colspan="7"><b>捐献记录</b></div></td></tr>
+<tr class="head_2" align="center">
+<td width="5%">ID</td>
+<td width="5%">类型</td>
+<td width="15%">$cn_name</td>
+<td width="15%">用户名</td>
+<td width="*">描述</td>
+<td width="15%">日期</td>
+<td width="5%">删除</td>
+</tr>
+<!--
+EOT;
+$num=($page-1)*$db_perpage;
+foreach($logdb as $key => $value){
+$num++;
+print <<<EOT
+-->
+<tr class="b" align="center">
+	<td>$num</td>
+	<td>{$logtype[$value[type]]}</td>
+	<td width="5%">
+		<a href="hack.php?H_name=colony&cyid=$value[field2]&job=view&id=$value[field2]" target="_blank">
+			$value[field3]
+		</a>
+	</td>
+	<td>$value[username1]</td>
+	<td><div style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word' align="left">$value[descrip]</div></td>
+	<td>$value[date]</td>
+	<td><input type="checkbox" name="selid[]" value="$value[id]"></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+ &nbsp; $pages
+<br>
+<center>
+<input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form,'2')">
+<input type="submit" value="提 交">
+</center>
+</form>
+<script language=JavaScript>
+function CheckAll(form,len){
+	for (var i=0;i<form.elements.length-len;i++){
+		var e = form.elements[i];
+		e.checked == true ? e.checked = false : e.checked = true;
+	}
+}
+</script>
+<!-- 
+EOT;
+}include_once PrintEot('adminbottom');
+?>-->

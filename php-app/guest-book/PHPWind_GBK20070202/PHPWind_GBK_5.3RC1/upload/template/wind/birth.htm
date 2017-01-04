@@ -1,0 +1,41 @@
+<!--<?php
+print <<<EOT
+-->
+	<tr class="tr4">
+		<td colspan="2">&raquo; 生日会员</td>
+    </tr>
+    <tr class="tr3">
+		<td class="f_two tac"  width="4%" style="padding:0"><img src="$imgpath/$stylepath/index/birth.gif" /></td>
+		<th class="f_one" width="95%" style="padding-right:8px; word-break:keep-all">
+<!--
+EOT;
+if($birthnum=='0'){
+print <<<EOT
+-->
+		今天论坛里没有人过生日
+<!--
+EOT;
+} else {
+for($i=0;$i<$birthnum;$i++){
+$userarray=explode("~",$birthmen[$i]);
+$rawname=rawurlencode($userarray[0]);
+if($userarray[1]==1){
+	$gender="先生";
+}elseif($userarray[1]==2){
+	$gender="小姐"; 
+}else{
+	$gender='';
+}
+print <<<EOT
+-->
+		<a href="profile.php?action=show&username=$rawname" title="$userarray[0]$gender 今天$userarray[2] 周岁了,生日快乐!">$userarray[0]</a>&nbsp;
+<!--
+EOT;
+} print <<<EOT
+-->
+		</th>
+    </tr>
+<!--
+EOT;
+}
+?>

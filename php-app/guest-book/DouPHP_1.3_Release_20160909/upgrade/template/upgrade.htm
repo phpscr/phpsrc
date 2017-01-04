@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$title}</title>
+<link href="template/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="wrapper">
+ <div class="logo"><a href="http://www.douco.com" target="_blank"><img src="template/logo.gif" alt="DouPHP" title="DouPHP" /></a></div>
+ <div class="upgrade"> 
+  <!-- {if $up_info.wrong} -->
+  <p class="wrong"><strong>{$lang.wrong}：</strong>{$up_info.wrong}</p>
+  <!-- {else} -->
+  <h3>{$lang.upgrade_up_list}</h3>
+  <ul>
+   <!-- {foreach from=$up_list item=item} -->
+   <li>{$item}</li>
+   <!-- {/foreach} -->
+  </ul>
+  <form action="index.php?step=upgrade" method="POST">
+   <p class="action">
+    <input type="submit" class="btn" name="upgrade" value="{$lang.upgrade_submit}">
+   </p>
+  </form>
+  <!-- {/if} --> 
+ </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+RewriteEngine On
+rewritebase /
+
+RewriteRule forum-([0-9]+)-([0-9]+)-([0-9]+)\.html forumdisplay.php?f=$1&st=$3&pp=$2&$4
+RewriteRule forum-([0-9]+)-([0-9]+)\.html forumdisplay.php?f=$1&pp=$2&$3
+RewriteRule forum-([0-9]+)-q-([0-9]+)\.html forumdisplay.php?f=$1&filter=quintessence&pp=$2
+RewriteRule forum-([0-9]+)-q\.html forumdisplay.php?f=$1&filter=quintessence
+RewriteRule forum-([0-9]+)\.html forumdisplay.php?f=$1
+RewriteRule thread-([0-9]+)-([0-9]+)\.html showthread.php?t=$1&pp=$2&$3
+RewriteRule thread-([0-9]+)\.html showthread.php?t=$1&$2
+RewriteRule user-([0-9]+)\.html profile.php?u=$1
+RewriteRule archive/f-([0-9]+)-([0-9]+)\.html archive/index.php?f$1-$2.html
+RewriteRule archive/t-([0-9]+)-([0-9]+)\.html archive/index.php?t$1-$2.html

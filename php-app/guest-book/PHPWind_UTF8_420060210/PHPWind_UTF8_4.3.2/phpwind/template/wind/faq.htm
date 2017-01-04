@@ -1,0 +1,270 @@
+<!--<?php
+if($db_kijiji){
+print <<<EOT
+-->
+<!--kijiji-->
+<!--
+EOT;
+}print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center><tr><td align=left>
+<img src='$imgpath/$stylepath/index/home.gif' align=absbottom> 
+<b><a href='$db_bfn'>$db_bbsname </a> -&gt 论坛帮助</b></td></tr></table><br>
+
+<table width='$tablewidth' cellspacing=1 cellpadding=3 bgcolor=$tablecolor align=center>
+<tr>
+<td width='14%' align=center class='f_one'><a href=faq.php?faqjob=2#1>注册与会员登录</a></td>
+<td width='14%' align=center class='f_one'><a href=faq.php?faqjob=2#2>会员控制面板</a></td>
+<td width='14%' align=center class='f_one'><a href=faq.php?faqjob=2#3>论坛发帖与相关权限 </a></td> 
+<td width='14%' align=center class='f_one'><a href=faq.php?faqjob=2#5>WAP 说明</a></td> 
+<td width='14%' align=center class='f_one'><a href=faq.php?faqjob=2#4>PHPWind 版权声明</a></td>
+<td width='14%' align=center class='f_one'><a href=faq.php?faqjob=1#5>互动联盟推荐</a></td>
+<td width='14%' align=center class='f_one'><a href=faq.php?faqjob=1#6> Wind Code</a> </td></tr></table>
+
+<!--
+EOT;
+if($faqjob==1){
+list($db_unioninfo,$c)=explode("\t",readover(D_P.'data/bbscache/info.txt'));
+print <<<EOT
+--><br>
+<table width='$tablewidth' cellspacing=1 cellpadding=3 $i_table align=center>
+<tr><td class=head><a name=5></a><b>互动联盟推荐</b></td></tr>
+<tr class='f_one'>
+<td>
+$db_unioninfo
+<!--
+EOT;
+if(!$db_unioninfo){print <<<EOT
+-->
+<center><a href="http://www.ofstar.com/bbs/" target=_blank><b>流星 ofstar.com</b><br><br>流星时尚 (服饰、美容、旅游、运动、美食)<br>流星数码(数码影像, 潮流手机, 随身听, 掌上电脑) <br>流星文联( 文学 ,情感 )<br>流星娱乐(最新音乐推荐 , 影视)</a></center>
+<!--
+EOT;
+}print <<<EOT
+--></td></tr>
+</table><br>
+
+<table width='$tablewidth' cellspacing=1 cellpadding=3 $i_table align=center>
+<tr><td class=head colspan=2><a name=6></a><b>Wind Code</b>
+</td></tr>
+<tr class='f_one'><td valign=center align=left>
+<ul>
+<font color=#5a6633 face=verdana>[quote]</font>
+被引用的内容，主要作用是在发帖时引用并回复具体楼层的帖子
+<font color=#5a6633 face=verdana>[/quote]</font> 
+</ul>
+</td>
+<td valign=center align=left>
+<table cellpadding=5 cellspacing=1 width=94% bgcolor=#000000 align=center>
+<tr><td class='f_one'>被引用的帖子和您的回复内容
+</td></tr></table>
+</td></tr>
+<tr class='f_one'><td valign=center align=left>
+<ul>
+<font color=#5a6633 face=verdana>[code]</font><font color=#5a6633></font>
+<br><font face=courier color=#333333><br>
+	 unset(\$txt[\$i]);<br>
+     \$txt=implode('',\$txt);<br>
+     \$f=fopen('userdata/xuni/market.data','w');<br>
+     fputs(\$f,\$txt);<br>
+	 fclose(\$f);<br>
+</font><font color=#5a6633 face=verdana>[/code]</font> 
+</ul>
+</td>
+<td valign=center align=left> 
+<font color=red>以下是代码:</font><br>
+<textarea name=textfield rows=5 style='width:100%;'>
+unset(\$txt[\$i]);
+\$txt=implode('',\$txt);
+\$f=fopen('userdata/xuni/market.data','w');
+fputs(\$f,\$txt);
+fclose(\$f);
+</textarea><br><font color=red>[Ctrl+A 全部选择]</font>
+</td></tr>
+<tr class='f_one'><td valign=center align=middle>
+<font face=verdana color=5a6633>[url]</font>
+<font face=verdana>http://www.phpwind.net</font><font color=5a6633>[/url] 
+</font>
+</td>
+<td valign=center align=middle>
+<a href=http://www.phpwind.net target=_blank>
+<font color=#000066>http://www.phpwind.net</font></a></td></tr>
+<tr class='f_one'><td valign=center align=middle>
+<font face=verdana color=5a6633>[url=http://www.phpwind.net]</font>
+<font face=verdana>PHPwind</font><font color=5a6633>[/url]</font></td>
+<td valign=center align=middle>
+<a href=http://www.phpwind.net>
+<font color=000066>PHPwind</font></a></font></td></tr>
+<tr class='f_one'>
+<td valign=center align=middle>
+<font face=verdana color=5a6633>[email]</font><font face=verdana>fengyu@163.com</font>
+<font color=5a6633>[/email]</font></td>
+<td valign=center align=middle>
+<a href=mailto:fengyu@163.com><font color=000066>fengyu@163.com</font></a></td></tr>
+<tr class='f_one'><td valign=center align=middle>
+<font face=verdana color=5a6633>[email=fengyu@163.com]</font>
+<font face=verdana>email me</font><font color=5a6633>[/email]</font></td>
+<td valign=center align=middle>
+<a href=mailto:fengyu@163.com><font color=000066>email me</font></a></td></tr>
+<tr class='f_one'> 
+<td valign=center align=middle><font face=verdana color=5a6633>[b]</font>
+<font face=verdana>粗体字</font><font color=5a6633 face=verdana>[/b]</font> 
+</td>
+<td valign=center align=middle><font face=verdana><b>粗体字</b></font> 
+</td></tr>
+<tr class='f_one'><td valign=center align=middle><font face=verdana color=5a6633>[i]</font>
+<font face=verdana>斜体字<font color=5a6633>[/i]</font> 
+</font></td>
+<td valign=center align=middle><font face=verdana><i>斜体字</i></font> 
+</td></tr>
+<tr class='f_one'><td valign=center align=middle><font face=verdana color=5a6633>[u]</font>
+<font face=verdana>下划线</font><font color=5a6633>[/u]</font></td>
+<td valign=center align=middle><font face=verdana><u>下划线</u></font> 
+</td>
+</tr>
+<tr class='f_one'> 
+<td valign=center align=middle>
+<font face=verdana color=5a6633>[align=center(可以是向左left，向右right)]</font>位于中间
+<font color=5a6633>[/align]</font></td>
+<td valign=center align=middle><font face=verdana><div align=center>中间对齐</div></font></td></tr>
+<tr class='f_one'> 
+<td valign=center align=middle><font face=verdana color=5a6633>[size=4]</font>
+<font face=verdana>改变字体大小<font color=5a6633>[/size] 
+</font> </font></td>
+<td valign=center align=middle><font face=verdana>改变字体大小 </font></td></tr>
+<tr class='f_one'> 
+<td valign=center align=middle><font face=verdana color=5a6633>[font=</font>
+<font color=5a6633>楷体_utf-8<font face=verdana>]</font></font>
+<font face=verdana>改变字体<font color=5a6633>[/font] 
+</font> </font></td>
+<td valign=center align=middle><font face=verdana><font face=楷体_utf-8>改变字体</font> 
+</font></td>
+</tr>
+<tr class='f_one'> 
+<td valign=center align=middle><font face=verdana color=5a6633>[color=red]</font>
+<font face=verdana>改变颜色<font color=5a6633>[/color] 
+</font> </font></td>
+<td valign=center align=middle><font face=verdana color=red>改变颜色</font><font face=verdana> 
+</font></td>
+
+</tr>
+<tr class='f_one'> 
+<td valign=center align=middle><font face=verdana color=5a6633>[img]</font>
+<font face=verdana>http://www.phpwind.net/logo.gif<font color=5a6633>[/img]</font> 
+</font></td>
+<td align=center><font face=verdana>
+<img src=logo.gif></font> </td>
+</tr>
+<tr class='f_one'> 
+<td valign=center align=middle>
+<font face=宋体 color=#333333><font color=#5a6633>[fly]</font>飞行文字特效
+<font color=#5a6633>[/fly]</font> </font></td>
+<td valign=center align=left>
+<font face=宋体	color=#333333>
+<marquee scrollamount=3 behavior=alternate width=90%>飞行文字特效</marquee></font></td>
+</tr>
+<tr class='f_one'> 
+<td valign=center align=middle>
+<font face=宋体 color=#333333><font color=#5a6633>[move]</font>滚动文字特效
+<font color=#5a6633>[/move]</font> </font></td>
+<td valign=center align=left>
+<font face=宋体 color=#333333> <marquee scrollamount=3 width=90%>滚动文字特效</marquee></font></td>
+</tr>
+<tr class='f_one'>
+<td valign=center align=middle>
+<font face=宋体 color=#333333>
+<font color=#5a6633>[flash=400,300]</font>http://www.phpwind.net/wind.swf
+<font color=#5a6633>[/flash]</font> </font></td>
+<td valign=center align=middle>
+<font face=宋体 color=#333333>将显示flash文件</font> </td>
+</tr>
+<tr class='f_one'>
+<td valign=center align=middle>
+<font face=宋体 color=#333333>
+<font color=#5a6633>[iframe]</font>http://www.phpwind.net<font color=#5a6633>[/iframe]</font> </font></td>
+<td valign=center align=middle>
+<font face=宋体 color=#333333>将在帖子中粘贴网页(后台默认关闭)</font> </td>
+</tr>
+<tr class='f_one'>
+<td align=center>
+<font color=#5a6633>[glow=255(宽度)，red(颜色)，1(边界)]</font><br>要产生光晕效果的文字<font color=#5a6633>[/glow]</font>
+</td>
+<td align=center><font face=宋体 color=#333333>
+<table width=255 style=filter:glow(color=red， direction=1)>
+<tr><td align=center>要产生彩色发光效果的文字</td>
+</tr></table></font></td></tr>
+</table>
+<!--
+EOT;
+}elseif($faqjob==2){print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=1 cellpadding=3 $i_table align=center>
+<tr><td class=head><a name=1></a>注册与会员登录</td></tr>
+<tr class='f_one'><td><b>关于注册</b></td></tr>
+<tr class='f_one'><td>您需要 <a href="./register.php"><font color="blue">注册成为会员</font></a> 才能正常使用论坛的各项功能，比如：<li>发布一个主题<li>回复其他会员的帖子<li>编辑自己的帖子<li>查看其他会员信息,排行榜等<li>给其他会员发送短信息<li>搜索您所需要的资料<br>等等 .....注册时，您需要一个用户名、密码和一个有效的email地址。输入您的email地址不会给您带来'垃圾邮件'，您可以在注册时选择隐藏email地址。</td></tr>
+<tr class='f_one'><td><b>关于登录论坛</b></td></tr>
+<tr class='f_one'><td>如果您以前是该论坛的会员，请点击 <a href="./login.php"><font color="blue">登录</font></a> 进入登录界面，填写用户名和密码。<br>同时您可以选择是否隐身登录，如果管理员允许您所处的用户组拥有此权利，这样别人将无法知道您是否在线。<br>Cookie 有效期介绍: 主要用于在您离开一会儿或者重新进入一个主题或者帖子的时候确认您的身份。当您登录时， 您将有一个'cookie 有效期:'选项，您可以选择cookie保存的时间，这时系统将您的用户名和密码用cookie保存，储存在您的电脑。如果您是使用一台共用的电脑，比如在图书馆、网吧，或者其他不能完全信任的地方， 建议使用'即时'选项，以免您的帐号被他人盗用。</td></tr>
+<tr class='f_one'><td><b>找回密码</b></td></tr>
+<tr class='f_one'><td>如果您之前是会员而忘记了密码，可用此功能 <a href="sendpwd.php"><font color="blue">找回密码</font></a>(邮箱必须有效)，在取回密码页面输入您注册时候的用户名，系统将自动发送密码到您的有效邮箱中。</td></tr>
+<tr><td class=head><a name=2></a>会员控制面板</td></tr>
+<tr class='f_one'><td><b>关于会员核心数据</b></td></tr>
+<tr class='f_one'><td>在 <a href="profile.php"><font color="blue">编辑会员核心数据</font></a> 时，考虑到安全性必须输入原密码，同时您也可以更改现有的密码，同时确认您的email地址是有效的，必要时系统将会发送一些论坛信息至您的邮箱，比如密码发送等。注意不能更改用户名，如有特殊情况需要修改用户名，请与管理员联系。</td></tr>
+<tr class='f_one'><td><b>关于个性化签名</b></td></tr>
+<tr class='f_one'><td>注册时，可以设置自己的个性签名。您的签名将出现在每个帖子底部，您也可以选择不显示个性签名，在发帖和回复的时候不选中"使用签名"选项。在编辑个性化签名时您可以使用 <a href="faq.php?faqjob=1#5"><font color="blue">Wind Code</font></a> 进行编辑多彩的签名。注意签名的字节数是跟您的等级相关的，所以您的签名长度是受限制的!</td></tr>
+
+<tr class='f_one'><td><b>关于自定义头像</b></td></tr>
+<tr class='f_one'><td>个人头像会出现在每个帖子中用户名的下方，头像可以是由论坛提供或者您自己输入完整的 URL 或上传 均可以，您可以选择一个最能代表您个性的头像。如果论坛允许使用自定义会员头像， 您可以使用URL 地址的头像或自己上传头像。</td></tr>
+
+<tr><td class=head><a name=3></a>论坛发帖与相关权限</td></tr>
+<tr class='f_one'><td><b>关于会员{$db_creditname}</b></td></tr>
+<tr class='f_one'><td>该积分用以判定一个会员对论坛宣传上的{$db_creditname}! 如果您使用 论坛的URL ?a= 自己的论坛数字ID 给您的一位朋友，使他们登录到论坛里，您的{$db_creditname}将增加 1 单位。举例: <a href="http://www.phpwind.net/?u=3558"><font color="blue">http://www.phpwind.net/?u=3558</font></a>     论坛数字ID 可在 控制面板 --> 查看个人资料 里查阅 </td></tr>
+<tr class='f_one'><td><b>关于会员等级提升</b></td></tr>
+<tr class='f_one'><td>一般是以您的发帖数来划分等级的，只要您多参与论坛讨论。等你的发帖数超过一定的数量时，您的等级将提升(有些论坛采用其他积分划分等级)。当然您同时还可以向管理员申请其他的特殊用户!</td></tr>
+<tr class='f_one'><td><b>关于论坛权限</b></td></tr>
+<tr class='f_one'><td>如果您看到论坛的某些版块为认证版块，说明您现在的用户组还没有权限进入。</td></tr>
+<tr class='f_one'><td><b>关于发帖的 Wind Code</b></td></tr>
+<tr class='f_one'><td>可以使用Wind Code 编辑您的帖子、短消息、签名，您可以设置帖子文字的字体、颜色等格式。<a href="faq.php?faqjob=1#5"><font color="blue">Wind Code</font></a> 代码使用简单。
+</td></tr>
+<tr class='f_one'><td><b>关于投票</b></td></tr>
+<tr class='f_one'><td>这项功能允许您提出一个问题，并设置一些可能的答案。其他会员则选答案参与投票，投票结果将在主题上显示。投票的例子见：<ol>什么是您最喜欢的城市? ( 在编辑框中 以 换行的 形式写入以下各项 )<li>温州 <li>杭州 <li>北京 <li>上海 <li>深圳</ol>　其他会员可以参与投票，您还可以设置投票是否允许多选，及多选的个数。每个会员只有一次投票机会，投票后可编辑投票！</td></tr>
+<tr class='f_one'><td><b>关于附件</b></td></tr>
+<tr class='f_one'><td>如果论坛允许使用上传附件的功能， 您可以在帖子中上传一些文件.。可以是一个图片、一个文本、一个压缩文件等. 您上传的每种文件都有大小限制( 最大为: 2 M )，论坛跟您的硬盘所采用的文件扩展名并不一致!上传一个附件，只有下载到自己的电脑上才能浏览。论坛限定了上传文件的类型:可以上传的文件扩展名: $db_uploadfiletype 发帖完毕后，附件将显示在您所发布的信息中. </td></tr>
+<tr class='f_one'><td><b>编辑与删除帖子</b></td></tr>
+<tr class='f_one'><td>注册会员可以编辑或删除自己的帖子，点<img src=$imgpath/wind/read/edit.gif>按钮来管理帖子。管理员可以编辑和删除论坛的所有帖子，版主只能编辑和删除指定版块内的帖子。</td></tr>
+<tr class='f_one'><td><b>关于版主</b></td></tr>
+<tr class='f_one'><td>版主负责论坛中某个版面。可以修改，删除或移动他们所管理的版面中的任何帖子等权限。任命某个版面的版主，通常是对本版有特殊贡献或对某领域有特殊才华的会员的一种奖励。</td></tr>
+
+<tr><td class=head><a name=5></a>WAP 说明</td></tr>
+<tr class='f_one'>
+<td><pre>
+
+$db_bbsname 目前已开通支持 WAP (手机移动论坛)功能.
+
+手机访问地址：<a href="$db_bbsurl/wap/"><font color=blue>$db_bbsurl/wap/</font></a>
+
+说明：只要您开通了移动GPRS或联通CDMA的数据服务，在支持WAP的手机上即可通过此网址访问 $db_bbsname
+
+手机资费说明：移动GPRS或联通CDMA的数据服务包月或流量费用，无需任何额外的费用支出
+
+主要应用范围：
+
+    通过手机您可以随时随地的浏览您在网络论坛上的活动信息，了解您发表的帖子的阅读、回复情况。
+
+</pre></td></tr>
+<br>
+
+<tr><td class=head><a name=4></a>PHPWind 版权声明</td></tr>
+<tr class='f_one'><td>
+<!--
+EOT;
+	$wind_licence= readover('licence.txt');
+	$wind_licence = str_replace('  ', '&nbsp; ', nl2br($wind_licence));
+
+print <<<EOT
+-->
+$wind_licence
+</td></tr>
+</table><br>
+<!--
+EOT;
+}
+?>-->

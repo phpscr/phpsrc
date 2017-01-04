@@ -1,0 +1,462 @@
+<!--<?php print <<<EOT
+-->
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td align="left">
+			<img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> 
+			<b><a href="$db_bfn">$db_bbsname</a> &raquo; 我的主题</b>
+		</td>
+	</tr>
+</table></div>
+<div class="t" style="margin-top:15px;">
+<table width="100%" cellspacing="0" cellpadding="0">
+	<tr class="tr4" style="text-align:center;">
+		<td><a href="profile.php">控制面板首页</a></td>
+		<td><a href="profile.php?action=modify">编辑个人资料</a></td>
+		<td><a href="profile.php?action=show&uid=$winddb[uid]">查看个人资料</a></td>
+		<td><a href="profile.php?action=friend">好友列表</a></td>
+		<td><a href="profile.php?action=permission">用户权限查看</a></td>
+<!--
+EOT;
+if($_G['atclog']){print <<<EOT
+-->
+		<td><a href="profile.php?action=log">帖子操作记录</a></td>
+<!--
+EOT;
+}print <<<EOT
+-->
+		<td><a href="userpay.php">{$db_currencyname}管理</a></td>
+		<td><a href="profile.php?action=buy">特殊组购买</a></td>
+		<td><a href="profile.php?action=favor">收藏夹</a></td>
+		<td><a href="personal.php">我的主题</a></td>
+	</tr>
+</table></div>
+<div class="t3" style="margin-bottom:25px;">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td width="23%" valign="top">
+	<div class="t">
+	<table width="100%" cellspacing="0" cellpadding="0" align="center">
+		<tr><td class="h"><b>我的主题</b></td></tr>
+		<tr class="tr3"><td><a href="personal.php">我的主题</a></td></tr>
+		<tr class="tr3"><td><a href="personal.php?action=post">我的回复</a></td></tr>
+		<tr class="tr3"><td><a href="personal.php?action=digest">我的精华</a></td></tr>
+		<tr class="tr3"><td><a href="personal.php?action=poll">我的投票</a></td></tr>
+		<tr class="tr3"><td><a href="personal.php?action=sale">我的交易</a></td></tr>
+	</table></div>
+	<div class="t">
+	<table width="100%" cellspacing="0" cellpadding="0" align="center">
+		<tr><td class="h"><b>我的悬赏</b></td></tr>
+		<tr class="tr3"><td><a href="personal.php?action=rewsort">悬赏统计</a></td></tr>
+		<tr class="tr3"><td><a href="personal.php?action=question">我的问题</a></td></tr>
+		<tr class="tr3"><td><a href="personal.php?action=answer">我的回答</a></td></tr>
+	</table></div>
+	<div class="t">
+	<table width="100%" cellspacing="0" cellpadding="0" align="center">
+		<tr><td class="h"><b>我的活动</b></td></tr>
+		<tr class="tr3"><td><a href="personal.php?action=actsort">活动统计</a></td></tr>
+		<tr class="tr3"><td><a href="personal.php?action=held">发起的活动 - 未结束</a></td></tr>
+		<tr class="tr3"><td><a href="personal.php?action=hold">发起的活动 - 已结束</a></td></tr>
+		<tr class="tr3"><td><a href="personal.php?action=applying">申请的活动 - 未结束</a></td></tr>
+		<tr class="tr3"><td><a href="personal.php?action=apply">申请的活动 - 已结束</a></td></tr>
+	</table></div>
+</td>
+<td width="*" valign="top"><div class="t" style="width:98%;margin-right:0">
+<!--
+EOT;
+if(!$action || $action=='digest' || $action=='poll' || $action=='sale'){ print <<<EOT
+-->
+	<table width="100%" cellspacing="0" cellpadding="0" align="center">
+		<tr><th class="h" colspan="6">
+<!--
+EOT;
+if(!$action){ print <<<EOT
+-->
+			<b>我的主题</b>
+<!--
+EOT;
+}elseif($action=='digest'){ print <<<EOT
+-->
+			<b>我的精华</b>
+<!--
+EOT;
+}elseif($action=='sale'){ print <<<EOT
+-->
+			<b>我的交易</b>
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+			<b>我的投票</b>
+<!--
+EOT;
+} print <<<EOT
+-->		
+		</th></tr>
+		<tr class="tr2">
+			<td width="6%" class="y-style">序号</td>
+			<td width="*" class="y-style">主题</td>
+			<td width="16%" class="y-style">所在版块</td>
+			<td width="8%" class="y-style">回复</td>
+			<td width="8%" class="y-style">人气</td>
+			<td width="24%" class="y-style">发帖时间</td>
+		</tr>
+<!--
+EOT;
+$i=($page-1)*$db_showperpage;
+foreach($threaddb as $key=>$thread){
+$i++;
+$class=$i%2==0 ? "f_two" : "f_one";
+print <<<EOT
+-->
+		<tr class="tr3 $class">
+			<td class="y-style">$i</td>
+			<th><a href="read.php?tid=$thread[tid]" target="_blank" class="a2">$thread[subject]</a>
+<!--
+EOT;
+if($thread[digest]){ print <<<EOT
+-->
+				<img src="$imgpath/$stylepath/file/digest_$thread[digest].gif" alt="精华帖标志" />
+<!--
+EOT;
+} print <<<EOT
+-->
+			</th>
+			<td><a href="thread.php?fid=$thread[fid]" class="y-style">$thread[forum]</a></td>
+			<td class="y-style">$thread[replies]</td>
+			<td class="y-style">$thread[hits]</td>
+			<td class="y-style">$thread[postdate]</td>
+		</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+	</table></div><div style="margin-left:12px;margin-bottom:15px">$pages</div>
+<!--
+EOT;
+}elseif($action=='post'){ print <<<EOT
+-->
+	<table width="100%" cellspacing="0" cellpadding="0" align="center">
+		<tr>
+			<th class="h" colspan="6">
+				<b>我的回复</b>
+<!--
+EOT;
+if($db_plist){ print <<<EOT
+-->
+			    <select name="ptable" onchange="window.location=('personal.php?action=post&ptable='+this.value);">
+				$p_table
+				</select>
+<!--
+EOT;
+} print <<<EOT
+-->
+			</th>
+		</tr>
+		<tr class="tr2">
+			<td width="6%">序号</td>
+			<td width="*">所在主题</td>
+			<td width="16%">所在版块</td>
+			<td width="16%">作者</td>
+			<td width="24%">发帖时间</td>
+		</tr>
+<!--
+EOT;
+$i=($page-1)*$db_showperpage;
+foreach($postdb as $key=>$post){
+$i++;
+print <<<EOT
+-->
+		<tr class="tr3">
+			<td>$i</td>
+			<th><a href="read.php?tid=$post[tid]#$post[pid]" target="_blank" class="a2">$post[subject]</a>
+<!--
+EOT;
+if($post[digest]){ print <<<EOT
+-->
+				<img src="$imgpath/$stylepath/file/digest_$post[digest].gif" alt="精华帖标志" />
+<!--
+EOT;
+} print <<<EOT
+-->
+			</th>
+			<td><a href="thread.php?fid=$post[fid]">$post[forum]</a></td>
+			<td><a href="profile.php?action=show&uid=$post[authorid]">$post[author]</a></td>
+			<td>$post[postdate]</td>
+		</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+	</table></div><div style="margin-left:12px;margin-bottom:15px">$pages</div>
+<!--
+EOT;
+}elseif($action=='rewsort'){ print <<<EOT
+-->
+	<table width="100%" cellspacing="0" cellpadding="0" align="center">
+		<tr><th class="h" colspan="2"><b>悬赏统计</b></th></tr>
+		<tr class="tr3">
+			<th width="40%">提问总数：</th>
+			<th>{$rewtdb[0]} 次</th>
+		</tr>
+		<tr class="tr3">
+			<th width="40%">问题悬赏中：</th>
+			<th>{$rewtdb[1]} 次</th>
+		</tr>
+		<tr class="tr3">
+			<th width="40%">问题已解决：</th>
+			<th>{$rewtdb[2]} 次</th>
+		</tr>
+		<tr class="tr3">
+			<th width="40%">解决问题：</th>
+			<th>{$rewpdb[0]} 次</th>
+		</tr>
+		<tr class="tr3">
+			<th width="40%">热心助人：</th>
+			<th>{$rewpdb[1]} 次</th>
+		</tr>
+		<tr class="tr3">
+			<th width="40%">最佳答案：</th>
+			<th>{$rewpdb[2]} 次</th>
+		</tr>
+	</table>
+<!--
+EOT;
+}elseif($action=='question'){ print <<<EOT
+-->
+	<table width="100%" cellspacing="0" cellpadding="0" align="center">
+		<tr><th class="h" colspan="7"><b>我的问题</b></th></tr>
+		<tr class="tr2" align="center">
+			<td width="6%" class="y-style">序号</td>
+			<td width="*" class="y-style">悬赏主题</td>
+			<td width="12%" class="y-style">所在版块</td>
+			<td width="12%" class="y-style">最佳答案奖励</td>
+			<td width="12%" class="y-style">热心助人奖励</td>
+			<td width="8%" class="y-style">状态</td>
+			<td width="12%" class="y-style">最佳答案得主</td>
+		</tr>
+<!--
+EOT;
+$i=($page-1)*$db_showperpage;
+foreach($rewdb as $key=>$value){
+$i++;
+print <<<EOT
+-->
+		<tr class="tr3">
+			<td width="6%" class="y-style">$i</td>
+			<td width="*"><a href="read.php?tid=$value[tid]" target="_blank">$value[subject]</a></td>
+			<td width="15%" class="y-style"><a href="thread.php?fid=$value[fid]">$value[forum]</a></td>
+			<td width="12%" class="y-style">$value[binfo]</td>
+			<td width="12%" class="y-style">$value[ainfo]</td>
+<!--
+EOT;
+if($value[ifreward]==1){ print <<<EOT
+-->
+			<td width="8%" class="y-style">悬赏中</td>
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+			<td width="8%" class="y-style"><font color="blue">已结束</font></td>
+<!--
+EOT;
+} print <<<EOT
+-->
+			<td width="12%" class="y-style">$value[rewname]</td>
+		</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+	</table></div><div style="margin-left:12px;margin-bottom:15px">$pages</div>
+
+<!--
+EOT;
+}elseif($action=='answer'){ print <<<EOT
+-->
+	<table width="100%" cellspacing="0" cellpadding="0" align="center">
+		<tr>
+			<th class="h" colspan="7">
+				<b>我的回答</b>
+<!--
+EOT;
+if($db_plist){ print <<<EOT
+-->
+			    <select name="ptable" onchange="window.location=('personal.php?action=answer&ptable='+this.value);">
+				$p_table
+				</select>
+<!--
+EOT;
+} print <<<EOT
+-->
+			</th>
+		</tr>
+		<tr class="tr2">
+			<td width="6%" class="y-style">序号</td>
+			<td width="*" class="y-style">悬赏主题</td>
+			<td width="12%" class="y-style">所在版块</td>
+			<td width="30%" class="y-style">悬赏答案</td>
+			<td width="12%" class="y-style">最佳答案奖励</td>
+		</tr>
+<!--
+EOT;
+$i=($page-1)*$db_showperpage;
+foreach($rewdb as $key=>$value){
+$i++;
+print <<<EOT
+-->
+		<tr class="tr3">
+			<td width="6%" class="y-style">$i</td>
+			<th width="*"><a href="read.php?tid=$value[tid]#$value[pid]" target="_blank">$value[subject]</a></th>
+			<td width="15%" class="y-style"><a href="thread.php?fid=$value[fid]">$value[forum]</a></td>
+			<td width="30%" class="y-style"><a href="read.php?tid=$value[tid]" target="_blank">$value[content]</a></td>
+			<td width="12%" class="y-style">$value[binfo]</td>
+		</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+	</table></div><div style="margin-left:12px;margin-bottom:15px">$pages</div>
+<!--
+EOT;
+}elseif($action=='actsort'){
+print <<<EOT
+-->
+	<table width="100%" cellspacing="0" cellpadding="0" align="center">
+		<tr><th class="h" colspan="2"><b>活动统计</b></th></tr>
+		<tr class="tr3">
+			<th width="40%">我发起的活动：</th>
+			<th>&nbsp;共 $act[count] 项</th>
+		</tr>
+		<tr class="tr3">
+			<th width="40%">我正申请参加的活动：</th>
+			<th>&nbsp;共 $actdb[0] 项</th>
+		</tr>
+		<tr class="tr3">
+			<th width="40%">我已申请参加的活动：</th>
+			<th>&nbsp;共 $actdb[1] 项</th>
+		</tr>
+		<tr class="tr3">
+			<th width="40%">我被拒绝参加的活动：</th>
+			<th>&nbsp;共 $actdb[2] 项</th>
+		</tr>
+	</table></div>
+<!--
+EOT;
+}elseif($action=='held' || $action=='hold'){ print <<<EOT
+-->
+	<table width="100%" cellspacing="0" cellpadding="0" align="center">
+		<tr><th class="h" colspan="5"><b>
+<!--
+EOT;
+if($action=='held'){ print <<<EOT
+-->
+		我发起的活动(未结束)
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+		我发起的活动(已结束)
+<!--
+EOT;
+} print <<<EOT
+-->
+			</b></th>
+		</tr>
+		<tr class="tr2">
+			<td width="*" class="y-style">活动名称</td>
+			<td width="18%" class="y-style">开始时间</td>
+			<td width="18%" class="y-style">结束时间</td>
+			<td width="15%" class="y-style">活动地点</td>
+			<td width="10%" class="y-style">活动费用</td>
+		</tr>
+<!--
+EOT;
+foreach($actdb as $key=>$value){ print <<<EOT
+-->
+		<tr class="tr3" align="center">
+			<th class="y-style"><a href="read.php?tid=$value[tid]" target="_blank">$value[subject]</a></th>
+			<td class="y-style">$value[starttime]</td>
+			<td class="y-style">$value[endtime]</td>
+			<td class="y-style">$value[location]</td>
+			<td class="y-style">$value[costs]</td>
+		</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+	</table></div>
+<!--
+EOT;
+}elseif($action=='applying' || $action=='apply'){ print <<<EOT
+-->
+	<table width="100%" cellspacing="0" cellpadding="0" align="center">
+		<tr><td class="h" colspan="6"><b>
+<!--
+EOT;
+if($action=='applying'){ print <<<EOT
+-->
+		我申请的活动(未结束)
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+		我申请的活动(已结束)
+<!--
+EOT;
+} print <<<EOT
+-->
+			</b></td>
+		</tr>
+		<tr class="tr2">
+			<td width="*" class="y-style">活动名称</td>
+			<td width="18%" class="y-style">开始时间</td>
+			<td width="18%" class="y-style">结束时间</td>
+			<td width="15%" class="y-style">活动地点</td>
+			<td width="10%" class="y-style">活动费用</td>
+			<td width="8%" class="y-style">状态</td>
+		</tr>
+<!--
+EOT;
+foreach($actdb as $key=>$value){ print <<<EOT
+-->
+		<tr class="tr3">
+			<td><a href="read.php?tid=$value[tid]" target="_blank">$value[subject]</a></td>
+			<td class="y-style">$value[starttime]</td>
+			<td class="y-style">$value[endtime]</td>
+			<td class="y-style">$value[location]</td>
+			<td class="y-style">$value[costs]</td>
+<!--
+EOT;
+if($value['state']==1){ print <<<EOT
+-->
+			<td><font color="blue">已审核</font></td>
+<!--
+EOT;
+}elseif($value['state']==2){ print <<<EOT
+-->
+			<td><font color="red">已拒绝</font></td>
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+			<td>未审核</td>
+<!--
+EOT;
+} print <<<EOT
+-->
+       </tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+	</table></div>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+</table></div>
+<!--
+EOT;
+?>-->

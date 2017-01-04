@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>插入表格</title>
+</head>
+<style type="text/css">
+BODY {font-family:Verdana;FONT-SIZE: 12px;COLOR: #000000;MARGIN: 0;background: #FFFFFF;text-align: center}
+textarea,input,object{font-size: 12px;  color: #000000;font-weight: normal; background-color: #FFFFFF}
+TD { BORDER-RIGHT: 1px; BORDER-TOP: 0px; FONT-SIZE: 9pt; COLOR: #000000;}
+</style>
+<script language="JavaScript">
+function bg_color() {
+	c=showModalDialog("./color.htm","color","dialogWidth:250pt;dialogHeight:195pt;help:0;status:0");
+	document.form.bgcolor.value=c;
+}
+function bd_color() {
+	c=showModalDialog("./color.htm","color","dialogWidth:250pt;dialogHeight:195pt;help:0;status:0");
+	document.form.bdcolor.value=c;
+}
+function info() {
+	var table;
+	table='<table width=100 ';
+	dm=document.form;
+	bg=dm.bgcolor.value;
+	bd=dm.bdcolor.value;
+	if(bg){
+		table+=" bgcolor='"+bg+"'";
+	}
+	if(bd){
+		table+=" bordercolor='"+bd+"'";
+	}
+	t_bd=dm.table_border.value;
+	if(t_bd!=""){
+		table+=" border='";
+		table+=t_bd;
+		table+="'";
+	}
+	table_cellspacing=dm.table_cellspacing.value;
+	if(table_cellspacing!=""){
+		table+=" cellspacing='";
+		table+=table_cellspacing;
+		table+="'";
+	}
+	table_cellpadding=dm.table_cellpadding.value;
+	if(table_cellpadding!=""){
+		table+=" cellpadding='";
+		table+=table_cellpadding;
+		table+="'";
+	}
+	by=dm.table_align;
+	cd=by.options[by.selectedIndex].value ;
+	table+="align='";
+	table+=cd;
+	table+="'>";
+
+	table_r=dm.table_r.value;
+	table_c=dm.table_c.value;
+	i=table_r;
+	j=table_c;
+	while(i--){
+		j=table_c;
+		table+="<tr>";
+		while(j--){
+			table+="<td align='left' valign='top'></td>";
+		}
+		table+="</tr>";
+	}
+	table+="</table>";
+	return table;
+}
+</script>
+<body bgcolor=menu topmargin="0" leftmargin="0">
+<form name="form" >
+<table cellspacing="4" cellpadding="0" align="center">
+<tr><td>表格行数 <input type="text" name="table_r" size="6" value="2"></td>
+<td> 表格列数 <input type="text" name="table_c" size="6" value="3"></td></tr>
+<tr><td>单元间距 <input type="text" name="table_cellspacing" size="6" value="0"></td>
+<td> 单元边距 <input type="text" name="table_cellpadding" size="6" value="0"></td></tr>
+<tr><td>边框宽度 <input type="text" name="table_border" size="6" value="1"></td>
+<td> 对齐方式 <select name="table_align">
+<option value="center">居中</option><option value="left">左对齐</option>
+<option value="right">右对齐</option></select></td></tr>
+<tr><td colspan=2>背景颜色 <input type="text" name="bgcolor" size="8" value="#FFFFFF" onclick="bg_color();">(点击文本框选择背景颜色)</td></tr>
+<tr><td colspan=2>边框颜色 <input type="text" name="bdcolor" size="8" value="#aaaaaa" onclick="bd_color();">(点击文本框选择背景颜色)</td></tr>
+<tr align="center"><td colspan=2>
+<br>
+<input type=button onclick='window.returnValue = info();window.close();' value='提 交'>
+<input type=button onclick="window.returnValue ='' ;window.close();" value="取消">
+</td></tr></table>
+</form></body></html>

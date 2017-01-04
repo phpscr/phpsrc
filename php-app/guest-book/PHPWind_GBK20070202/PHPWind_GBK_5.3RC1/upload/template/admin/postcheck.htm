@@ -1,0 +1,74 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b><b>提示信息</b></b></td></tr>
+<tr><td class=b><br>
+<ul><li>版块开启 "回复审核" 功能时，只有经过管理员审核的回复才会在主题中显示</li></ul>
+<br></td></tr></table>
+<br>
+
+<form action="$basename&" method=post>
+<input type=hidden name=job value='search'>
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan="2">回复验证</td></tr>
+<tr align="center">
+<td class=b>所属分类 : <select name="fid"><option>选择分类</option>$forumcache</select> &nbsp; 
+作者 : <input type=text size=20 name="username"> &nbsp;
+<!--
+EOT;
+if($db_plist){ print <<<EOT
+-->
+分表数据库 : <select name="ptable" onchange="window.location=('$basename&ptable='+this.value);">$p_table</select>
+<!--
+EOT;
+} print <<<EOT
+-->
+</td>
+<td class=b width="20%"><input type=submit value="提 交"></td></tr>
+</table>
+</form>
+
+<form action="$basename&" method=post>
+<input type=hidden name=job value=search>
+<input type=hidden name=step value=2>
+<input type=hidden name=ptable value="$ptable">
+<table width='98%' align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=7>回复验证</td></tr>
+<tr align=center class=head_2>
+<td width='5%'>ID</td>
+<td>标题</td>
+<td>所在主题</td>
+<td width='15%'>作者</td>
+<td width='15%'>所属分类</td>
+<td width='15%'>发表时间</td>
+<td width='6%'></td></tr>
+<!--
+EOT;
+$num=($page-1)*$db_perpage;
+foreach($postdb as $key=>$post){
+$num++;
+print <<<EOT
+-->
+<tr align=center class=b>
+<td>$num</td>
+<td><a href="$admin_file?adminjob=content&type=post&tid=$post[tid]&id=$post[pid]" target="_blank">$post[subject]</a></td>
+<td><a href="read.php?tid=$post[tid]" target='_blank'>所在主题</a></td>
+<td><a href="profile.php?action=show&uid=$post[authorid]" target='_blank'>$post[author]</td>
+<td>$post[name]</td>
+<td class='smalltxt'>$post[postdate]</td>
+<td><input type=checkbox name="selid[]" value='$post[pid]'></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table><br>$pages
+<center><input type=radio name="type" value=del>删除<input type=radio name="type" value=pass checked>通过
+<br><br>
+<input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)">
+<input type=submit value="提 交"></center></form>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>-->

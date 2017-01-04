@@ -1,0 +1,138 @@
+<!--<?php 
+print <<<EOT
+-->
+<tr>
+	<td class='t_one' valign="top" width='20%'>选项</td>
+	<td class='t_one'>
+		<input type="checkbox" name="kjj" onclick="showmkejiji()" $kjj_checked>
+		同时在客齐集上刊登广告(将您的文章同时发布在分类广告站点--<a href="http://shanghai.kijiji.com.cn/" target="_blank">客齐集</a>) [<a href="http://shanghai.kijiji.com.cn/p-Help" target="_blank">什么是客齐集?</a>]
+		<span id="kejiji" style='DISPLAY: none'>
+		<br><br>
+		城市 &nbsp; : 
+		<select name="area_id">
+			<option value="30002">北京</option>
+			<option value="30001">上海</option>
+			<option value="30006">广州</option>
+			<option value="30034">长春</option>
+			<option value="30035">长沙</option>
+			<option value="30009">成都</option>
+			<option value="30039">重庆</option>
+			<option value="30040">大连</option>
+			<option value="30041">贵阳</option>
+			<option value="30012">杭州</option>
+			<option value="30047">哈尔滨</option>
+			<option value="30048">合肥</option>
+			<option value="30017">济南</option>	
+			<option value="30049">昆明</option>
+			<option value="30050">兰州</option>
+			<option value="30051">南昌</option>
+			<option value="30011">南京</option>
+			<option value="30042">青岛</option>
+			<option value="30043">汕头</option>
+			<option value="30044">沈阳</option>
+			<option value="30045">深圳</option>
+			<option value="30046">石家庄</option>
+			<option value="30031">苏州</option>
+			<option value="30052">太原</option>
+			<option value="30053">天津</option>
+			<option value="30007">武汉</option>
+			<option value="30036">厦门</option>
+			<option value="30037">西安</option>
+			<option value="30038">烟台</option>
+			<option value="30019">郑州</option>
+		</select> &nbsp;
+		类别:
+		<select name="category_id">
+			<option value="402">同城生活->便民告示</option>
+			<option value="406">同城生活->全民健身</option>
+			<option value="409">同城生活->旅游活动</option>
+			<option value="4010">同城生活->文艺活动</option>
+			<option value="40131">同城生活->娱乐休闲</option>
+			<option value="40116">同城生活->宠物救助</option>
+			<option value="4067">同城生活->打折信息</option>
+			<option value="40121">同城生活->团购信息</option>
+			<option value="4068">同城生活->失物招领</option>
+			<option value="4047">同城生活->志愿者</option>
+			<option value="4013">同城生活->其它</option>
+			<option value="4079">房屋->商铺/办公楼</option>
+			<option value="4080">房屋->出租/出售</option>
+			<option value="4081">房屋->求购/求租</option>
+			<option value="40113">房屋->合租专栏</option>
+			<option value="40122">房屋->其它</option>
+			<option value="4017">招聘/求职->艺术/文化</option>
+			<option value="4019">招聘/求职->客户服务</option>
+			<option value="4020">招聘/求职->教育/培训</option>
+			<option value="4021">招聘/求职->电子技术/通讯</option>
+			<option value="4024">招聘/求职->互联网/电子商务</option>
+			<option value="4026">招聘/求职->掌柜/店长</option>
+			<option value="4027">招聘/求职->销售/市场</option>
+			<option value="4030">招聘/求职->采购/物流</option>
+			<option value="4034">招聘/求职->软件开发</option>
+			<option value="4035">招聘/求职->硬件/网络</option>
+			<option value="4036">招聘/求职->IT服务/技术支持</option>
+			<option value="4037">招聘/求职->广告/设计</option>
+			<option value="4039">招聘/求职->编辑/翻译</option>
+			<option value="40117">招聘/求职->酒店/餐饮/导游</option>
+			<option value="4040">招聘/求职->其它</option>
+			<option value="4073">同城寻缘->找男友</option>
+			<option value="4074">同城寻缘->找女友</option>
+			<option value="4076">同城寻缘->失去联系的朋友</option>
+			<option value="40110">同城寻缘->旅游伙伴</option>
+			<option value="40111">同城寻缘->倾诉对象</option>
+			<option value="40132">同城寻缘->真情告白</option>
+			<option value="40133">同城寻缘->俱乐部</option>
+			<option value="40112">同城寻缘->同乡会</option>
+			<option value="4077">同城寻缘->其它</option>
+			<option value="4059">教育与培训->学科教育</option>
+			<option value="4060">教育与培训->电脑教育</option>
+			<option value="4061">教育与培训->外语教育</option>
+			<option value="4062">教育与培训->家教</option>
+			<option value="4063">教育与培训->艺术类教育</option>
+			<option value="4064">教育与培训->运动类教育</option>
+			<option value="4065">教育与培训->其它</option>
+			<option value="4042">跳蚤市场->电脑/配件</option>
+			<option value="4043">跳蚤市场->家用电器</option>
+			<option value="4044">跳蚤市场->服装/饰品</option>
+			<option value="4046">跳蚤市场->文体用品</option>
+			<option value="4047">跳蚤市场->家俱/摆设</option>
+			<option value="4048">跳蚤市场->居家用品</option>
+			<option value="4049">跳蚤市场->宠物用品</option>
+			<option value="4050">跳蚤市场->个人收藏</option>
+			<option value="4051">跳蚤市场->稀奇古怪</option>
+			<option value="4052">跳蚤市场->音像制品</option>
+			<option value="4054">跳蚤市场->各种票券</option>
+			<option value="4056">跳蚤市场->办公用品</option>
+			<option value="40120">跳蚤市场->通讯产品</option>
+			<option value="40119">跳蚤市场->图书杂志</option>
+			<option value="40118">跳蚤市场->影音设备</option>
+			<option value="40129">跳蚤市场->美容用品</option>
+			<option value="4057">跳蚤市场->其它</option>
+			<option value="40130">服务->美容店</option>
+			<option value="4089">服务->餐饮</option>
+			<option value="4090">服务->快递</option>
+			<option value="4091">服务->搬家</option>
+			<option value="4092">服务->维修</option>
+			<option value="4093">服务->保姆/钟点工</option>
+			<option value="4099">服务->电脑 维修</option>
+			<option value="40104">服务->留学移民</option>
+			<option value="40105">服务->其它</option>
+			<option value="4083">车辆买卖与服务->二手汽车买卖</option>
+			<option value="40123">车辆买卖与服务->新车买卖</option>
+			<option value="40125">车辆买卖与服务->租车</option>
+			<option value="40127">车辆买卖与服务->拼车上下班</option>
+			<option value="40124">车辆买卖与服务->驾驶员培训</option>
+			<option value="40126">车辆买卖与服务->带车求职</option>
+			<option value="40128">车辆买卖与服务->无车司机求职</option>
+			<option value="4085">车辆买卖与服务->自行车买卖</option>
+			<option value="4084">车辆买卖与服务->摩托车/助动车买卖</option>
+			<option value="4086">车辆买卖与服务->汽车配件/服务</option>
+			<option value="4087">车辆买卖与服务->其它</option>
+		</select>
+		<br><br>
+		Email : <input type="text" size="30" name="k_email" value="$winddb[email]">
+		</span>
+	</td>
+</tr>
+<!--
+EOT;
+?>

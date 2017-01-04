@@ -1,0 +1,42 @@
+{include file="subnavibar.html"}
+    <div id="page">
+            <h2 class="title">用户管理</h2>
+            <p><a href="{spUrl c=admin a=derivecsv}">导出用户信息</a></p>
+        <div class="entry">
+            {foreach from=$results item=result}
+                <p>{$result.uid}. <a href="{spUrl c=user a=profile uname=$result.uname}" target="_blank">{$result.uname}</a>
+                {if $result.openid}<img style="border:none;" src="{$siteurl}/template/common/connect_qq.gif" title="QQ绑定"/> {/if}
+                {($result.acl =="GBADMIN") ? "<span style=\"color:#E53333;\">管理员</span>" : (($result.forum =="0"
+                ) ? "普通用户" : "版主")}{($result.acl =="shield") ? "<i>该用户已被屏蔽</i>" : ""}
+                {if ( "GBADMIN" != $result.acl )}
+                    <a href="javascript:void(0);" onclick="delconfirm({$result.uid},'{$result.uname}');">删除</a>
+                    <a href="javascript:void(0);" onclick="desconfirm({$result.uid},'{$result.uname}');">销毁</a>
+                    </span>
+                    <abbr title="{getCity ip=$result.ip}"> {$result.ip}</abbr>
+                {/if}
+                <a href="{spUrl c=user a=editprofile uid=$result.uid}" target="_blank">编辑</a>
+                {$result.ctime|date_format:"%Y-%m-%d %H:%M"} {$result.credits}</p>
+            {/foreach}
+        </div>
+        <div class="scott">
+            <p>
+                {if $pager}
+                     {pager pager=$pager c="admin" a="user" idname="ult" id="1"}
+                {/if}
+            </p>
+        </div>
+    </div>
+
+<script>
+function delconfirm(uid,uname){
+    if( window.confirm("确定删除“" + uname + "”用户？") ){
+        window.location = "{spUrl c=admin a=deluser}&uid=" + uid;
+    }
+}
+function desconfirm(uid,uname){
+    if( window.confirm("确定彻底删除“" + uname + "”用户？将删除所有话题、评论和留言等资料。") ){
+        window.location = "{spUrl c=admin a=destroy}&uid=" + uid +"&uname=" +uname;
+    }
+}
+</script>
+{include file="footer.html"}

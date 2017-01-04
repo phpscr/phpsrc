@@ -1,0 +1,67 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>
+<ul>
+1.　为了保证后台的安全性,系统只允许论坛创始人和管理员删除操作日记<br>2.　系统必须保留前100条后台管理日志.
+</ul>
+<br></td></tr></table><br>
+
+<form action="$basename" method=post>
+<input type=hidden name=action value=search>
+<table width=98% align=center cellspacing=0 cellpadding=0>
+<tr><td><table width=100% cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=5><span class=bold>搜索</span></td></tr>
+<tr align=center><td class=b>用户名</td>
+<td class=b><input type=text name=username></td>
+<td class=b>管理员</td>
+<td class=b><input type=text name=adminname></td>
+<td class=b><input type=submit value='提 交'></td></tr>
+</table></td></tr></table><br>
+</form>
+
+
+<table width=98% align=center cellspacing=0 cellpadding=0>
+<tr><td><table width=100% cellspacing=1 cellpadding=5 class=i_table>
+<tr><td class=head colspan=5><b>管理日志</b></td></tr>
+<tr align=center class=head_2><td width=10%>用户名</td><td width=10%>级别</td>
+<td width=5%>发帖</td><td width=15%>注册时间</td>
+<td width=10%>管理员</td></tr>
+<!--
+EOT;
+foreach($userlogdb as $userlog){
+if($userlog){
+print <<<EOT
+-->
+<tr class=b align=center><td>$userlog[1]</td><td>$userlog[group]</td><td class=f_one>$userlog[3]</td>
+<td>$userlog[regdate]</td><td>$userlog[5]</td></tr>
+<!--
+EOT;
+}}
+print <<<EOT
+-->
+</table></td></tr></table><br>
+<center>
+<!--
+EOT;
+if($action=='search'){print <<<EOT
+-->
+<a href='$basename'><b>查看全部日志</b></a>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+$pages
+<!--
+EOT;
+}if($admin_gid==3){print <<<EOT
+-->
+<br><br><a href="$basename&del=Y"><b>删除多余管理日志</b></a></center>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>
+-->

@@ -1,0 +1,2 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<div class="pager"><!-- {if $pager.page gt 1} --><a href="{$pager.previous}">{$lang.pager_previous}</a><!-- {else} --><em>{$lang.pager_previous}</em><!-- {/if} --><span>{$lang.pager_6}{$pager.page}/{$pager.page_count}{$lang.pager_4}</span><!-- {if $pager.page lt $pager.page_count} --><a href="{$pager.next}">{$lang.pager_next}</a><!-- {else} --><em>{$lang.pager_next}</em><!-- {/if} --></div>

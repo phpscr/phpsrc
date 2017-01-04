@@ -1,0 +1,215 @@
+<!--<?php print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center>
+<tr><td align=left><img src='$imgpath/$stylepath/index/home.gif' align=absbottom> 
+<b><a href='$db_bfn'>$db_bbsname </a> -> 信息资料</b></td></tr></table><br>
+<!--
+EOT;
+if($windid==$userdb['username']){
+print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=1 cellpadding=4 align=center $i_table style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word;'>
+	<tr align=center>
+		<td class='f_one'><a href='profile.php'>控制面板首页</a></td>
+		<td class='f_one'><a href='profile.php?action=modify'>编辑个人资料</a></td>
+		<td class='f_one'><a href="profile.php?action=show&uid=$winddb[uid]">查看个人资料</a></td>
+		<td class='f_one'><a href="profile.php?action=permission">用户权限查看</a></td>
+<!--
+EOT;
+if($_G['atclog']){print <<<EOT
+-->
+		<td class='f_one'><a href="profile.php?action=log">帖子操作记录</a></td>
+<!--
+EOT;
+}print <<<EOT
+-->
+		<td class='f_one'><a href='userpay.php'>交易币管理</a></td>
+		<td class='f_one'><a href='profile.php?action=favor'>收藏夹</a></td>
+	</tr>
+</table>
+<!--
+EOT;
+}print <<<EOT
+-->
+<br>
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=5 align=center $i_table>
+<tr><td align='center' class=head colspan=2>个人信息 (数字ID:{$userdb[uid]})</td></tr>
+<tr><td width=35% class='f_two'>用户名</td><td class='f_two'>$userdb[username] (
+<!--
+EOT;
+if($userdb['thisvisit']+$db_onlinetime*1.5>$timestamp){print <<<EOT
+-->
+<b>在线</b> 
+<!--
+EOT;
+} else{print <<<EOT
+-->
+<b>离线</b>
+<!--
+EOT;
+}print <<<EOT
+-->
+)--- <a href='search.php?authorid=$userdb[uid]'>[用户主题]</a> 
+<a href='search.php?authorid=$userdb[uid]&digest=1'>[精华主题]
+<a href='hack.php?H_name=toolcenter&action=user&uid=$userdb[uid]'>[道具出售]</a>
+<a href='show.php?uid=$userdb[uid]'>[个人展区]</a>
+</td></tr>
+<!--
+EOT;
+if($groupid==3){print <<<EOT
+-->
+<tr class='f_one'><td>管理员操作</td>
+<td>
+[<a href="admin.php?adminjob=setuser&action=edit&uid=$userdb[uid]" target="_blank">编辑用户</a>]
+[<a href="admin.php?adminjob=banuser&username=$userdb[username]" target="_blank">会员禁言</a>]
+[<a href="admin.php?adminjob=superdel&a_type=article&action=deltpc&fid=-1&ifkeep=1&author=$userdb[username]&lines=30" target="_blank">删除主题</a>] 
+[<a href="admin.php?adminjob=superdel&a_type=article&action=delrpl&fid=-1&author=$userdb[username]&nums=30" target="_blank">删除回复</a>]
+</td></tr>
+<!--
+EOT;
+}if($systitle){print <<<EOT
+-->
+<tr><td class='f_one'>系统头衔</td><td class='f_one'>$systitle</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr><td class='f_two'>会员头衔</td><td class='f_two'>$memtitle</td></tr>
+<!--
+EOT;
+if($md_ifopen){print <<<EOT
+-->
+<tr><td class='f_two'>勋章</td>
+<td class='f_two'>
+<!--
+EOT;
+if($userdb['medals']){
+foreach($userdb['medals'] as $key=>$value){
+if($_MEDALDB[$value][picurl]){print <<<EOT
+-->
+			<img src="$imgpath/medal/{$_MEDALDB[$value][picurl]}" alt="{$_MEDALDB[$value][name]}"> 
+<!--
+EOT;
+}}}else{print <<<EOT
+-->
+			该用户还没有获得勋章
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<!--
+EOT;
+}if($windid==$manager || $groupid==3){print <<<EOT
+-->
+<tr><td class='f_one'>最后登录IP</td><td class='f_one'>$logininfo[0]</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr><td class='f_one'>发帖</td><td class='f_one'>$userdb[postnum]</td></tr>
+<tr><td class='f_one'>精华</td><td class='f_one'>$userdb[digests]</td></tr>
+<tr><td class='f_two'>$db_rvrcname</td><td class='f_two'>$userdb[rvrc] $db_rvrcunit</td></tr>
+<tr><td class='f_one'>$db_moneyname</td><td class='f_one'>$userdb[money] $db_moneyunit</td></tr>
+<!--
+EOT;
+if($db_ads){print <<<EOT
+-->
+<tr><td class='f_two'>$db_creditname</td><td class='f_two'>$userdb[credit] $db_creditunit</td></tr>
+<tr><td class='f_two'>如何获得$db_creditname</td><td class='f_two'>在文章页面使用<img src="$imgpath/$stylepath/read/emailto.gif" align=absmiddle alt="推荐此帖">功能将文章推荐给你的朋友你的{$db_creditname}会自动增加<br>或者将下面的链接发给你的朋友, 当你的朋友点击下面连接的时候你的{$db_creditname}也会自动增加<br>$db_bbsurl/?a=$userdb[username] 或<br> $db_bbsurl/?u=$userdb[uid]</td></tr>
+<!--
+EOT;
+}foreach($_CREDITDB as $key => $value){
+$usercredit = $creditdb ? $creditdb[$key][1] : 0;
+print <<<EOT
+-->
+<tr><td class='f_one'>$value[0]($value[2])</td>
+<td class='f_one'>$usercredit $value[1]</td></tr>
+<!--
+EOT;
+}if($userdb['honor']){print <<<EOT
+-->
+<tr><td class='f_one'>自定义头衔</td><td class='f_one'>$userdb[honor]</td></tr>
+<!--
+EOT;
+}if($colonydb){print <<<EOT
+-->
+<tr>
+<td class='f_two'>加入的{$db_hackdb[colony][0]}</td>
+<td class='f_two'>
+<!--
+EOT;
+foreach($colonydb as $key=>$value){print <<<EOT
+-->
+<a href="hack.php?H_name=colony&cyid=$value[id]&job=view&id=$value[id]" target="_blank">$value[cname]</a> 
+<!--
+EOT;
+}print <<<EOT
+-->
+</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr><td class='f_two'>头像</td><td class='f_two'>$usericon</td></tr>
+<tr><td class='f_one'>Email</td><td class='f_one'>$sendemail</td></tr>
+<tr><td class='f_two'>OICQ:</td><td class='f_two'>$userdb[oicq]</td></tr>
+<tr><td class='f_one'>ICQ:</td><td class='f_one'>$userdb[icq]</td></tr>
+<tr><td class='f_two'>Yahoo:</td><td class='f_two'>$userdb[yahoo]</td></tr>
+<tr><td class='f_one'>Msn:</td><td class='f_one'>$userdb[msn]</td></tr>
+<tr><td class='f_two'>性别</td><td class='f_two'>
+<!--
+EOT;
+if($userdb[gender]==1){print <<<EOT
+-->
+男
+<!--
+EOT;
+}elseif($userdb[gender]==2){print <<<EOT
+-->
+女
+<!--
+EOT;
+}else{print <<<EOT
+-->
+保密
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<tr><td class='f_one'>生日</td><td class='f_one'>$userdb[bday]</td></tr>
+<tr><td class='f_two'>个人主页</td>
+<td class='f_two'><a href="$userdb[site]" target="_blank">$userdb[site]</a></td></tr>
+<tr><td class='f_one'>签名</td>
+<td class='f_one'><table style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word'>
+<tr><td>$tempsign</td></tr></table>
+</td></tr>
+<tr><td class='f_two'>自我简介<br>--少于100字节</td><td class='f_two'>
+<table style='TABLE-LAYOUT: fixed;WORD-WRAP: break-word'>
+<tr><td>$tempintroduce</td></tr></table></td></tr>
+<tr><td class='f_one'>注册时间</td><td class='f_one'>$show_regdate</td></tr>
+<!--
+EOT;
+if($db_ifonlinetime){print <<<EOT
+-->
+<tr><td class='f_one'>在线时间</td><td class='f_one'>$userdb[onlinetime] 小时</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr><td class='f_two'>平均每日发帖</td><td class='f_two'>{$averagepost}篇 (今日{$userdb[todaypost]}篇)</td></tr>
+<tr><td class='f_one'>最后登录</td><td class='f_one'>$lasttime </td></tr>
+$printlastpost
+<tr><td class='f_two'>相关动作</td>
+<td class='f_two'><a href='message.php?action=write&touid=$userdb[uid]'>
+<img src='$imgpath/$stylepath/read/message.gif'></a>
+<a href='sendemail.php?username=$rawauthor'>
+<img src='$imgpath/$stylepath/read/email.gif'></a>
+</td></tr></table>
+
+<br><center><input type=submit value='返 回' onclick='javascript:history.go(-1)'></center>
+<!--
+EOT;
+?>-->

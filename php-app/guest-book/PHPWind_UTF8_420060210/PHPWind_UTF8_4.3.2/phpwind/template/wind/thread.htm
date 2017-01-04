@@ -1,0 +1,419 @@
+<!--<?php print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center>
+<tr><td><img src='$imgpath/$stylepath/index/home.gif' align=absbottom> <b><a href='$db_bfn'>$db_bbsname</a> $msg_guide</b></td>
+<td align=right>
+<table cellspacing=1 cellpadding=1 style="font-family: Tahoma, Verdana;BORDER: #8C8E7B 1px solid;background:#FFFFFF;">
+<tr><td style="background:#FF6500;font-size: 7pt;color:#ffffff;">&nbsp;XML&nbsp;</td>
+<td style="background:#8C8E7B;font-size: 7pt;">&nbsp;<a href="rss.php?fid=$fid" target="_blank" title="订阅本版面最新帖子"><font color='#ffffff'>RSS 2.0</font></a>&nbsp;</td>
+<td style="background:#8C8E7B;font-size: 7pt;">&nbsp;<a href="faq.php?faqjob=2#5" target="_blank" title="通过手机访问论坛"><font color='#ffffff'>WAP</font></a>&nbsp;</td>
+</tr></table>
+</td></tr></table><br>
+
+<!--ads begin-->
+<!--
+EOT;
+if($advertdb[text]){
+print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=1 cellpadding=6 align=center $i_table>
+<!--
+EOT;
+$id=0;
+foreach($advertdb[text] as $key => $value){
+$value = strtotime($value[endtime]) > $timestamp ? $value[code] : '';
+if($id==0){
+print <<<EOT
+-->
+<tr align=center>
+<!--
+EOT;
+}$id++;print <<<EOT
+-->
+<td  class="f_one" width='25%'>$value</td>
+<!--
+EOT;
+if($id==4){
+$id=0;
+print <<<EOT
+-->
+</tr>
+<!--
+EOT;
+}}
+if($advertdb[text] && $id && $id<4){
+for($i=$id;$i<4;$i++){print <<<EOT
+-->
+<td class="f_one" width='25%'></td>
+<!--
+EOT;
+}print <<<EOT
+-->
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table><br>
+<!--
+EOT;
+}print <<<EOT
+-->
+<!--ads end-->
+
+<!--
+EOT;
+if($foruminfo[aid]){
+print <<<EOT
+-->
+<table cellspacing=1 cellpadding=6 width='$tablewidth' align=center $i_table>
+<tr><td class="head"><a style="float:right" href="#" onclick="return IndexDeploy('thread',0)"><img id="img_thread" src="$imgpath/$stylepath/index/cate_$thread_img.gif"></a><b>版块公告</b></td></tr>
+<tbody id="cate_thread" style="$cate_thread">
+<tr><td class=t_one onMouseOver="this.className='t_two'" onMouseOut="this.className='t_one'">
+$foruminfo[subject]&nbsp;<span class="smalltxt">($foruminfo[author]: $foruminfo[startdate])</span><br><br>
+$foruminfo[content]
+<div align="right"><a href="notice.php?fid=$foruminfo[fid]#$foruminfo[aid]">更多公告..</a></div></td></tr>
+</table><br>
+<!--
+EOT;
+}$thread_children && require_once PrintEot($thread_children);
+print <<<EOT
+-->
+<table width='$tablewidth' align=center cellspacing=0 cellpadding=0>
+<tr><td align=left valign=middle width=60%>$pages &nbsp;&nbsp; </td>
+<td align=right>
+<a href='post.php?fid=$fid'><img src='$imgpath/$stylepath/post.gif'></a>
+<!--
+EOT;
+if($forumset[allowsale]!=2){print <<<EOT
+-->
+<a href='post.php?fid=$fid&sale=1'><img src='$imgpath/$stylepath/sale.gif'></a>
+<!--
+EOT;
+}print <<<EOT
+-->
+<a href='post.php?action=vote&fid=$fid'><img src='$imgpath/$stylepath/vote.gif'></a>
+</td></tr></table>
+<table cellspacing=1 cellpadding=4 width='$tablewidth' align=center $i_table id="ajaxtable">$trd_adminhide
+<tr align=center class=head>
+<td width=5% >状态</td>
+<td width=56% align=center>文章</td>
+<td width=10%>作者</td>
+<td width=5%>回复</td>
+<td width=5%>人气</td>
+<td width=19%>最后发表</td></tr>
+<tr class=cbg><td colspan=3>
+ &nbsp;<b>专题：</b>
+<a href="thread.php?fid=$fid">所有主题</a> 
+<a href="thread.php?fid=$fid&search=digest">精华主题</a>
+<!--
+EOT;
+if($groupid!='guest' && $foruminfo['f_check']){print <<<EOT
+-->
+ &nbsp;<a href="thread.php?fid=$fid&search=check">未验证主题</a>
+ <!--
+EOT;
+}foreach($t_typedb as $key=>$value){
+if($value){
+if($type==$key)$value="<b>$value</b>";
+print <<<EOT
+-->
+&nbsp; <a href="thread.php?fid=$fid&type=$key">{$value}</a>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</td><td colspan=3 align='right' valign='middle'>
+<!--
+EOT;
+if($db_adminshow && $admin_T[admin]){print <<<EOT
+-->
+<select name='admin' onchange="Ajump(this.options[this.selectedIndex].value);">
+<option value=''>版主列表</option>
+$admin_T[admin]
+</select>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+$admin_T[admin]
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+<!--
+EOT;
+if($page==1 && $ifsort){
+if($NT_A){
+print <<<EOT
+-->
+<tr align=middle class=t_two>
+<td align=center><img src='$imgpath/$stylepath/thread/anc.gif'></td>
+<td align=left class=t_one onMouseOver="this.className='t_two'" onMouseOut="this.className='t_one'">&nbsp<b>论坛公告:</b>
+<a href='notice.php?fid=$NT_A[fid]#$NT_A[aid]'>$NT_A[subject]</a></td>
+<td>
+<a href='profile.php?action=show&username=$NT_A[rawauthor]'>$NT_A[author]</a></td>
+<td class=t_one colspan=2><b>论坛公告</b></td>
+<td align=center class='smalltxt'>$NT_A[startdate]</td></TR>
+<!--
+EOT;
+}if($NT_C){
+print <<<EOT
+-->
+<tr align=middle class=t_two>
+<td align=center><img src='$imgpath/$stylepath/thread/anc.gif'></td>
+<td align=left class=t_one onMouseOver="this.className='t_two'" onMouseOut="this.className='t_one'">&nbsp<b>分类公告:</b>
+<a href='notice.php?fid=$NT_C[fid]#$NT_C[aid]'>$NT_C[subject]</a></td>
+<td>
+<a href='profile.php?action=show&username=$NT_C[rawauthor]'>$NT_C[author]</a></td>
+<td class=t_one colspan=2><b>分类公告</b></td>
+<td align=center class='smalltxt'>$NT_C[startdate]</td></TR>
+<!--
+EOT;
+}}
+$tpc_topped=0;
+$td_id=$a_id='';
+foreach($threaddb as $key => $thread){
+if($db_ajaxsubject && $ajaxcheck && $thread[fid]==$fid){
+$td_id="td_s_".$thread[tid];
+$a_id="a_ajax_".$thread[tid];
+}
+if($page==1 && $ifsort && $thread[topped]==0 && $tpc_topped==0){
+$tpc_topped=1;
+print <<<EOT
+-->
+<tr class=cbg><td colspan=6>&nbsp; <b>普通主题</b></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr align=center class=t_two>
+<td><a title='打开新窗口' href='$thread[tpcurl]' target=_blank>$thread[status]</a></td>
+<td class=t_one onMouseOver="this.className='t_two'" onMouseOut="this.className='t_one'" align=left style="padding-left:8px" id='$td_id'>
+$thread[adminbox]
+<!--
+EOT;
+if($thread[topped]){
+print <<<EOT
+-->
+<img src='$imgpath/$stylepath/file/headtopic_$thread[topped].gif' alt='置顶帖标志'> 
+<!--
+EOT;
+}print <<<EOT
+-->
+$thread[useriocn]
+<!--
+EOT;
+if($forumset['addtpctype'] && $t_typedb[$thread['type']]){print <<<EOT
+-->
+[{$t_typedb[$thread[type]]}]
+<!--
+EOT;
+}print <<<EOT
+-->
+<a href='$thread[tpcurl]' id='$a_id'>$thread[subject]</a> $thread[ifmark] $thread[titleadd]
+<!--
+EOT;
+if ($timestamp-$thread[lastpost]<=$db_newtime){print <<<EOT
+-->
+<img src='$imgpath/$stylepath/file/new.gif' alt='新帖标志'>
+<!--
+EOT;
+}if($thread[digest]){
+print <<<EOT
+-->
+<img src='$imgpath/$stylepath/file/digest_$thread[digest].gif' alt='精华帖标志'>
+<!--
+EOT;
+}
+print <<<EOT
+-->
+$thread[ispage]
+<!--
+EOT;
+if($managemode==1 && $admincheck){print <<<EOT
+-->
+<div style="float:right"><font color=#ff8ba2>
+[<a href='mawhole.php?action=digest&fid=$thread[fid]&seltid=$thread[tid]' title='加入精华帖'>精</a><a href='mawhole.php?action=lock&fid=$thread[fid]&seltid=$thread[tid]' title='锁定帖子不让会员再回复帖子'>锁</a><a href='mawhole.php?action=headtopic&fid=$thread[fid]&seltid=$thread[tid]' title='置顶主题:将主题置顶,以便会员查看'>顶</a><a href='mawhole.php?action=pushtopic&fid=$thread[fid]&seltid=$thread[tid]' title='提前帖子'>提</a><a href='mawhole.php?action=edit&fid=$thread[fid]&seltid=$thread[tid]' title='编辑标题'>亮</a>]
+</font></div>
+<!--
+EOT;
+}if($thread[toolinfo]){print <<<EOT
+-->
+<div style="float:right"><span class="tool">[$thread[toolinfo]]</span></div>
+<!--
+EOT;
+}print <<<EOT
+-->
+</div>
+</td>
+<td class=smalltxt>
+<a href='profile.php?action=show&uid=$thread[authorid]'>$thread[author]</a>
+<br>$thread[postdate]</td>
+<td class=t_one>$thread[replies]</td>
+<td class=t_one>$thread[hits]</td>
+<td class=smalltxt>&nbsp;
+<a href='read.php?tid=$thread[tid]&page=e&fpage=$page#a'>
+$thread[lstptime]
+</a><br>
+by: $thread[lastposter]</td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<!--
+EOT;
+if($admincheck){print <<<EOT
+-->
+<table cellpadding=1 cellspacing=1 align=center width='$tablewidth'>
+<tr align=center><td>
+管理选项:
+<!--
+EOT;
+if($foruminfo['f_check'] && $search=='check'){print <<<EOT
+-->
+<input name=action type=radio value='check'>验证主题
+<!--
+EOT;
+}print <<<EOT
+-->
+<input name=action type=radio value='headtopic'>置顶
+<input name=action type=radio value='digest'>精华
+<input name=action type=radio value='lock'>锁定
+<input name=action type=radio value='edit'>加亮
+<input name=action type=radio value='pushtopic'>提前
+<input name=action type=radio value='type'>主题分类
+<input name=action type=radio value='move'>移动
+<input name=action type=radio value='copy'>复制
+<input name=action type=radio value='del' checked>删除
+<br><br>
+<input type=button value='帖子管理' onclick="location.href='thread.php?fid=$fid&search=$search&page=$page&concle=$concle'">
+<input type='button' name='chkall' value='全 选' onclick='CheckAll(this.form)'>
+<input type='reset' name='Reset' value='重 置'>
+<input type='submit' name='hello' value='提 交'>
+</td></tr></form></table>
+<!--
+EOT;
+}print <<<EOT
+-->
+<br>
+<table cellspacing=0 cellpadding=0 width='$tablewidth' align=center>
+<tr><td align=left>{$pages}&nbsp;&nbsp;$db_perpage/页&nbsp;{$count}篇文章</td>
+<td align=right>
+<a href='post.php?fid=$fid'><img src='$imgpath/$stylepath/post.gif'></a>
+<!--
+EOT;
+if($forumset[allowsale]!=2){print <<<EOT
+-->
+<a href='post.php?fid=$fid&sale=1'><img src='$imgpath/$stylepath/sale.gif'></a>
+<!--
+EOT;
+}print <<<EOT
+-->
+<a href='post.php?action=vote&fid=$fid'><img src='$imgpath/$stylepath/vote.gif'></a>
+</td></tr>
+<tr>
+<FORM action='thread.php?fid=$fid&page=$page' method=post><td align='left'><br>
+<select name=search>
+<OPTION value=''>所有主题</OPTION>
+<OPTION value=digest>本版精华区</OPTION>
+<OPTION value='1'>1天内的主题</OPTION>
+<OPTION value='2'>2天内的主题</OPTION>
+<OPTION value='7'>1星期内的主题</OPTION>
+<OPTION value='30'>1个月内的主题</OPTION>
+<OPTION value='60'>2个月内的主题</OPTION>
+<OPTION value='90'>3个月内的主题</OPTION>
+<OPTION value='180'>6个月内的主题</OPTION>
+<OPTION value='365'>1年内的主题</OPTION>
+</select>
+<!--
+EOT;
+if($gp_alloworder){
+print <<<EOT
+-->
+<select name=orderway>
+<OPTION value='lastpost' $ordersel[lastpost]>最后发表</OPTION>
+<OPTION value='postdate' $ordersel[postdate]>发表时间</OPTION>
+<OPTION value='hits' $ordersel[hits]>人气</OPTION>
+<OPTION value='replies' $ordersel[replies]>回复</OPTION>
+</select>
+<select name=asc>
+<OPTION value='ASC' $ascsel[ASC]>升序</OPTION>
+<OPTION value='DESC' $ascsel[DESC]>降序</OPTION>
+</select>
+<!--
+EOT;
+}
+print <<<EOT
+-->
+<INPUT type='submit' value='提 交'>
+</td></form>
+<form name=jump method=post><td align=right><br>
+<a href="profile.php?action=forumright&fid=$fid" title="查看您在本版块的权限">版块权限查看</a>&nbsp;
+<select onchange=Fjump(this.options[this.selectedIndex].value)>
+<option value='' selected>快速跳至</option>
+$forumcache
+</select></td></form>
+
+</tr></table><br>
+<!--
+EOT;
+$thread_online && require_once PrintEot($thread_online);
+$fastpost && require_once PrintEot($fastpost);
+print <<<EOT
+-->
+<br>
+<center>
+<img src='$imgpath/$stylepath/thread/topicnew.gif'> 开放主题 
+<img src='$imgpath/$stylepath/thread/topichot.gif'> 热门主题 
+<img src='$imgpath/$stylepath/thread/topiclock.gif'> 锁定主题 
+<img src='$imgpath/$stylepath/thread/topicclose.gif'> 关闭主题 
+<img src='$imgpath/$stylepath/thread/vote.gif'> 投票主题 
+<img src='$imgpath/$stylepath/thread/votelock.gif'> 锁定投票
+</center>
+<br><br>
+<script language=JavaScript>
+function CheckAll(form){
+	for (var i=0;i<form.elements.length-13;i++){
+		var e = form.elements[i];
+		e.checked == true ? e.checked = false : e.checked = true;
+	}
+}
+function Fjump(value){
+	if(value!= '') {
+		window.location=('thread.php?fid='+value);
+	}
+}
+function Ajump(value){
+	if(value!= '') {
+		window.location=('profile.php?action=show&username='+value);
+	}
+}
+</script>
+<!--
+EOT;
+if($db_ajaxsubject && $ajaxcheck){print <<<EOT
+-->
+<script type="text/javascript" language="JavaScript" src="$imgpath/ajax.js"></script>
+<script type="text/javascript" language="JavaScript" src="$imgpath/ajax_subject.js"></script>
+<script type="text/javascript">
+AJAX_Init('ajaxtable');
+</script>
+<div>
+<iframe id="AjaxFrame" name="AjaxFrame" width="0" height="0"></iframe>
+<form id="AjaxForm" name="AjaxForm" action="ajax.php?" method="post" target="AjaxFrame">
+<input type="hidden" name="atc_content">
+<input type="hidden" name="tid">
+<input type="hidden" name="action">
+</form>
+</div>
+<!--
+EOT;
+}if($foruminfo[aid]){print <<<EOT
+-->
+<script language="JavaScript" src="$imgpath/Deploy.js"></script>
+<!--
+EOT;
+}?>-->

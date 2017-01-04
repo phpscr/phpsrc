@@ -1,0 +1,135 @@
+<!--<?php
+if($foruminfo[across]){
+print <<<EOT
+-->
+<div class="t t4"><table cellspacing="0" cellpadding="0" width="100%" style="border-collapse: collapse;">
+	<tr><td class="h" colspan="$foruminfo[across]"><b>$foruminfo[name]</b></td></tr>
+	<tr></tr>
+	<tr class="tr2"><td colspan="$foruminfo[across]" style="padding:0;border-bottom:0;font:0/0 Arial"></td></tr>
+	<!--
+EOT;
+$a=0;
+foreach($forumdb as $key=>$forums){
+if($a==0){
+print <<<EOT
+-->
+	<tr class="tr1">
+	<!--
+EOT;
+}$a++;
+print <<<EOT
+-->
+	<td width="25%" class="td1" style="padding:0"><div class="t3" style="margin:0px">
+		<table cellspacing="0" cellpadding="0" width="100%" border="0">
+			<tr><td colspan="3" height="20" style="padding-left:12px"><h2><a href="thread.php?fid=$forums[fid]" class="fnamecolor"><b>$forums[name]</b></a></h2></td>
+			</tr>
+			<tr valign="middle" height="15">
+				<td class="tinytxt f10" style="padding-left:12px">topic :<span class="s3"> $forums[topics]</span></td>
+				<td class="tinytxt f10">post :<span class="s3"> $forums[article]</span></td>
+				<td class="tinytxt f10">today :<span class="s3"> $forums[tpost]</span></td>
+			</tr>
+			<tr><td colspan="4" style="padding:2px 0 2px 12px; ">版主:
+<!--
+EOT;
+if($db_adminshow && $forums[admin]){print <<<EOT
+-->
+				<select name="admin" onchange="Ajump(this.options[this.selectedIndex].value)">
+				<option value=""> 版主列表</option>				
+				$forums[admin]
+				
+				</select>
+				<!--
+EOT;
+}else{print <<<EOT
+-->
+				$forums[admin]
+<!--
+EOT;
+}print <<<EOT
+-->
+			</td></tr>
+		</table></div></td>
+	<!--
+EOT;
+if($a==$foruminfo[across]){
+$a=0;
+print <<<EOT
+-->
+	</tr>
+<!--
+EOT;
+}}
+if($a!=0){
+for($i=$a;$i<$foruminfo[across];$i++){print <<<EOT
+-->
+	<td width="25%" class="f_one" onMouseOver="this.className='f_two'" onMouseOut="this.className='f_one'"></td>
+<!--
+EOT;
+}print <<<EOT
+-->
+	</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+	</tbody></table></div>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+<div class="t">
+<table cellspacing="0" cellpadding="0" width="100%">
+	<tr><td class="h" colspan="5"><b>子版块</b></td>
+	</tr>
+	<tr></tr>
+	<tr class="tr2"><td width="5%">&nbsp;</td><td width="*">论坛</td><td width="10%" class="y-style">版主</td><td width="12%" class="y-style">文章</td><td width="17%" class="y-style">最后发表</td>
+	</tr>
+	<!-- 
+EOT;
+foreach($forumdb as $key=>$forums){
+print <<<EOT
+-->
+	<tr class="f_one tr3" onMouseOver="this.className='f_two tr3'" onMouseOut="this.className='f_one tr3'" ><td align="center" valign="middle" class="y-style"><a href="thread.php?fid=$forums[fid]" target="_blank"> <img src="$imgpath/$stylepath/$forums[pic].gif" /></a> </td>
+	<th align="left"> <a class="bklogo" href="thread.php?fid=$forums[fid]" target="_blank">$forums[logo]</a>
+		<h2><a href="thread.php?fid=$forums[fid]" class="fnamecolor a1"> <b>$forums[name]</b></a></h2><br /><span class="smalltxt">$forums[descrip]</span> </th>
+	<td align="center" style="word-break:keep-all" class="y-style"><!--
+EOT;
+if($db_adminshow && $forums[admin]){print <<<EOT
+-->
+		<select name="admin" onchange="Ajump(this.options[this.selectedIndex].value)"><option value="">版主列表</option>$forums[admin]
+		</select>
+		<!--
+EOT;
+}else{print <<<EOT
+-->
+		$forums[admin]
+		<!--
+EOT;
+}print <<<EOT
+-->
+		&nbsp;</td>
+	<td class="f10 y-style">$forums[article]</td>
+	<th class="smalltxt y-style" title="$forums[newtitle]"> <!--
+EOT;
+if($forums[au]){print <<<EOT
+-->
+		<h3><a href="$forums[ft]">$forums[t]</a></h3><br />$forums[au]
+<!--
+EOT;
+}if($forums[pic]=='lock'){print <<<EOT
+-->
+		认证论坛
+<!--
+EOT;
+}print <<<EOT
+-->
+	</th></tr>
+	<!--
+EOT;
+}print <<<EOT
+-->
+	<tr><td style="height:8px"></td>
+	</tr></table></div>
+<!--
+EOT;
+}?>

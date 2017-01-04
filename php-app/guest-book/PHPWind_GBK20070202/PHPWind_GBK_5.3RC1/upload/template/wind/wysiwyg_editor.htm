@@ -1,0 +1,271 @@
+<!--<?php
+print <<<EOT
+-->
+<style type="text/css">
+.wysiwyg{
+	padding:1px;
+	background-color:#F0F0EE;
+	width:560px;
+	border:1px solid #CCCCCC;
+}
+.htmlarea { background: #fff; }
+.toolbar {
+  cursor: default;
+  background: #F0F0EE;
+  padding: 1px 1px 1px 1px;
+  border-bottom: 1px solid #CCCCCC;
+}
+.button {
+  float:left;
+  background: #F0F0EE;
+  color: ButtonText;
+  border: 1px solid #F0F0EE;
+  margin: 0px 0 0px;
+  width: 18px;
+  height: 18px;
+  padding: 1px;
+}
+
+.button img{ vertical-align: baseline;}
+
+.buttonHover {
+  border: 1px solid #F0F0EE;
+  border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
+}
+.buttonActive,.buttonPressed {
+  padding: 1px;
+  border: 1px solid;
+  border-color: ButtonShadow ButtonHighlight ButtonHighlight ButtonShadow;
+}
+.buttonPressed {
+  background: ButtonHighlight;
+}
+.indicator {
+  padding: 0px 3px;
+  overflow: hidden;
+  width: 20px;
+  text-align: center;
+  cursor: default;
+  border: 1px solid ButtonShadow;
+}
+.buttonDisabled img {
+  filter: alpha(opacity = 25);
+  -moz-opacity: 0.25;
+}
+.separator {
+  float:left;
+  margin: 5px 8px 0 9px;
+  border-left: 1px solid ButtonShadow;
+  border-right: 1px solid ButtonHighlight;
+  width: 0px;
+  height: 15px;
+  padding: 0 ;
+}
+.space { margin-left:5px;}
+.toolbar select { font: 12px Tahoma,Verdana,sans-serif;}
+.toolbar select,
+.toolbar select:hover,
+.toolbar select:active {color: ButtonText; }
+</style>
+<script type="text/javascript">
+var editor = null;
+var imgpath="{$imgpath}";
+var bbsurl ="{$B_url}";
+function initEditor(){
+	editor = new WYSIWYD("$editor");
+	editor.init();
+	return false;
+}
+WYSIWYD.Config = function () {
+	this.baseURL = document.baseURI || document.URL;
+	if(this.baseURL && this.baseURL.match(/(.*)\/([^\/]?)/)){
+		this.baseURL = RegExp.$1 + "/";
+	}
+	this.imgURL = imgpath + "/post/c_editor/";
+	
+	this.btnList = {
+		removeformat:[ false, editorcode ],
+		bold: [ true, editorcode ],
+		italic: [ true, editorcode ],
+		underline: [ true, editorcode ],
+		strikethrough: [ true, editorcode ],
+		subscript: [ true, editorcode ],
+		superscript: [ true, editorcode ],
+		justifyleft: [ true, editorcode ],
+		justifycenter: [ true, editorcode ],
+		justifyright: [ true, editorcode ],
+		justifyfull: [ true, editorcode ],
+		insertorderedlist: [ true, editorcode ],
+		insertunorderedlist: [ true, editorcode ],
+		outdent: [ true, editorcode ],
+		indent: [ true, editorcode ],
+		forecolor: [ true, editorcode ],
+		hilitecolor: [ true, editorcode ],
+		inserthorizontalrule: [ true, editorcode ],
+		createlink: [ true, editorcode ],
+		unlink: [ true, editorcode ],
+		insertimage: [ true, insertImage ],
+		inserttable: [ false, insertTable ],
+		htmlmode: [ true, editorcode ],
+		undo: [ false, editorcode ],
+		redo: [ false, editorcode ],
+		cut: [ false, editorcode ],
+		copy: [ false, editorcode ],
+		paste: [ false, editorcode ],
+		media: [ true, rming ],
+		quote: [ true, quote ],
+		code: [ true, code ],
+		br: [ false, br ],
+		sale: [ true, saletable ],
+		mdbchina: [ true, mdbchina ]
+	};
+	this.fontname = {
+		"宋体":	'宋体',
+		"新宋体":	'新宋体',
+		"楷体_GB2312":	'楷体_GB2312',
+		"黑体":	'黑体',
+		"Arial":	   'arial,helvetica,sans-serif',
+		"Courier New":	   'courier new,courier,monospace',
+		"Georgia":	   'georgia,times new roman,times,serif',
+		"Tahoma":	   'tahoma,arial,helvetica,sans-serif',
+		"Times New Roman": 'times new roman,times,serif',
+		"Verdana":	   'verdana,arial,helvetica,sans-serif',
+		"impact":	   'impact',
+		"WingDings":	   'wingdings'
+	};
+	this.fontsize = {
+		"1 (8 pt)":  "1",
+		"2 (10 pt)": "2",
+		"3 (12 pt)": "3",
+		"4 (14 pt)": "4",
+		"5 (18 pt)": "5",
+		"6 (24 pt)": "6",
+		"7 (36 pt)": "7"
+	};
+	this.formatblock = {
+		"普通": "p",
+		"标题一": "h1",
+		"标题二": "h2",
+		"标题三": "h3",
+		"标题四": "h4",
+		"标题五": "h5",
+		"标题六": "h6"
+	};
+	this.selList = [ 'fontname', 'fontsize', 'formatblock' ];
+};
+</script>
+
+<body onLoad="initEditor()">
+<div class="wysiwyg" style="padding:0x;border:1px solid #DDDDDD;margin-bottom:5px;">
+<div class="toolbar">
+
+<div style="padding: 1px; height: 32px; vertical-align: text-bottom">
+<span class="button" id="wy_htmlmode" title="所见即所得" style="width:60px; height: 15px; float:right; text-align:center">
+<img src="$imgpath/post/c_editor/html.gif" /></span>
+
+<div style="padding:0 0 5px;" class="fl">
+<select id="wy_fontname" style="width:120px">
+<option value="" selected>字体</option></select>
+<span class="space"></span>
+
+<select id="wy_fontsize" style="width:80px">
+<option value="" selected>字号</option></select>
+<span class="space"></span>
+
+<select id="wy_formatblock" style="width:80px">
+<option value="" selected>段落格式</option></select>
+</div>
+<span class="space"></span>
+<span class="c"></span>
+</div>
+<div style="padding:1px">
+<span class="button" id="wy_bold" title="粗体">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/bold.gif" /></span>
+<span class="button" id="wy_italic" title="斜体">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/italic.gif" /></span>
+<span class="button" id="wy_underline" title="下划线">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/underline.gif" ></span>
+<span class="button" id="wy_strikethrough" title="删除线">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/strike.gif" /></span>
+<span class="separator"></span>
+
+<span class="button" id="wy_subscript" title="下标">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/sub.gif" /></span>
+<span class="button" id="wy_superscript" title="上标">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/sup.gif" /></span>
+<span class="separator"></span>
+
+<span class="button" id="wy_copy" title="复制">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/copy.gif" /></span>
+<span class="button" id="wy_cut" title="剪切">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/cut.gif"></span>
+<span class="button" id="wy_paste" title="粘贴">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/paste.gif" /></span>
+<span class="button" id="wy_removeformat" title="removeformat">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/removeformat.gif" /></span>
+<span class="separator"></span>
+
+<span class="button" id="wy_undo" title="撤消">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/undo.gif" /></span>
+<span class="button" id="wy_redo" title="恢复">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/redo.gif" /></span>
+<span class="separator"></span>
+<span class="button" id="wy_quote" title="插入引用">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/quote.gif" /></span>
+<span class="button" id="wy_code" title="插入代码">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/code.gif" /></span>
+<span class="button" id="wy_inserthorizontalrule" title="插入水平线">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/hr.gif" /></span>
+<span class="button" id="wy_br" title="换行">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/br.gif" /></span>
+<div class="c"></div></div>
+<div  style="padding:1px; ">
+<span class="button" id="wy_justifyleft" title="左对齐">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/justifyleft.gif" /></span>
+<span class="button" id="wy_justifycenter" title="居中">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/center.gif" /></span>
+<span class="button" id="wy_justifyright" title="右对齐">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/justifyright.gif" /></span>
+<span class="button" id="wy_justifyfull" title="左右平等">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/justify.gif" /></span>
+<span class="separator"></span>
+
+<span class="button" id="wy_forecolor" title="字体颜色">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/color_fg.gif"></span>
+<span class="button" id="wy_hilitecolor" title="背景颜色">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/color_bg.gif" /></span>
+<span class="separator"></span>
+
+<span class="button" id="wy_insertorderedlist" title="有序列表">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/list_num.gif" /></span>
+<span class="button" id="wy_insertunorderedlist" title="无序列表">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/list_bullet.gif" /></span>
+<span class="button" id="wy_outdent" title="取消缩进">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/outdent.gif" /></span>
+<span class="button" id="wy_indent" title="缩进">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/indent.gif" /></span>
+<span class="separator"></span>
+
+<span class="button" id="wy_createlink" title="插入url链接">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/createlink.gif" /></span>
+<span class="button" id="wy_unlink" title="删除链接">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/unlink.gif"></span>
+<span class="separator"></span>
+
+<span class="button" id="wy_insertimage" title="插入图片">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/image.gif" /></span>
+<span class="button" id="wy_media" title="插入多媒体">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/rm.gif" /></span>
+<span class="button" id="wy_mdbchina" title="从mdbchina提取电影信息"><img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/mdbchina.gif" /></span>
+<span class="button" id="wy_sale" title="发表交易帖">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/sale.gif" /></span>
+<span class="button" id="wy_inserttable" title="插入表格">
+<img style="width: 20px; height: 20px" src="$imgpath/post/c_editor/table.gif" /></span>
+<div class="c"></div>
+</div><div class="c"></div></div>
+<textarea id="textarea" name="atc_content" style="border:0px;width:550px;" rows="20" cols="90">{$atc_content}</textarea>
+</div>
+</body>
+<!--
+EOT;
+?>

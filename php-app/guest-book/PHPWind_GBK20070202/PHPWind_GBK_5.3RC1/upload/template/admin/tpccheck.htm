@@ -1,0 +1,54 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b><b>提示信息</b></b></td></tr>
+<tr><td class=b><br>
+<ul><li>版块开启 "主题审核" 功能时，只有经过管理员审核的主题才会在前台显示</li></ul>
+<br></td></tr></table><br>
+
+<form action="$basename&" method=post>
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head><b>帖子验证</b></td></tr>
+<tr><td width="35%" class=b>所属分类 : <select name="fid"><option>选择分类</option>$forumcache</select> &nbsp; 
+作者 : <input type=text size=20 name="username"> &nbsp; 
+<input type=submit value="提 交"></td></tr>
+</table>
+</form>
+
+<form action="$basename&" method=post>
+<input type=hidden name=job value=search>
+<input type=hidden name=step value=2>
+<table width='98%' align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=6><b>帖子验证</b></td></tr>
+<tr align=center class=head_2><td width='5%'>ID</td><td>标题</td><td width='15%'>作者</td>
+<td width='15%'>所属分类</td><td width='15%'>发表时间</td><td width='6%'></td></tr>
+<!--
+EOT;
+$num=($page-1)*$db_perpage;
+foreach($checkdb as $check){
+$num++;
+print <<<EOT
+-->
+<tr align=center class=b>
+<td>$num</td>
+<td><a href="$admin_file?adminjob=content&type=tpc&id=$check[tid]" target="_blank">$check[subject]</a></td>
+<td><a href="profile.php?action=show&uid=$check[authorid]" target='_blank'>$check[author]</td><td>$check[name]</td>
+<td class='smalltxt'>$check[postdate]</td>
+<td><input type=checkbox name="selid[]" value="$check[tid]"></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table><br>$pages
+<center>
+<input type=radio name="type" value=del>删除<input type=radio name="type" checked='checked' value=pass>通过
+<br><br>
+<input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)">
+<input type=submit value="提 交">
+</center></form>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>-->

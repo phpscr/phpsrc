@@ -1,0 +1,145 @@
+<!--<?php
+print <<<EOT
+-->
+<div class="t3">
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+  <td align="left"><img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> 
+	<a href="$db_bfn"><b>$db_bbsname</b> </a> &raquo; <a href="$basename"><b>{$cy_name}</b></a> &raquo; <b>$cydb[cname]</b>
+</td>
+</tr></table>
+</div>
+<div style="height:10px;"></div>
+<div class="t">
+<table width="100%"  cellspacing="0" cellpadding="0">
+  <tr class="tr4">
+    <td>$cydb[admin] 创建于 $cydb[createtime]</td>
+    <td>管理员：$colonyadmins</td>
+  </tr>
+</table>
+</div>
+<div class="t3">
+<!--
+EOT;
+include printHack("nav");
+if($job=="view"){
+print <<<EOT
+-->
+<div style="float:right; width:19%;">
+<div class="t"  style="margin-right:0; width:99%">
+<table cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr>
+  <td class="h">个人功能</td>
+</tr>
+<tr class="f_one tr3">
+  <th><a href="$basename&cyid=$cyid&job=editcard">编辑我的通讯录</a></th>
+</tr>
+<tr class="f_one tr3">
+  <th><a href="$basename&cyid=$cyid&job=donate">给{$cn_name}充值</a></th>
+</tr>
+<tr class="f_one tr3">
+  <th><a href="$basename&cyid=$cyid&job=creatalbum">创建相册</a></th>
+</tr>
+<tr>
+  <td class="h">成员列表</td>
+</tr>
+<!--
+EOT;
+foreach($colonymembers as $cm){
+print <<<EOT
+-->
+<tr class="f_one tr3">
+  <th>{$cm[adminimg]}<a href="profile.php?action=show&uid=$cm[uid]">$cm[username]</a></th>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+<tr class="tr3"><td style="text-align:right"><a href="$basename&cyid=$cyid&job=member">More..</a></td>
+</tr>
+</table>
+</div>
+</div>
+<div style="width:60%;margin-top:0px;" class="t3">
+<div class="t">
+<table cellspacing="0" cellpadding="0" width="100%" border="0" style="TABLE-LAYOUT: fixed;WORD-WRAP: break-word">
+<tr><td colspan="2" class="h">{$cn_name}首页</td></tr>
+<tr class="tr3 f_one"><td width="30%" style="text-align:center">
+<!--
+EOT;
+if($cydb[cnimg]){print <<<EOT
+-->
+<img src="$imgpath/cn_img/$cydb[cnimg]" />
+<!--
+EOT;
+}print <<<EOT
+--><br />
+</td>
+  <th width="70%">$cydb[annouce]<br /></th>
+</tr>
+</table>
+</div>
+<div class="t">
+<table cellspacing="0" cellpadding="0" width="100%" border="0">
+	<tr>
+	  <td class="h" colspan="2">{$cn_name}最新讨论文章</td>
+	  <td class="h"><A HREF="$basename&job=board&cyid=$cyid"><img src="$hkimg/post.gif"></A></td>
+	</tr>
+	<tr class="tr2" >
+		<td>标题</td>
+		<td>作者</td>
+		<td>最后发表</td>
+	</tr>
+<!-- 
+EOT;
+$i=0;
+foreach($argudb as $key=>$val){
+$i++;
+$trclass=$i%2==0 ? "f_one" : "f_two";
+print <<<EOT
+-->
+	<tr class="$trclass tr3">
+		<th><a href="$basename&cyid=$cyid&job=read&tid=$val[tid]">$val[subject]</a></th>
+		<td>$val[author]</td>
+		<td>$val[lastpost]</td>
+	</tr>
+<!-- 
+EOT;
+}print <<<EOT
+-->
+</table>
+$pages
+</div>
+<div class="t">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="h">最新上传相片</td>
+    </tr>
+  <tr class="f_one tr3">
+    <td>
+<!--
+EOT;
+foreach($photodb as $value){
+print <<<EOT
+-->
+<div style="display: inline; padding:5px;">
+<a href="$basename&cyid=$cyid&job=viewphoto&pid=$value[pid]&aid=$value[aid]"><img src=$value[path] width="100" height="100" style="border:#e3e3e3 2px solid;margin:5px;"></a></div>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td>
+    </tr>
+</table>
+
+</div>
+</div>
+<!--
+EOT;
+}print <<<EOT
+-->
+</div>
+<div class="c" style="width:100%"></div>
+<!--
+EOT;
+?>-->

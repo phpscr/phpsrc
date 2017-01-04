@@ -1,0 +1,65 @@
+<!--<?php
+include_once PrintEot('left');
+if(empty($action)){print <<<EOT
+-->
+<form method="post" action="$basename&">
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+	<tr><td colspan="7" class=head><b>友情链接</b></td></tr>
+	<tr class=head_2  align=center>
+		<td width="5%">ID</td>
+		<td width="20%">论坛名称</td>
+		<td width="6%">顺序</td>
+		<td width="30%">论坛URL</td>
+		<td width="30%">论坛说明</td>
+		<td width="5%">编辑</td>
+		<td width="5%">删</td>
+	</tr>
+<!--
+EOT;
+foreach($threaddb as $key=> $thread){
+$key++;
+print <<<EOT
+-->
+	<tr align=center>
+		<td class=b>$key</td>
+		<td class=b><a href="$basename&action=edit&sid=$thread[sid]">$thread[name]</a></td>
+		<td class=b>$thread[threadorder]</td>
+		<td class=b>$thread[url]</td>
+		<td class=b>$thread[descrip]</td>
+		<td class=b><a href="$basename&action=edit&sid=$thread[sid]">编辑</a></td>
+		<td class=b><input type='checkbox' name='deiaid[]' value="$thread[sid]"></td>
+	</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<input name=action type=hidden value="del">
+<br><center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)"><input type="submit" name="delete" value="删 除"></center></form>
+<!--
+EOT;
+}elseif($action=='add' || $action=='edit'){print <<<EOT
+-->
+<form action="$basename" method=POST>
+<input type=hidden name="action" value=$action>
+<input type=hidden name="step" value=2>
+<input type=hidden name="sid" value=$sid>
+<table cellspacing=1 cellpadding=3 width=98% align="center" class=i_table>
+<tr><td class=head colspan=2><b>友情链接</b></td></tr>
+<tr class=b><td width=20%>论坛名称</td>
+<td><input type=text name="name" size=30 value='$name'></td></tr>
+<tr class=b><td width=20%>显示顺序(默认为0)</td>
+<td><input type=text name="threadorder" value='$threadorder' size=30></td></tr>
+<tr class=b><td >论坛URL</td>
+<td><input type=text name="url" value='$url' size=30></td></tr>
+<tr class=b><td >论坛说明</td>
+<td><input type=text name="descrip" value='$descrip' size=30></td></tr>
+<tr class=b><td >论坛LOGO<br>[设置文字链接请留空]</td>
+<td><input type=text name="logo" value='$logo' size=30></td></tr>
+</table><br>
+<center><input type=submit value="提 交"></center></form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>
+-->

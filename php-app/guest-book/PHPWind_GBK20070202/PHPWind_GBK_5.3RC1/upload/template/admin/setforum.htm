@@ -1,0 +1,609 @@
+<!--<?php
+include_once PrintEot('left');
+if (empty($action)){print <<<EOT
+-->
+<br>
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head>
+<b>添加分类</b></td></tr>
+<tr><td class=b><br>
+<ul><li>说明：可以添加新分类，新版块</li></ul>
+<form action="$basename&" method=POST>
+<input type=hidden name="action" value="addforum">
+<input type=hidden name="forumtype" value="category">
+<input type=hidden name="type" value='$type'>
+<b>添加新分类</b>&nbsp;新分类名称
+<input type=text name="name" size=10>
+&nbsp;&nbsp;
+<input type=submit value="提 交"><br></form>
+
+<form action="$basename&" method="POST">
+<input type=hidden name="action" value="addforum">
+<input type=hidden name="forumtype" value="forum">
+<input type=hidden name="type" value='$type'>
+<b>添加新版块</b>&nbsp;新版块名称
+<input type=text name="name" size=10> 所属分类
+<select name="fup">$forumcache</select> <input type="checkbox" name="ifsave" value="1" /> 继承父版块设置
+<input type=submit value="提 交"></form>
+</td></tr></table><br>
+<form action="$basename&" method=POST><input type=hidden name="action" value="editforum">
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head>编辑论坛</td></tr>
+<tr><td class=b><br>
+<ul><li>编辑论坛：可以编辑论坛（子论坛）在上级分类（论坛）的排列顺序；可以添加版主，<font color=blue>多个版主之间用半角逗号","分隔</font>，可以编辑指定论坛权限和删除指定论坛</li></ul>
+<!-- 
+EOT;
+foreach($threaddb as $thread){
+if($thread){
+print <<<EOT
+-->
+$thread[space]
+$thread[name]&nbsp;&nbsp;&nbsp; FID:[$thread[fid]] - 顺序 <input type="text" name="order[$thread[fid]]" value="$thread[vieworder]" size="1">&nbsp;
+版主 <input type="text" name="forumadmin[$thread[fid]]" value="$thread[forumadmin]" size="15"> - <a href="$basename&action=edit&fid=$thread[fid]"><b>编辑</b></a>
+<a href="$basename&action=delete&fid=$thread[fid]"><b>删除</b></a>
+<br><br>
+<!-- 
+EOT;
+}}if($forum_L){print <<<EOT
+-->
+$space ◆- <font color=blue>异常版块</font>(重新设置上级分类可以恢复正常)<br><br>
+<!-- 
+EOT;
+foreach($forum_L as $key=> $thread){
+if($thread){print <<<EOT
+-->
+$thread[space]
+$thread[name] 
+&nbsp;&nbsp;&nbsp; FID:[$thread[fid]]
+- 顺序 <input type="text" name="order[$thread[fid]]" value="$thread[vieworder]" size="1">&nbsp;
+版主 <input type="text" name="forumadmin[$thread[fid]]" value="$thread[forumadmin]" size="15"> - <a href="$basename&action=edit&fid=$thread[fid]" target='_balnk'>[编辑]</a> 
+<a href="$basename&action=delete&fid=$thread[fid]" target='_balnk'>[删除]</a>
+<br><br>
+<!-- 
+EOT;
+}}}print <<<EOT
+-->
+<center><input type=submit value="提 交"></center><br>
+</td></tr></table>
+<br><br></form>
+<!-- 
+EOT;
+}elseif($action=='delete'){
+print <<<EOT
+-->
+<form action="$basename&action=delete&fid=$fid" method="post">
+<input type=hidden name="step" value="2">
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br>
+将删除该版块的所有文章, 与该版块相关的所有信息, 该版块的版主职务也将免除, 请确认! 
+<br><br></td><td class=b align=center><br><input type=submit value="确认删除"><br><br></td></tr></table><br>
+<br><br>
+<center> <input type='button' value='返 回 继 续 操 作' onclick='javascript:history.go(-1);'></center><br>
+</form>
+<!-- 
+EOT;
+}elseif($action=='credit'){
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=b>
+[<a href="$admin_file?adminjob=setforum">版块管理</a>]
+[<a href="$admin_file?adminjob=setforum&action=edit&fid=$fid">基本资料设置</a>]
+[<b>版块积分设置</b>]
+</td></tr></table><br>
+<form action="$basename&" method="post">
+<input type=hidden name="action" value="credit">
+<input type=hidden name="step" value="2">
+<input type=hidden name="fid" value="$fid">
+
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head align=center colspan=3><a class=bold>版块积分设置</a></td></tr>
+<tr><td class=b colspan=3><font color=blue>{$db_rvrcname}设置</font>( 留空 将采用核心设置处的默认值 )</td></tr>
+<tr class=b>
+<td width="3%"><input type="checkbox" name="otherforum[rvrc][Digest]" value="1"></td>
+<td width="30%">精华一个主题增加的{$db_rvrcname}</td>
+<td><input type=text name="creditdb[rvrc][Digest]" size=10  value="{$credit[rvrc][Digest]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[rvrc][Post]" value="1"></td>
+<td>发表一个主题增加的{$db_rvrcname}</td>
+<td><input type=text name="creditdb[rvrc][Post]" size=10  value="{$credit[rvrc][Post]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[rvrc][Reply]" value="1"></td>
+<td>发表十个回复增加的{$db_rvrcname}</td>
+<td><input type=text name="creditdb[rvrc][Reply]" size=10  value="{$credit[rvrc][Reply]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[rvrc][Undigest]" value="1"></td>
+<td>取消精华主题减少的{$db_rvrcname}</td>
+<td><input type=text name="creditdb[rvrc][Undigest]" size=10  value="{$credit[rvrc][Undigest]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[rvrc][Delete]" value="1"></td>
+<td>删除一个主题减少的{$db_rvrcname}</td>
+<td><input type=text name="creditdb[rvrc][Delete]" size=10  value="{$credit[rvrc][Delete]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[rvrc][Deleterp]" value="1"></td>
+<td>删除十个回复减少的{$db_rvrcname}</td>
+<td><input type=text name="creditdb[rvrc][Deleterp]" size=10  value="{$credit[rvrc][Deleterp]}"></td></tr>
+<tr><td class=b colspan=3><font color=blue>{$db_moneyname}设置</font>( 留空 将采用核心设置处的默认值 )</td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[money][Digest]" value="1"></td>
+<td>精华一个主题增加的{$db_moneyname}</td>
+<td><input type=text name="creditdb[money][Digest]" size=10  value="{$credit[money][Digest]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[money][Post]" value="1"></td>
+<td>发表一个主题增加的{$db_moneyname}</td>
+<td><input type=text name="creditdb[money][Post]" size=10  value="{$credit[money][Post]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[money][Reply]" value="1"></td>
+<td>发表一个回复增加的{$db_moneyname}</td>
+<td><input type=text name="creditdb[money][Reply]" size=10  value="{$credit[money][Reply]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[money][Undigest]" value="1"></td>
+<td>取消精华主题减少的{$db_moneyname}</td>
+<td><input type=text name="creditdb[money][Undigest]" size=10  value="{$credit[money][Undigest]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[money][Delete]" value="1"></td>
+<td>删除一个主题减少的{$db_moneyname}</td>
+<td><input type=text name="creditdb[money][Delete]" size=10  value="{$credit[money][Delete]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[money][Deleterp]" value="1"></td>
+<td>删除一个回复减少的{$db_moneyname}</td>
+<td><input type=text name="creditdb[money][Deleterp]" size=10  value="{$credit[money][Deleterp]}"></td></tr>
+<!--
+EOT;
+foreach($_CREDITDB as $key => $value){
+print <<<EOT
+-->
+<tr><td class=b colspan=3><font color="red">{$value[0]}</font>( 留空 将采用核心设置处的默认值 )</td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[$key][Digest]" value="1"></td>
+<td>精华一个主题增加的{$value[0]}</td>
+<td><input type=text name="creditdb[$key][Digest]"   size=10  value="{$credit[$key][Digest]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[$key][Post]" value="1"></td>
+<td>发表一个主题增加的{$value[0]}</td>
+<td><input type=text name="creditdb[$key][Post]"     size=10  value="{$credit[$key][Post]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[$key][Reply]" value="1"></td>
+<td>发表一个回复增加的{$value[0]}</td>
+<td><input type=text name="creditdb[$key][Reply]"    size=10  value="{$credit[$key][Reply]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[$key][Undigest]" value="1"></td>
+<td>取消精华主题减少的{$value[0]}</td>
+<td><input type=text name="creditdb[$key][Undigest]" size=10  value="{$credit[$key][Undigest]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[$key][Delete]" value="1"></td>
+<td>删除一个主题减少的{$value[0]}</td>
+<td><input type=text name="creditdb[$key][Delete]"   size=10  value="{$credit[$key][Delete]}"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[$key][Deleterp]" value="1"></td>
+<td>删除一个回复减少的{$value[0]}</td>
+<td><input type=text name="creditdb[$key][Deleterp]" size=10  value="{$credit[$key][Deleterp]}"></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table><br>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr class=head align=center><td colspan=2>高级设置</td></tr>
+<tr class=b><td width="63%" valign="top">版块积分横向操作<br><br>功能说明：<br>利用此功能可将一个或多个积分设置同时应用到其它版块中，不再需要逐个版块设置，使操作更加简便<br><br>操作说明：<br>1. <font color=blue>选中</font>需要进行横向操作的<font color=blue>积分设置前面的复选框</font><br>2. 在右边的复选框中<font color=blue>选择</font>需要进行横向操作的<font color=blue>版块</font><br>3. 然后提交即可完成版块积分横向操作<br><br>注：<br>1. 选择版块时可使用 ‘Ctrl’ 键进行多选，也可使用 ‘Shift’ 键或拖动鼠标连续选择多个版块<br>2. 不使用此功能，请不要选中<font color=blue>积分设置前面的复选框</font>和右边的复选框中<font color=blue>版块</font></td>
+<td><select name='otherfid[]' size='22' multiple>$forumcache</select></td></tr>
+</td></tr></table><br>
+<center><input type=submit value="提 交"> <input type=reset value="重 置"></center>
+</form>
+<!-- 
+EOT;
+}elseif($action=='edit'){
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=b>
+[<a href="$admin_file?adminjob=setforum">版块管理</a>]
+[<b>基本资料设置</b>]
+<!-- 
+EOT;
+if($type!='category'){
+print <<<EOT
+-->
+[<a href="$admin_file?adminjob=setforum&action=credit&fid=$fid">版块积分设置</a>]
+<!-- 
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+<br>
+<form action="$basename&" method="post">
+<input type=hidden name="action" value="edit">
+<input type=hidden name="step" value="2">
+<input type=hidden name="fid" value="$fid">
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+	<tr><td class=head align=center colspan=3>版块基本权限</td></tr>
+	<tr class=b>
+		<td width="63%" colspan=2>版块名称：[支持 html 代码]</td>
+		<td><input type="text" size="30" value="$name" name="name"></td>
+	</tr>
+	<tr class=b>
+		<td width="3%"><input type="checkbox" name="otherforum[vieworder]" value="1"></td>
+		<td width="60%">顺序 </td>
+		<td><input type="text" size="5" name="vieworder" value="$vieworder"></td>
+	</tr>
+	<tr class=b>
+		<td><input type="checkbox" name="otherforum[forumadmin]" value="1"></td>
+		<td>版主 </td>
+		<td><input type="text" size="30" name="forumadmin" value="$forumadmin"></td>
+	</tr>
+	<tr class=b>
+		<td><input type="checkbox" name="otherforum[style]" value="1"></td>
+		<td>版块风格</td>
+		<td>
+			<select name="style">
+				<option value="0">--使用默认--</option>
+				$setfid_style
+			</select>
+		</td>
+	</tr>
+	<tr class=b>
+		<td><input type="checkbox" name="otherforum[across]" value="1"></td>
+		<td>版块横排设置 (填写每排显示版块个数，不使用请留空或填 "0")</td>
+		<td><input type="text" size="30" name="across" value="$across"></td>
+	</tr>
+<!-- 
+EOT;
+if($type=='category'){
+print <<<EOT
+-->
+	<tr class=b>
+		<td><input type="checkbox" name="otherforum[dirname]" value="1"></td>
+		<td>版块二级目录设置(填写版块所属二级目录)</td>
+		<td><input type="text" size="30" name="dirname" value="$dirname"></td>
+	</tr>
+<!--
+EOT;
+if(trim($cmscache)){print <<<EOT
+-->
+	<tr class=b>
+		<td><input type="checkbox" name="otherforum[cms]" value="1"></td>
+		<td>更改分类所属类型</td>
+		<td>
+			<input type=radio name=cms value=1 $check_c>文章分类
+			<input type=radio name=cms value=0 $check_f>论坛版块
+		</td>
+	</tr>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+		<input type="hidden" name="cms" value="0">
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<!-- 
+EOT;
+}else{
+if(trim($cmscache)){print <<<EOT
+-->
+	<tr class=b>
+		<td><input type="checkbox" name="otherforum[cms]" value="1"></td>
+		<td><b>选择版块类型</b><br>此功能可以实现文章版块和论坛版块之间的转换</td>
+		<td>
+			<input type=radio name=cms value=1 $check_c>文章分类
+			<input type=radio name=cms value=0 $check_f>论坛版块
+		</td>
+	</tr>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+		<input type="hidden" name="cms" value="0">
+<!--
+EOT;
+}print <<<EOT
+-->
+	<tr class=b>
+		<td><input type="checkbox" name="otherforum[fup]" value="1"></td>
+		<td>选择上级版块</td>
+		<td>
+<!-- 
+EOT;
+if(trim($cmscache)){print <<<EOT
+-->
+			文章分类 : <select name="cfup"><option></option>$cmscache</select><br>
+<!--
+EOT;
+}print <<<EOT
+-->
+			论坛版块 : <select name="ffup"><option></option>$forumcache</select>
+		</td>
+	</tr>
+	<tr class=b>
+		<td><input type="checkbox" name="otherforum[descrip]" value="1"></td>
+		<td>版块简介 [支持 html 代码]<br>(250字节以内)</td>
+		<td><textarea rows="5" name="descrip" cols="45">{$descrip} </textarea></td>
+	</tr>
+<!--
+EOT;
+if($type=='forum' && $cms=='0'){ print <<<EOT
+-->
+	<tr class=b>
+		<td><input type="checkbox" name="otherforum[showsub]" value="1"></td>
+		<td>首页是否显示子版块</td>
+		<td><input type='radio' name='showsub' value='1' $showsub_Y>是 
+		<input type='radio' name='showsub' value='0' $showsub_N>否  </td>
+	</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+	<tr class=b>
+		<td><input type="checkbox" name="otherforum[logo]" value="1"></td>
+		<td>版块图标</td>
+		<td><input type="text" size="30" name="logo" value="$logo"></td>
+	</tr>
+</table>
+<br>
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head align=center colspan=3><a class=bold>版块基本权限</a></td></tr>
+<tr class=b>
+<td width="3%"><input type="checkbox" name="otherforum[f_type]" value="1"></td>
+<td width="60%">新类别<br> 开放:默认版块.正规:游客无法进入.<br>隐藏:无权限的将不可见.投票:只允许投票主题</td>
+<td><select name="f_type">
+<option value="forum"	 $ftype[forum] checked>	开放版块</option>
+<option value="former"	 $ftype[former]>正规版块</option>
+<option value="hidden"	 $ftype[hidden]>隐藏版块</option>
+<option value="vote"	 $ftype[vote]>	投票版块</option></select></td></tr>
+<!-- 
+EOT;
+if($type=='forum' && trim($cmscache)){
+print <<<EOT
+-->
+<tr class=b>
+<td><input type="checkbox" name="otherforum[ifhide]" value="1"></td>
+<td><font color="#0000FF">是否在文章系统中显示</font><br>将出现在文章系统首页左下方，主题列表和文章页面右下方的"<font color="#0000FF">社区推荐</font>"中</td><td>
+<input type='radio' name='ifhide' value='0' $ifhide_open>是  
+<input type='radio' name='ifhide' value='1' $ifhide_close>否  </td></tr>
+<!--
+EOT;
+}else{print <<<EOT
+-->
+		<input type="hidden" name="ifhide" value="1">
+<!-- 
+EOT;
+}print <<<EOT
+-->
+<tr class=b>
+<td><input type="checkbox" name="otherforum[forumsetdb][link]" value="1"></td>
+<td>版块链接 (填写此项，当进入版块时将转向您填写的链接地址)</td>
+<td><input type="text" size="30" name="forumsetdb[link]" value="$forumset[link]"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[forumsetdb][lock]" value="1"></td>
+<td>锁定多少天以前发表的主题不允许回复 (留空或设为 "0" 不限制)</td>
+<td><input type="text" size="30" name="forumsetdb[lock]" value="$forumset[lock]"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[forumsetdb][cutnums]" value="1"></td>
+<td>主题列表标题显示字节数 (一个汉字占两个字节，留空或设为 "0" 不限制)</td>
+<td><input type="text" size="30" name="forumsetdb[cutnums]" value="$forumset[cutnums]"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[forumsetdb][threadnum]" value="1"></td>
+<td>主题列表每页显示主题个数 <font color=blue>注：留空使用核心设置中设定的值</font></td>
+<td><input type="text" size="30" name="forumsetdb[threadnum]" value="$forumset[threadnum]"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[forumsetdb][readnum]" value="1"></td>
+<td>浏览帖子每页显示文章个数 <font color=blue>注：留空使用核心设置中设定的值</font></td>
+<td><input type="text" size="30" name="forumsetdb[readnum]" value="$forumset[readnum]"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[forumsetdb][newtime]" value="1"></td>
+<td>显示新帖图片标识时间设置 (单位：分钟) <font color=blue>注：留空使用核心设置中设定的值</font></td>
+<td><input type="text" size="30" name="forumsetdb[newtime]" value="$forumset[newtime]"></td></tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[forumsetdb][orderway]" value="1"></td>
+	<td>版块默认主题排序关键字<br>影响效率，建议使用按‘最后发表’排序</td>
+	<td><select name="forumsetdb[orderway]">
+		<option value="lastpost" $sel_lastpost>最后发表</option>
+		<option value="postdate" $sel_postdate>发表时间</option>
+		<option value="hits" $sel_hits>人气</option>
+		<option value="replies" $sel_replies>回复</option>
+	</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[forumsetdb][asc]" value="1"></td>
+	<td>版块默认主题排序方式</td>
+	<td><select name="forumsetdb[asc]">
+		<option value="DESC" $sel_DESC>降序</option>
+		<option value="ASC" $sel_ASC>升序</option>
+	</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[allowreward]" value="1"></td>
+	<td>悬赏贴 有效时间(1~9天 ；0，则关闭该功能)<br />	逾期版主有权强行结案,悬赏金额将不返回.</td>
+	<td>
+		<input type="text" name="allowreward" value="$allowreward" size="5">
+	</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[forumsetdb][rewarddb]" value="1" /></td>
+	<td>悬赏贴最小积分设置</td>
+	<td>
+		最佳答案&nbsp;<input type="text" name="rewarddb[1]" value="$rw_b_val" size="5" />&nbsp;
+		热心助人&nbsp;<input type="text" name="rewarddb[2]" value="$rw_a_val" size="5" />
+	</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[forumsetdb][allowsale]" value="1"></td>
+	<td>是否允许发表交易帖</td>
+	<td>
+		<input type=radio value=1 name="forumsetdb[allowsale]" $allowsale_Y>是
+		<input type=radio value=2 name="forumsetdb[allowsale]" $allowsale_N>否
+	</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[forumsetdb][allowactive]" value="1"></td>
+	<td>是否允许发表活动贴</td>
+	<td>
+		<input type="radio" value="1" $active_Y name="forumsetdb[allowactive]">是  
+		<input type="radio" value="0" $active_N name="forumsetdb[allowactive]">否
+	</td>
+</tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[viewsub]" value="1"></td>
+<td>是否只显示子版块(选 <font color=blue>"是"</font> 将不显示父版块的帖子)</td>
+<td><input type=radio value=1 $sub_open name=viewsub>是 
+<input type=radio value=0 $sub_close name=viewsub>否  </td></tr>
+
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[allowhide]" value="1"></td>
+	<td>是否允许隐藏帖</td>
+	<td>
+		<input type=radio value=1 $hide_open name=allowhide>是  
+		<input type=radio value=0 $hide_close name=allowhide>否  
+	</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[allowencode]" value="1"></td>
+	<td>是否允许加密帖</td>
+	<td>
+		<input type=radio value=1 $encode_open name=allowencode>是  
+		<input type=radio value=0 $encode_close name=allowencode>否
+	</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[allowsell]" value="1"></td>
+	<td>是否允许出售帖</td>
+	<td>
+		<input type=radio value=1 $sell_open name=allowsell>是  
+		<input type=radio value=0 $sell_close name=allowsell>否
+	</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[forumsetdb][anonymous]" value="1"></td>
+	<td>是否允许匿名帖</td>
+	<td>
+		<input type=radio value=1 $anonymous_Y name="forumsetdb[anonymous]">是  
+		<input type=radio value=0 $anonymous_N name="forumsetdb[anonymous]">否
+	</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[copyctrl]" value="1"></td>
+	<td><font color=blue>是否使用帖子水印功能:</font>防止帖子内容被复制</td>
+	<td>
+		<input type=radio value=1 $copyctrl_open name=copyctrl>是  
+		<input type=radio value=0 $copyctrl_close name=copyctrl>否
+	</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[f_check]" value="1"></td>
+	<td>发帖审核设置(管理员不受此限制)<br>开启发帖审核功能后,用户发表的主题或回复需要通过审核后才能在前台显示</td>
+	<td>
+		<input type=radio value=0 $check_0 name=f_check>无<br>
+		<input type=radio value=1 $check_1 name=f_check>审核主题<br>
+		<input type=radio value=2 $check_2 name=f_check>审核回复<br>
+		<input type=radio value=3 $check_3 name=f_check>审核主题和回复
+	</td>
+</tr>
+</table>
+<br>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head align=center colspan=3><b>版块主题分类</b></td></tr>
+<tr class=b>
+	<td width="3%"><input type="checkbox" name="otherforum[forumsetdb][addtpctype]" value="1"></td>
+	<td width="60%">是否在标题前面加上主题分类名称（主题列表页面）</td>
+	<td>
+		<input type=radio value=1 $addtpctype_Y name='forumsetdb[addtpctype]'>是  
+		<input type=radio value=0 $addtpctype_N name='forumsetdb[addtpctype]'>否
+	</td>
+</tr>
+<tr class=b>
+	<td rowspan=13><input type="checkbox" name="otherforum[t_type]" value="1"></td>
+	<td>普通会员主题分类管理</td>
+	<td>
+		<input type=radio value=2 $t_type_2 name='t_db[0]'>强制分类  
+		<input type=radio value=1 $t_type_1 name='t_db[0]'>允许分类  
+		<input type=radio value=0 $t_type_0 name='t_db[0]'>关闭分类
+	</td>
+</tr>
+<!--
+EOT;
+for($m=1;$m<13;$m++){
+print <<<EOT
+-->
+<tr class=b>
+	<td>数字码 <font color="green"><b>$m</b></font> 对应主题类别名称</td>
+	<td><input type="text" size="30" maxLength=25 value="$t_typedb[$m]" name="t_db[$m]"></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<br>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head align=center colspan=3><a class=bold>版块访问积分限制</a></td></tr>
+<tr class=b>
+<td width="3%"><input type="checkbox" name="otherforum[forumsetdb][rvrcneed]" value="1"></td>
+<td width="60%">至少需要{$db_rvrcname}</td>
+<td><input type=text name="forumsetdb[rvrcneed]" size=10  value="$forumset[rvrcneed]"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[forumsetdb][moneyneed]" value="1"></td>
+<td>至少需要{$db_moneyname}</td>
+<td><input type=text name="forumsetdb[moneyneed]" size=10  value="$forumset[moneyneed]"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[forumsetdb][creditneed]" value="1"></td>
+<td>至少需要{$db_creditname}</td>
+<td><input type=text name="forumsetdb[creditneed]" size=10  value="$forumset[creditneed]"></td></tr>
+<tr class=b>
+<td><input type="checkbox" name="otherforum[forumsetdb][postnumneed]" value="1"></td>
+<td>至少需要发帖数</td>
+<td><input type=text name="forumsetdb[postnumneed]" size=10  value="$forumset[postnumneed]"></td></tr>
+</table>
+<br>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head align=center colspan=3><a class=bold>版块权限--全不选则默认为开放版块</a></td></tr>
+<tr class=b>
+	<td width=3%><input type="checkbox" name="otherforum[password]" value="1"></td>
+	<td width=15%>版块密码</td>
+	<td><input type="text" size="30" value="$password" name="password">不加密请清空!如果版块已加密,显示的密码为32位MD5密码,不必再修改!</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[allowvisit]" value="1"></td>
+	<td>允许浏览版块</td>
+	<td>$viewvisit</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[allowpost]" value="1"></td>
+	<td>允许发表主题</td>
+	<td>$viewpost </td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[allowrp]" value="1"></td>
+	<td>允许发表回复</td>
+	<td>$viewrp </td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[allowupload]" value="1"></td>
+	<td>允许上传附件</td>
+	<td>$viewupload</td>
+</tr>
+<tr class=b>
+	<td><input type="checkbox" name="otherforum[allowdownload]" value="1"></td>
+	<td>允许下载附件</td>
+	<td>$viewdownload</td>
+</tr>
+</table>
+<br>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr class=head align=center><td colspan=2>高级设置</td></tr>
+<tr class=b><td width="63%" valign="top">版块权限横向操作<br><br>功能说明：<br>利用此功能可将一个或多个权限设置同时应用到其它版块中，不再需要逐个版块设置，使操作更加简便<br><br>操作说明：<br>1. <font color=blue>选中</font>需要进行横向操作的<font color=blue>权限设置前面的复选框</font><br>2. 在右边的复选框中<font color=blue>选择</font>需要进行横向操作的<font color=blue>版块</font><br>3. 然后提交即可完成版块权限横向操作<br><br>注：<br>1. 选择版块时可使用 ‘Ctrl’ 键进行多选，也可使用 ‘Shift’ 键或拖动鼠标连续选择多个版块<br>2. 不使用此功能，请不要选中<font color=blue>权限设置前面的复选框</font>和右边的复选框中<font color=blue>版块</font></td>
+<td><select name='otherfid[]' size='22' multiple>$forumcache</select></td></tr>
+</table>
+<!--
+EOT;
+}print <<<EOT
+-->
+<br>
+<center><input type=submit value="提 交"> <input type=reset value="重 置"></center>
+</form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>-->

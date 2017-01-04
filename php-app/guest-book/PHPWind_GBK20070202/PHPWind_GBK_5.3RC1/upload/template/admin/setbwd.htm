@@ -1,0 +1,148 @@
+<!--<?php
+include_once PrintEot('left');
+if(!$action){
+print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="b">
+<!--
+EOT;
+if($type==0){print <<<EOT
+-->
+[<b>替换词语</b>]
+[<a href="$basename&type=1">禁用词语</a>]
+[<a href="$basename&action=add">新增词语</a>]
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+[<a href="$basename">替换词语</a>]
+[<b>禁用词语</b>]
+[<a href="$basename&action=add">新增词语</a>]
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+<br />
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="head" colspan="2"><b>提示信息</b></td></tr>
+<tr><td class="b">
+<!--
+EOT;
+if($type==0){ print <<<EOT
+-->
+替换词语：在浏览帖子时，会将帖子中的需要替换的词语替换为对应内容
+<!--
+EOT;
+}else{print <<<EOT
+-->
+禁用词语：在发表文章时，检查文章内容中是否含有禁用词语，如果含有禁用词语将被禁止发表，已经发表的文章中如果含有禁用词语将被替换为对应的内容
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+<br />
+<form action="$basename" method="post" name="submit">
+<input type="hidden" name="action" value="update" />
+<input type="hidden" name="type" value="$type" />
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="head" colspan="4">替换词语</td></tr>
+<tr class="head_2" align="center">
+	<td>id</td>
+	<td>不良词语</td>
+	<td>替换为</td>
+	<td>删除</td>
+</tr>
+<!--
+EOT;
+$id=($page-1)*$db_perpage;
+foreach($replacedb as $key=>$value){
+$id++;
+print <<<EOT
+-->
+<tr class="b" align="center">
+	<td>$id</td>
+	<td><input name="word[$key]" type="text" size="40" value="$value[word]"></td>
+	<td><input name="replace[$key]" type="text" size="40" value="$value[wordreplace]"></td>
+	<td><input type="checkbox" name="selid[]" value="$key" /></td></tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+</table>
+$pages
+<br />
+<center><input type="submit" value="提 交" name="submit"></center>
+</form>
+<!--
+EOT;
+}elseif($action=='add'){ print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="b">
+[<a href="$basename">替换词语</a>]
+[<a href="$basename&type=1">禁用词语</a>]
+[<b>新增词语</b>]
+</td></tr></table>
+<br />
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="head" colspan="2"><b>提示信息</b></td></tr>
+<tr><td class="b">
+替换词语：在浏览帖子时，会将帖子中的需要替换的词语替换为对应内容<br />
+禁用词语：在发表文章时，检查文章内容中是否含有禁用词语，如果含有禁用词语将被禁止发表，已经发表的文章中如果含有禁用词语将被替换为对应的内容
+</td></tr></table>
+<br />
+<form action="$basename" method="post">
+<input type="hidden" name="action" value="add" />
+<input type="hidden" name="step" value="3" />
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="head" colspan="4"><b>新增词语 <a href="javascript:addact();">[+]</a> <a href="javascript:removeact();">[-]</a></b></td></tr>
+<tr class="b" align="center">
+	<td>不良词语</td>
+	<td>替换为</td>
+</tr>
+<tr class="b" align="center">
+	<td><input name="word[1]" type="text" size="40" /></td>
+	<td><input name="rep[1]" type="text" size="40" /></td>
+</tr>
+<!--
+EOT;
+for($i=2;$i<=10;$i++){
+$id='act_'.$i;
+print <<<EOT
+-->
+<tr class="b" align="center" id="$id" style="display:none">
+	<td><input name="word[$i]" type="text" size="40" /></td>
+	<td><input name="rep[$i]" type="text" size="40" /></td>
+</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+</td></tr>
+</table><br />
+<center>词语类型 <input type="radio" name="type" value='0' checked />替换词语 <input type="radio" name="type" value='1' />禁用词语 <br /><br />
+<input type="submit" value="提 交" name="submit" /></center>
+</form>
+<script type="text/javascript">
+var act = 1;
+function addact(){
+	if(act < 10){
+		act++;
+		document.getElementById("act_"+act).style.display = "";
+	}
+}
+function removeact(){
+	if(act > 1){
+		document.getElementById("act_"+act).style.display = "none";
+		act--;
+	}
+}
+</script>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>
+-->

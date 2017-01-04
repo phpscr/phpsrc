@@ -1,0 +1,85 @@
+<!--<?php
+include_once PrintEot("css");
+print <<<EOT
+-->
+</head>
+<body class=head_2 topmargin=5 leftmargin=5>
+<br><br><br><br><br><br><br>
+<form action="$REQUEST_URI" method="post" name="login">
+<INPUT TYPE="hidden" name="Login_f" value=1>
+<!-- <INPUT TYPE="hidden" name="adminjob" value='$adminjob'>
+<INPUT TYPE="hidden" name="refer" value='$_SERVER[HTTP_REFERER]'> -->
+<table width=50% cellpadding=1 cellspacing=1 align=center class=i_table>
+<!--
+EOT;
+if($msg){
+print <<<EOT
+-->
+<tr><td class=b align=center valign=middle colspan=2><br><br><br>
+<b>$msg</b><br><br><br><center><a href="$basename">返 回 继 续 操 作</a></center><br><br>
+<!--
+EOT;
+}else{
+print <<<EOT
+-->
+<tr>
+<td valign=middle align=center class=b>
+<br><br>
+<b>请输入您的管理员用户名和密码</b>
+<br><br>
+<table width=350 align=center cellspacing=1 cellpadding=0 class=i_table>
+<tr>
+<td>
+<table width=100%  cellspacing=0 cellpadding=3>
+<tr bgcolor='#ffffff'>
+<td valign=middle width=40% align=right>
+请输入管理员ID
+</td>
+<td valign=middle>
+<input type=text size=20 name="admin_name">
+</td>
+</tr>
+<tr bgcolor='#ffffff'>
+<td valign=middle width=40% align=right>
+请输入管理员密码
+</td>
+<td valign=middle>
+<input type=password size=21 name="admin_pwd">
+
+</td>
+</tr>
+<!--
+EOT;
+if($admingd){print <<<EOT
+-->
+<tr bgcolor='#ffffff'>
+<td valign=middle width=40% align=right>
+请输入右边的认证码
+</td>
+<td valign=middle>
+<input type='text' name="lg_num"> <img src="ck.php?admin=1" align="absmiddle" onclick="this.src='ck.php?'">
+</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></td></tr></table><br><input type=submit name="submit" value="提 交">
+<script language="JavaScript">
+document.login.admin_name.focus();
+</script>
+<!--
+EOT;
+}
+print <<<EOT
+-->
+<br>
+<br>
+<span class=bold>PHPwind
+</span> $wind_version</a><br><br>
+</td></tr></table></form>
+</body></html>
+<!--
+EOT;
+?>
+-->

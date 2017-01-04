@@ -1,0 +1,31 @@
+<?php
+$lang=array(
+
+'operate_success'		=> "操作完成",
+'have_login'			=> "您已经顺利登录",
+'login_out'				=> "状态：您已经顺利退出网站",
+'enter_thread'			=> "<a href=thread.php?fid=$fid>[ 发贴完毕点击进入主题列表 ]</a>",
+'reg_success'			=> "恭喜您,完成注册现在可以开始使用您的会员权利了",
+'mail_success'			=> "邮件发送完成",
+'enter_c_thread'		=> "<a href=c_thread.php?fid=$fid>[ 发贴完毕点击进入主题列表 ]</a>",
+'post_check'			=> "文章发表成功,本版块开启了发帖审核功能,请等待管理员审核!",
+'masigle_ban_success'	=> "完成禁言,将自动跳转至会员资料页面",
+'update_cache'			=> "正在更新会员排行缓存,请耐心等待!",
+'colony_regsuccess'		=> "{$cn_name}注册成功，进入{$cn_name}基本资料设置",
+'colony_joinsuccess'	=> "加入{$cn_name}成功,进入{$cn_name}首页。",
+'colony_cardsuccess'	=> "{$cn_name}名片修改成功。",
+'colony_postsuccess'	=> "发言成功。",
+'colony_editsuccess'	=> "编辑成功。",
+'colony_delsuccess'		=> "删除成功。",
+'colony_quitsuccess'	=> "退出成功。",
+'colony_setsuccess'		=> "{$cn_name}基本设置修改成功。",
+'colony_cancelsuccess'	=> "{$cn_name}解散成功。",
+'showsign_success'		=> "签名展示设置成功。",
+'bank_savesuccess'		=> "完成存款!",
+'bank_drawsuccess'		=> "完成取款!",
+'bank_viresuccess'		=> "完成转帐!",
+'bank_creditsuccess'	=> "完成积分转换!",
+'blog_enterhomepage'	=> "进入 {$username} 的个人主页",
+'pushtokjj_success'		=> "您已经成功将信息推送客齐集。",
+);
+?>

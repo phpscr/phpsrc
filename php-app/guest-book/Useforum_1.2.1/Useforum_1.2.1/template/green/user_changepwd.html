@@ -1,0 +1,16 @@
+{include file="subnavibar.html"}
+	<div id="page">
+		<div class="post">
+		<h2 class="title">修改密码</h2>
+			<div class="entry">
+				<form action="" method="POST">
+					<p>旧 密 码：<input name="passwordold" type="password" required="required"></p>
+					<p>新 密 码：<input name="password" type="password" required="required"> 6~20个字母、数字或符号</p>
+					<p>确认密码：<input name="comfirm_upass" type="password" required="required"> </p>
+					<p><input type="submit" class="links" value="提  交" /></p>
+				</form>
+			</div>
+		</div>
+	</div>
+	<head><title>个人设置-{$sitename}</title></head>
+{include file="footer.html"}

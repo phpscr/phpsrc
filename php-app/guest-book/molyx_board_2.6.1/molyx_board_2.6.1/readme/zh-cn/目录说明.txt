@@ -1,0 +1,6 @@
+﻿\tools 目录 ---- 相关工具目录
+	\convert	目录 ---- 数据库恢复、转码工具包，如果需要使用convert工具，请将其目录传到论坛根目录下运行
+	\compressed	目录 ---- 压缩后的js文件，覆盖到论坛根目录，加速JS文件下载，但会轻微增加客户浏览器的负担
+	\url_rewrite目录 ---- 使用 URL Rewrite 实现静态化的方法说明
+\uploads 目录 ---- Molyx Board 主程序
+\readme  目录 ---- 说明文件

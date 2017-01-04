@@ -1,0 +1,153 @@
+<!--<?php
+$ifanonymous=($forumset['anonymous'] && $_G['anonymous']) ? '' : "disabled";
+print <<<EOT
+-->
+<form name="FORM" method="post" action="post.php?" onsubmit="return checkpost(document.FORM);">
+<div class="t"><table cellspacing="0" cellpadding="0" align="center" width="100%">
+	<tr>
+		<td class="h" colspan="2"><b>快速发帖</b></td>
+		<td class="h" style="text-align:right"><a href="javascript:scroll(0,0)"><b>顶端</b></a></td>
+	</tr>
+	<tr></tr>
+	<tr class="tr2"><td colspan="100" style="border-bottom:0"></td></tr>
+	<tr>
+		<td valign="top" width="20%" bgcolor="$forumcolorone" style="padding:7px">
+		<b>内容</b><br />
+		<font face="verdana">  HTML 代码不可用
+		$windcode
+		<br />
+		<br />
+		<input type="checkbox" name="atc_anonymous" value="1" $ifanonymous />匿名帖
+		<br />
+		<input type="checkbox" name="atc_hide" value="1" $htmlpost />隐藏此帖
+		<br />
+		<input type="checkbox" name="atc_requiresell" value="1" $htmlsell />出售此帖
+		<input class="input" type="text" maxlength="3" size="3" name="atc_money" value="0" />
+		<br />
+		<input type="checkbox" name="atc_requirervrc" value="1" $htmlhide />加密此帖
+		<input class="input" type="text"  maxlength="6" size="3" name="atc_rvrc" value="0" /><br /><br />
+		[<a href="javascript:checklength(document.FORM,'$db_postmax');">查看帖子长度</a>]
+		</td>
+		<td width="60%" bgcolor="$forumcolorone" style="padding:7px">
+		<div>
+<!--
+EOT;
+if(!$psot_sta && ($t_per>0 || $admincheck) && $t_exits==1){ print <<<EOT
+-->
+		<select name="p_type" style="width:62px;">
+		<option value="0"></option>
+<!--
+EOT;
+foreach($t_typedb as $key=>$value){
+if($value){
+print <<<EOT
+-->
+		<option value="$key">$value</option>
+<!--
+EOT;
+}}print <<<EOT
+-->
+		</select>
+<!--
+EOT;
+}print <<<EOT
+-->
+		<input type="text" class="input" name="atc_title" value="$titletop1" size="65" />
+		</div><div style="margin:3px 0px">
+<!--
+EOT;
+list(,,$postgd)=explode("\t",$db_gdcheck);
+if($winddb[postnum] < $postgd){
+print <<<EOT
+-->
+		<input type="text" class="input" maxLength="4" name="gdcode" size="7" />&nbsp;<img src="ck.php?" align="absmiddle" onclick="this.src='ck.php?'" style="cursor:pointer;" />
+<!--
+EOT;
+}$verify = substr(md5($winduid.$db_hash.$winddb['postnum']),0,8);
+print <<<EOT
+-->
+		<input type="checkbox" name="atc_usesign" value="1" checked />使用签名
+		<input type="checkbox" name="atc_convert" value="1" checked />Wind Code自动转换
+		<input type="hidden" name="atc_autourl" value="1" /></div>
+		<textarea onkeydown="quickpost(event)" name="atc_content" rows="8" style="width:96%"></textarea>
+		<input type="hidden" value="2" name="step" />
+		<input type="hidden" value="$psot_sta" name="action" />
+		<input type="hidden" value="$fid" name="fid" />
+		<input type="hidden" value="$tid" name="tid" />
+		<input type="hidden" value="$winddb[editor]" name="editor" />
+		<input type="hidden" value="none" name="atc_attachment" />
+		<input type="hidden" name="verify" value="$verify" />
+		<div style="margin:5px 0">
+		<div style="padding:4px 10px 0 0;float:left;color:#FF0000">按 Ctrl+Enter 直接提交</div>
+		<input class="btn" type="submit" name="Submit" value="提 交" /></div>
+		</td>
+		<td width="20%">
+		<div style="padding:3px; text-align:center; width:200px;">
+		<fieldset id="smiliebox" style="border:1px solid $tdcolor">
+			<legend>表情</legend>
+			<div id="menu_show"></div>
+			<span style="float:right; margin:3px 10px 5px;"><a id="td_face" style="cursor:pointer;" onClick="showDefault();" align="absmiddle">[更多]</a></span>
+		</fieldset></div>
+		<div id="menu_face" class="menu" style="display:none;"></div>
+		</td>
+	</tr>
+</table></div></form>
+<script language="javascript">
+var imgpath='$imgpath';
+var stylepath='$stylepath';
+var cate=$db_forcetype;
+var cnt = 0;
+function checkpost(obj){
+	if(cate==1 && obj.p_type!=null && obj.p_type.value==0){
+		alert("没有选择主题分类");
+		obj.p_type.focus();
+		return false;
+	}
+	if(obj.atc_title.value==""){
+		alert("标题不能为空");
+		obj.atc_title.focus();
+		return false;
+	}else if(obj.atc_title.value.length>$db_titlemax){
+		alert("标题超过最大长度 $db_titlemax 个字节");
+		obj.atc_title.focus();
+		return false;
+	}
+	if(obj.atc_content.value.length<$db_postmin){
+		alert("文章内容少于 $db_postmin 个字节");
+		obj.atc_content.focus();
+		return false;
+	}else if(obj.atc_content.value.length>$db_postmax){
+		alert("文章内容大于 $db_postmax 个字节");
+		obj.atc_content.focus();
+		return false;
+	}
+	document.FORM.Submit.disabled=true;
+	cnt++;
+	if(cnt!=1){
+		alert('Submission Processing. Please Wait');
+		return false;
+	}
+	return true;
+}
+function quickpost(event){
+	if((event.ctrlKey && event.keyCode == 13) || (event.altKey && event.keyCode == 83)){
+		document.FORM.Submit.click();
+	}
+}
+function checklength(theform,postmaxchars){
+	if(postmaxchars != 0){
+		message = '\\n最大的字符为'+postmaxchars+' 字节';
+	} else{
+		message = '';
+	}
+	alert('您的信息已经有 '+theform.atc_content.value.length+' 字节'+message);
+}
+function addsmile(NewCode){
+    document.FORM.atc_content.value += ' [s:'+NewCode+'] ';
+}
+</script>
+<script src="data/bbscache/face.js"></script>
+<script src="$imgpath/showface.js"></script>
+<!--
+EOT;
+?>

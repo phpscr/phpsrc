@@ -1,0 +1,152 @@
+<!--<?php
+include_once PrintEot('left');
+if(empty($action)){
+print <<<EOT
+-->
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+	<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+	<tr>
+		<td class=b>
+<pre>
+
+PHPWind 通行证系统是为解决多个系统之间会员数据共享问题而开发的，是一套跨服务器，跨域名，跨语言的会员共享系统，实现了不同系统之间
+可以共享会员数据和同步会员基本信息，支持不同域名下同步登录，同步退出功能
+
+功能说明：实现多个系统同步登录，退出功能，共享会员数据，同步积分信息
+
+使用方法：通行证由一个服务器端和多个客户端组成，选择一个系统的会员数据做为通行证服务器，其他系统做为客户端
+
+以论坛和博客整合为例说明通行证使用方法：
+
+1. 将论坛做为服务器端，后台设置如下：
+-------------------------------------------------------------
+是否开启通行证          是
+通行证私有密钥          随机生成一个私有密钥（各系统私有密钥必须完全相同）
+将该网站做为通行证的    服务器端
+
+通行证客户端地址        博客系统url地址
+每行填写一个url地址     
+(注意不要在最后加 / )
+-------------------------------------------------------------
+
+2. 将博客做为客户端，后台设置如下
+-------------------------------------------------------------
+是否开启通行证          是
+通行证私有密钥          将服务器端的私有密钥填写到此处（各系统的私有密钥必须完全相同）
+将该网站做为通行证的    客户端
+
+通行证服务器地址        论坛系统url地址
+通行证登录地址          login.php（论坛登录地址）
+通行证退出地址          login.php?action=quit（论坛退出登录地址）
+通行证注册地址          register.php（论坛注册地址）
+选择需要同步的积分      选择需要同步的积分
+--------------------------------------------------------------
+
+3. 通行证设置完成！
+</pre>
+		</td>
+	</tr>
+</table>
+<br><br>
+
+<form action="$basename" method="post">
+<input type=hidden name="action" value="unsubmit">
+<table width=98% align="center" cellpadding=3 cellspacing=1 class=i_table>
+<tr class=head align=center><td colspan="2">通行证设置</td></tr>
+<tr class=b>
+	<td width="40%">是否开启通行证</td>
+	<td>
+		<input type=radio name="config[passport_ifopen]" value="1" $ifopen_Y> 是 
+		<input type=radio name="config[passport_ifopen]" value="0" $ifopen_N> 否 
+	</td>
+</tr>
+<tr class=b>
+	<td>通行证私有密钥</td>
+	<td>
+		<input size=35 id="passport_key" name="config[passport_key]" value="$passport_key">
+		<input type="button" value="随机生成私有密钥" onclick="generatekey()">
+	</td>
+</tr>
+<tr class=b>
+	<td>将该网站做为通行证的</td>
+	<td>
+		<input type=radio name="config[passport_type]" value="server" $type_server onclick="sendtype('server')">服务器端
+		<input type=radio name="config[passport_type]" value="client" $type_client onclick="sendtype('client')">客户端
+	</td>
+</tr>
+</table>
+<br>
+<table id="server" width=98% align="center" cellpadding=3 cellspacing=1 class=i_table style="$style_server">
+<tr class=head align=center><td colspan="2">通行证服务器端设置</td></tr>
+<tr class=b>
+	<td width="40%">通行证客户端地址<br>每行填写一个url地址 (注意不要在最后加 / )<br>例如：http://www.phpwind.net</td>
+	<td><textarea name="config[passport_urls]" rows="5" cols="50">$passport_urls</textarea></td>
+</tr>
+</table>
+
+<table id="client" width=98% align="center" cellpadding=3 cellspacing=1 class=i_table style="$style_client">
+<tr class=head align=center><td colspan="2">通行证客户器端设置</td></tr>
+<tr class=b>
+	<td width="40%">通行证服务器地址</td>
+	<td><input size=35 name="config[passport_serverurl]" value="$passport_serverurl"></td>
+</tr>
+<tr class=b>
+	<td>通行证登录地址</td>
+	<td><input size=35 name="config[passport_loginurl]" value="$passport_loginurl"></td>
+</tr>
+<tr class=b>
+	<td>通行证退出地址</td>
+	<td><input size=35 name="config[passport_loginouturl]" value="$passport_loginouturl"></td>
+</tr>
+<tr class=b>
+	<td>通行证注册地址</td>
+	<td><input size=35 name="config[passport_regurl]" value="$passport_regurl"></td>
+</tr>
+<tr class=b>
+	<td>选择需要同步的积分</td>
+	<td>
+<!--
+EOT;
+foreach($credit as $key=>$val){
+$ifchecked=strpos(",$passport_credit,",",$key,")!==false ? 'checked' : '';{
+print <<<EOT
+-->
+		<input type="checkbox" name="ppt_credit[]" value="$key" $ifchecked>$val
+<!--
+EOT;
+}}print <<<EOT
+-->
+	</td>
+</tr>
+</table>
+<br>
+<center><input type=submit value="提 交"></center>
+</form>
+<br>
+<SCRIPT LANGUAGE="JavaScript">
+function sendtype(show){
+	document.getElementById(show).style.display = "";
+	if (show=='server'){
+		document.getElementById('client').style.display = "none";
+	}else{
+		document.getElementById('server').style.display = "none";
+	}
+}
+oldkey="$passport_key";
+function generatekey() {
+    var keychars = "abcdefhjmnpqrstuvwxyz23456789ABCDEFGHJKLMNPQRSTUVWYXZ.,:";
+    var keylength = 16;
+    var key = document.getElementById('passport_key');
+	if(oldkey=='' || confirm('更改私有密钥需要同时在其他使用通行证接口的应用程序中修改私有密钥，您确认要更改私有密钥？')){
+		oldkey='';
+		key.value = '';
+		for ( i = 0; i < keylength; i++ ) {
+			key.value += keychars.charAt( Math.floor( Math.random() * keychars.length ) )
+		}
+	}
+}
+</SCRIPT>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>-->

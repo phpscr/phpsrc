@@ -1,0 +1,5 @@
+在您安装好 phpwind 4.3.x 版或是已经升级为 phpwind 4.3.x 版后
+将该目录里的 data  image template 3 个目录复制到论坛根目录下即可
+注意: 如果您站点的图片目录名不是 image 请将 image 更改为您站点上的图片目录，然后再上传
+
+然后您可以进入控制面版或是直接输入类似的 http://www.phpwind.net/?skinco=card 即可

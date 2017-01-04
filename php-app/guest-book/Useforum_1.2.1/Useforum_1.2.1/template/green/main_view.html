@@ -1,0 +1,248 @@
+{if $info.title}{$t="`$info.title`-`$info.f.name`"}{/if}
+{include file="header.html" t=$t}
+<div id="page">{if $pager.current_page == ""}{$pager.current_page = 1}{/if}
+    <div class="post">
+        <h2 class="title">
+            {if $info.top == "1"}
+            <span class="list1" >置顶</span>
+            {/if}
+            {if $info.close == "1"}
+            <span class="list2" >锁定</span>
+            {/if}
+            {if $info.digest == "1"}
+            <span class="digest" >精华</span>
+            {/if}
+            {if $info.authority}
+            <span class="list3" > 阅读权限 {$info.authority} </span>
+            {/if}
+            {$info.title}
+            <span style="font-size: 12px;color:#8A8A8A;" >
+                [<a href="{spUrl c=main a=viewforum id=$info.forum}" style="font-size: 12px;">{$info.f.name}</a>]
+                {theDate time=$info.ctime}
+            </span>
+        </h2>
+        <table width="100%">
+            <tr>
+                <td rowspan="2" valign="top" width="120px" class="viewleft">
+                    <div class="content">
+                        <a href="{spUrl c=user a=profile uname=$info.uname}">
+                            {if avatar($poster.avatar)}
+                            <img src ="{$poster.avatar}" width="120px" alt="{$info.uname}"align="left" />
+                            {else}
+                            <img src ="{$siteurl}/template/green/images/noavatar_big.gif" width="120px" align="left" />
+                            {/if}
+                        </a>
+                    </div>
+                    <h3 align="center" style="margin-top: 5px;" >
+                        <a href="{spUrl c=user a=profile uname=$info.uname}">{$info.uname}</a>
+                        {if $poster.admit == "1"}
+                        <span class="identity" title="身份认证"/>ｉ</span>
+                        {/if}
+                    </h3>
+                    <div class="tdcenter">{if $poster.acl}{($poster.acl =="GBADMIN") ? "管理员" : ( ($poster.forum =="0") ? "普通用户" : "版主")}{($poster.acl =="shield") ? "该用户被已屏蔽" : ""}
+                    {else}该用户不存在{/if}</div>
+                    {if $poster.uid}
+                    UID {$poster.uid}
+                    <br />来自 {$poster.live}
+                    <br />积分 {$poster.credits}
+                    <br />发帖 {$poster.post}
+                    <br />注册时间 {$poster.ctime|date_format:"%Y-%m-%d"}
+                    <br />{lastLogin uname=$info.uname}
+                    {/if}
+                </td>
+                <td class="viewrighttop"style="max-width: 800px;" >
+                    <div class="content" >{$info.contents}</div>
+                </td>		
+            </tr>
+            <tr>
+                <td valign="bottom" class="viewrightbottom">
+                    {if is_array($info.score.0)}
+                    <p class="signature">该话题的评分记录</p>
+                    {foreach from=$info.score item=score}
+                    <p>
+                        <b>{$score.score}分</b> <a href="{spUrl c=user a=profile uname=$score.uname}"> {$score.uname}</a>:{$score.reason}
+                    </p>
+                    {/foreach}
+                    {/if}
+                    <br />
+                    <a href="{spUrl c=main a=viewforum id=$info.forum}">返回{$info.f.name}</a>
+                    {if $smarty.session.userinfo}
+                    | <a href="#reply">快速评论</a>
+                    {/if}
+                    {if ( "GBADMIN" == $smarty.session.userinfo.acl || $info.uname == $smarty.session.userinfo.uname || $info.forum == $smarty.session.userinfo.forum)}
+                    | <a href="{spUrl c=main a=edit gid=$info.gid}">编辑</a>
+                    {/if}
+                    {if ( "GBADMIN" == $smarty.session.userinfo.acl || $info.forum == $smarty.session.userinfo.forum )}
+                    | <b><a href="{spUrl c=admin a=move gid=$info.gid}">移动</a></b>
+                    | <b><a href="{spUrl c=admin a=totop gid=$info.gid}">{($info.top == "1") ? "取消置顶" : "置顶"}</a></b>
+                    | <b><a href="{spUrl c=admin a=digest gid=$info.gid}">{($info.digest == "1") ? "取消精华" : "精华"}</a></b>
+                    | <b><a href="{spUrl c=admin a=close gid=$info.gid}">{($info.close == "1") ? "解除锁定" : "锁定"}</a></b>
+                    | <b><a href="{spUrl c=admin a=del gid=$info.gid}">删除</a></b>
+                    | <abbr title="{getCity ip=$result.ip}"> {$info.ip}</abbr>
+                    {/if}
+                    {if $smarty.session.userinfo} | <span id="showscore"><a href="javascript:void(0);">评分</a></span>{/if}
+                    <script type="text/javascript">
+                        (function(){
+                            var p = {
+                                url:location.href,
+                                showcount:'1',/*是否显示分享总数,显示：'1'，不显示：'0' */
+                                desc:'',/*默认分享理由(可选)*/
+                                summary:'{cutString str=$info.contents length=200}',/*分享摘要(可选)*/
+                                title:'{$info.title}',/*分享标题(可选)*/
+                                site:'{$sitename}',/*分享来源 如：腾讯网(可选)*/
+                                pics:'', /*分享图片的路径(可选)*/
+                                style:'101',
+                                width:199,
+                                height:30
+                            };
+                            var s = [];
+                            for(var i in p){
+                                s.push(i + '=' + encodeURIComponent(p[i]||''));
+                            }
+                            document.write(['<a version="1.0" class="qzOpenerDiv" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?',s.join('&'),'" target="_blank">分享</a>'].join(''));
+                        })();
+                    </script>
+                    <script src="http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201" charset="utf-8"></script>
+                </td>
+            </tr>
+        </table>
+        <table width="100%" id='resulttable'>
+            {foreach from=$results item=result}
+            <tr>
+                <td valign="top" width="60px">
+                    {if avatar($result.replyer.avatar)}
+                    <img class="avatar" src ="{$result.replyer.avatar}" width="60" align="left" />
+                    {else}
+                    <img class="avatar" src ="{$siteurl}/template/green/images/noavatar_big.gif" width="60" align="left" />
+                    {/if}
+                </td>
+                <td>
+                    <p>
+                        {$result@index + 1 + ($pager.current_page - 1)*$replypager}楼
+                        <b>{getUrl uname=$result.uname}</b>
+                        {if $result.replyer.admit == "1"}
+                        <span class="identity" title="身份认证"/>ｉ</span>
+                        {/if}
+                        {if $result.replyer.acl}
+                        {($result.replyer.acl =="GBADMIN") ? "管理员" : ( ($result.replyer.forum =="0") ? "普通用户" : "版主")}
+                        {else}该用户不存在{/if}
+                        {theDate time=$result.ctime}{($result.replyer.acl =="shield") ? "该用户已被屏蔽" : ""}
+                        积分 {$result.replyer.credits} 精华数 {$result.replyer.digestpost} {lastLogin uname=$result.uname}
+                        {if ( "GBADMIN" == $smarty.session.userinfo.acl || $info.forum == $smarty.session.userinfo.forum )}
+                        <a href="javascript:void(0);" onclick="delconfirm({$result.rid}, '{$result.uname}');">删除</a>
+                        <abbr title="{getCity ip=$result.ip}"> {$result.ip}</abbr>
+                        {/if}
+                        {if ( "GBADMIN" == $smarty.session.userinfo.acl || $info.uname == $smarty.session.userinfo.uname || $info.forum == $smarty.session.userinfo.forum)}
+                        <a href="{spUrl c=main a=redit rid=$result.rid}">编辑</a>
+                        {/if}
+                        {if $smarty.session.userinfo.uname}
+                        <a href="javascript:void(0);" onclick="replyto({$result@index + 1 + ($pager.current_page - 1) * $replypager}, '{$result.uname}');">评论</a>
+                        {/if}
+                    </p>
+                    <div class="content">{$result.content}</div>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="1" colspan="2">
+                    {if $result.replyer.signature}
+                    <p class="signature">{$result.replyer.signature}</p>
+                    {else}
+                    <p class="nosign"></p>
+                    {/if}
+                </td>
+            </tr>
+            {/foreach}
+        </table>
+        <div class="scott">
+            <p>
+                {if $pager.all_pages}
+                {pager pager=$pager c="main" a="view" idname="gid" id=$info.gid}
+                {/if}
+            </p>
+        </div>	
+        <div class="entry">
+            {if $smarty.session.userinfo}
+            {if !$info.close}
+            <a name="reply"></a>
+            <p>我也说两句：<span class="notice"><span id="ex2result">&nbsp;</span></span><br /></p>
+            <textarea id="content" name="content" style="width:600px;height:150px;" required="required"></textarea></p>
+            <br/><p><input type="hidden" id="gid" name="gid" value="{$info.gid}"></p>
+            <p><input type="button" name="Submit3" class="links" value="提  交" id="ex3button"></p>
+            {else}<h3>评论已关闭</h3>
+            {/if}
+            {else}
+            <h3>请<a href="{spUrl c=main a=login backurl=$currenturl}">登录或<a href="{spUrl c=user a=register backurl=$currenturl}">注册</a>后再参与该话题。</h3>
+            {/if}
+        </div>
+    </div>
+</div>	
+<script>
+                            function delconfirm(rid, uname) {
+                                if (window.confirm("确定删除“" + uname + "”的评论？")) {
+                                    window.location = "{spUrl c=admin a=delreply}&rid=" + rid;
+                                }
+                            }
+                            function replyto(floor, uname) {
+                                editor.insertHtml('评论' + floor + '楼<a href={spUrl c=user a=profile}&uname=' + uname + '>@' + uname + ' </a>:  ');
+                            }
+</script>
+{if $smarty.session.userinfo}
+<link rel="stylesheet" href="{$siteurl}/include/editor/themes/default/default.css" />
+<script charset="utf-8" src="{$siteurl}/include/editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="{$siteurl}/include/editor/lang/zh_CN.js"></script>
+<script>
+                            var editor;
+                            KindEditor.ready(function(K) {
+                                editor = K.create('textarea[name="content"]', {
+                                    resizeType: 1,
+                                    allowPreviewEmoticons: false,
+                                    allowImageUpload: true,
+                                    items: [
+                                        'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                                        'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                                        'insertunorderedlist', '|', 'emoticons', 'image', 'link', "|", "source"]
+                                });
+                            });
+                            KindEditor.ready(function(K) {
+                                K('#showscore').click(function() {
+                                    var dialog = K.dialog({
+                                        width: 200,
+                                        title: '评分',
+                                        body: '<div style="margin:10px;"><form action=\"{spUrl c=main a=score gid=$info.gid}\" method="POST"><input type=\"hidden\" name="poster" value=\"{$info.uname}\"><input name=\"score\" type=\"number\" value=3 style="width:50px;\"> 评分区间：1 ~ 5<br>理由：<br><input type=\"text\" name=\"reason\" style=\"width: 150px;\"><br><input type=\"submit\" value=\"评分\" class=\"ke-button-outer\"></form></div>',
+                                        closeBtn: {
+                                            name: '关闭',
+                                            click: function(e) {
+                                                dialog.remove();
+                                            }
+                                        }
+                                    });
+                                });
+                            });
+</script>
+<script type="text/javascript" src="{$siteurl}/include/jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() { // 当页面加载完毕
+        $("#ex3button").click(function() { // “提交”按钮被点击
+            $('#ex2result').html("请稍候");
+            // 构造发送的数据，请注意如果获取表单各项的值
+            var formdata = {
+                'content': editor.html(),
+                'gid': $('#gid').val()
+            };
+            // 用$.post发送数据
+            $.post('{spUrl c=main a=rpost}', formdata, function(add) {
+                if (add.length > 100) {
+                    $('#resulttable').append(add); // 返回的数据直接追加到resulttable表格的后面
+                    $('#ex2result').html("");
+                    editor.text('');
+                } else {
+                    $.getJSON("{spUrl c=main a=rpost}", formdata, function(json) {
+                        $('#ex2result').html(json.message); // 使用json.message，对应myajax/check中的$result['message']
+                    });
+                }
+            });
+        });
+    });
+</script>	
+{/if}
+{include file="footer.html"}

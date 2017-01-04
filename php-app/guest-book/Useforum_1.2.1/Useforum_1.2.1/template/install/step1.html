@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Useforum 1.2.1 安装程序</title>
+<link href="template/install/style.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+<body>
+<div id="page">
+	<div id="logo">
+		<h1><img src="./template/green/images/logo.png"/>安装程序</h1>
+	</div>
+	<hr />
+	<!-- end #logo -->
+	<div id="content">
+		<div class="post">
+			<h2 class="title">Useforum 1.2.1 介绍</h2>
+			<div class="entry">
+			<p>Useforum是一款简单易用的轻论坛程序，采用PHP+MYSQL构架。Useforum拥有小巧的内核和强大的功能，提供简洁的论坛体验，操作方便，上手容易，非常适合中小站点运营。Useforum1.2.1是该系统的一个补丁版本，将修复1.1.0的一些漏洞，也是1系列最后一个版本，如果您遇到问题，请到<a href="http://u.gw269.com/" target="_blank">官方网站</a>咨询，我们会耐心解答，感谢您的使用，下面开始安装吧。</p>
+			</div>
+			<h2 class="title">第一步，检查文件权限</h2>
+			<p class="meta"><em>{ 请保证以下文件和文件夹属性均为777。 }</em></p>
+			<div class="entry">
+				<p>/cache目录  <?php echo (is_writable('cache') ? '可写' : '不可写');?></p>
+				<p>/attachment目录  <?php echo (is_writable('attachment') ? '可写' : '不可写');?></p>
+				<p>config.php  <?php echo (is_writable('config.php') ? '可写' : '不可写');?></p>
+			</div>
+			<h2 class="title">第二步，填写信息</h2>
+			<p class="meta"><em>{ 填写以下的数据库设置及网站设置 }</em></p>
+			<form action="./install.php?step=3" method="POST" onsubmit="return window.confirm('确定信息正确吗？');">
+<?php if(!empty($err)){?>
+				<p><i><?php echo $err;?></i></p>
+<?php }?>
+			<div class="entry">
+				
+				<h3>数据库信息</h3>
+				<p><span>网站数据库地址：</span><input type="text" name="DB_HOST" value="<?php echo $tips["DB_HOST"];?>" /></p>
+				<p><span>网站数据库用户名：</span><input type="text" name="DB_USER" value="<?php echo $tips["DB_USER"];?>" /></p>
+				<p><span>网站数据库密码：</span><input type="text" name="DB_PASSWORD" value="<?php echo $tips["DB_PASSWORD"];?>" /></p>
+				<p><span>网站数据库名称：</span><input type="text" name="DB_DBNAME" value="<?php echo $tips["DB_DBNAME"];?>" /></p>
+				<p><span>网站数据库表前缀：</span><input type="text" name="DB_PREFIX" value="<?php echo $tips["DB_PREFIX"];?>" /></p>
+				
+				<h3>管理员设置</h3>
+				<p><span>管理员用户名：</span><input type="text" name="uname" value="<?php echo $tips["uname"];?>" /></p>
+				<p><span>管理员密码：</span><input type="password" name="upass" value="<?php echo $tips["upass"];?>" /></p>
+				<p><span>管理员电子邮件：</span><input type="text" name="email" value="<?php echo $tips["email"];?>" /></p>
+				<?php if(is_writable('cache') and is_writable('attachment') and is_writable('config.php')): ?>
+					<p class="links"><input type="submit" class="button" value="进入下一步" /></p>
+				<?php else: ?>
+					<p class="links"><input type="submit" disabled="disabled" class="button" value="请修改文件权限后再试" /></p>
+				<?php endif; ?>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="head" colspan="2"><b>提示信息</b></td></tr>
+<tr><td class="b">
+<br>可以给单个用户指定版块权限!<br>当版块设置为需要特殊头衔才能进入，但同时又需要对某单个用户开放,可用此功能指定单个用户的权限!<br><br>
+</td></tr></table><br />
+<!--
+EOT;
+if(empty($action)){ print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="b">
+[<b>用户列表</b>]
+[<a href="$basename&action=setright">权限设置</a>]
+</td></tr></table><br />
+
+<form action="$basename" method="post">
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr class="head"><td>搜索</td></tr>
+<tr class="b" align="left">
+	<td>用户名：<input type="text" name="username">&nbsp;<input type="submit" value="提 交"></td>
+</tr>
+</table></form>
+<form action="$basename" method="post">
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="head" colspan="7">用户列表</td></tr>
+<tr class="head_2" align="center">
+<td width="6%"></td>
+<td width="8%">ID</td>
+<td width="*">用户名</td>
+<td width="30%">级别</td>
+<td width="8%"></td>
+</tr>
+<!--
+EOT;
+$i=($page-1)*$db_perpage;
+foreach($memberdb as $key=>$member){
+$i++;
+print <<<EOT
+-->
+<tr class="b" align="center">
+<td><input type="checkbox" name="selid[]" value="$member[uid]"></td>
+<td>$i</td>
+<td>$member[username]</td>
+<td>$member[level]</td>
+<td><a href="$basename&action=editright&uid=$member[uid]"><b>编辑</b></a></td>
+</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+</table>$pages
+<input type="hidden" name="action" value="del" />
+<br /><center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)" />&nbsp;
+<input type="submit" value="删除所选项" /></center></form>
+<!--
+EOT;
+}elseif($action=='setright' || $action=='editright'){ print <<<EOT
+-->
+<table width="98%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+<tr><td class="b">
+[<a href="$basename">用户列表</a>]
+[<b>权限设置</b>]
+</td></tr></table><br />
+
+<form action="$basename" method="post">
+<table width="98%" align="center" cellspacing="1" cellpadding="4" class="i_table">
+<tr class="head"><td colspan="2">权限设置</td></tr>
+<tr class="b"><td width="60%">用户名</td>
+<!--
+EOT;
+if($action=='setright'){print <<<EOT
+-->
+<td><input type="text" name="username" size="30" /></td>
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+<td>$username</td>
+<!--
+EOT;
+} print <<<EOT
+-->
+</tr>
+<tr class="b"><td>允许浏览版块：<br><br>(以下两项设置，要此项开启才有效!)<br><br>注：选择版块时可使用 ‘Ctrl’ 键进行多选，也可使用 ‘Shift’ 键或拖动鼠标连续选择多个版块</td><td><select name="visit[]" size="16" multiple>$forum_visit</select></td></tr>
+<tr class="b"><td>允许发表主题：</td><td><select name="post[]" size="16" multiple>$forum_post</select></td></tr>
+<tr class="b"><td>允许发表回复：</td><td><select name="reply[]" size="16" multiple>$forum_reply</select></td></tr>
+</table>
+<input type="hidden" name="action" value="$action" />
+<input type="hidden" name="step" value="2" />
+<!--
+EOT;
+if($action=='editright'){ print <<<EOT
+-->
+<input type="hidden" name="uid" value="$uid" />
+<!--
+EOT;
+} print <<<EOT
+-->
+<br /><center><input type="submit" value="提 交" /></center></form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>
+-->

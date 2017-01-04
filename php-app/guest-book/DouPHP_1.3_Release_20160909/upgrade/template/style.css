@@ -1,0 +1,204 @@
+/*
+Template Name: 红果创意家居
+Version: 2.72
+Author: DouCo Team
+Author URI: http://www.douco.net/
+*/
+
+/* 全局通用
+----------------------------------------------- */
+body {
+	font-family:\5b8b\4f53, Arial, Lucida, Verdana, Helvetica, sans-serif;
+	font-size:14px;
+	color:#555;
+	background-color:#F4F4F4;
+	line-height:130%;
+	margin:0;
+	padding:0;
+}
+textarea {
+	outline:none;
+	font-size:12px;
+	line-height:160%;
+}
+p, ul, ol, dl, dt, dd, form, blockquote {
+	margin:0;
+	padding:0;
+}
+ul, ol {
+	list-style:none;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-size:18px;
+	font-weight:normal;
+}
+em, b, i {
+	font-style:normal;
+	font-weight:normal;
+}
+img {
+	border:0;
+}
+a {
+	text-decoration:none;
+	color:#333333;
+}
+a:hover {
+	text-decoration:underline;
+	color:#C70D0E;
+}
+input, img, select {
+	outline:none;
+	vertical-align:middle;
+	margin:0;
+}
+.clear {
+	clear:both;
+	height:0;
+	line-height:0;
+	font-size:0;
+}
+label {
+	cursor:pointer;
+}
+/* btn */
+.btn {
+	display:inline;
+	cursor:pointer;
+	background-color:#0072C6;
+	border:0;
+	color:#FFF;
+	padding:12px 25px;
+	font-size:16px;
+	font-weight:bold;
+	text-transform:capitalize;
+}
+.btn:hover {
+	color:#FFF;
+	text-decoration:none;
+}
+.btnGray {
+	display:inline;
+	cursor:pointer;
+	background-color:#CCC;
+	border:0;
+	color:#555;
+	padding:8px 20px;
+	font-size:16px;
+	font-weight:bold;
+	text-transform:capitalize;
+	margin-right:15px;
+}
+.wrong {
+	border:1px solid #E6DB55;
+	padding:8px;
+	margin:5px 0 15px;
+	background-color:#FFFFE0;
+}
+/* 主要样式
+----------------------------------------------- */
+#wrapper {
+	width:800px;
+	margin:80px auto;
+	background-color:#FFF;
+	border:1px solid #CCC;
+	padding:30px;
+	padding-bottom:50px;
+}
+#wrapper h3 {
+	padding:12px 0;
+	border-bottom: 1px solid #DADADA;
+	margin:12px 0;
+	color:#666;
+	font-weight:bold;
+}
+.logo {
+	margin-bottom:20px;
+	padding:5px 0;
+	text-align:left;
+}
+.action {
+	margin-top:50px;
+}
+/* maual */
+.maual {
+ font-size:20px;
+}
+.maual ul {
+	padding:10px 0;
+}
+.maual li {
+	line-height:180%;
+	margin-bottom:20px;
+ padding-bottom:20px;
+	border-bottom: 1px dashed #DADADA;
+}
+.maual li.o {
+ color:#999;
+}
+.maual li i {
+ background-color:#19B4EA;
+ color:#FFF;
+ padding:3px 5px;
+ margin-right:8px;
+}
+.maual li a {
+ display:block;
+ background: url(icon_download.png) no-repeat;
+ line-height:26px;
+ padding-left:36px;
+ color:#19B4EA;
+ font-weight:bold;
+ font-size:16px;
+ margin-top:10px;
+}
+/* upgrade */
+.upgrade ul {
+	padding:10px 0;
+}
+.upgrade li {
+	position:relative;
+	height:25px;
+	line-height:25px;
+	margin-bottom:10px;
+}
+.upgrade li em {
+	display:block;
+	padding-left:85px;
+	height:25px;
+}
+.upgrade li i {
+	position:absolute;
+	display:block;
+	border-radius:2px;
+	height:25px;
+	color:#FFF;
+	text-align:center;
+	width:75px;
+}
+.upgrade li i.x {
+	background-color:#E39F0F;
+}
+.upgrade li i.z {
+	background-color:#82CD5C;
+}
+.upgrade li i.y {
+	background-color:#6ABAE3;
+}
+.upgrade li i.a {
+	background-color:#0072C6;
+}
+.upgrade li b {
+ margin-left:20px;
+ color:#19B4EA;
+}
+/* finish */
+.finish ul {
+	margin-bottom:30px;
+}
+.finish .success {
+	margin-bottom:15px;
+}
+.finish td {
+	padding:8px 0;
+}

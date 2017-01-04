@@ -1,0 +1,11 @@
+<!--<?php print <<<EOT
+-->
+<table width="$tablewidth" cellspacing="0" cellpadding="0" align="center">
+<tr><td align="left"><img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> <b><a href="$db_bfn">$db_bbsname</a> $msg_guide</b></td></tr>
+</table><br />
+<!--
+EOT;
+
+$thread_children && require_once PrintEot($thread_children);
+$thread_online && require_once PrintEot($thread_online);
+?>

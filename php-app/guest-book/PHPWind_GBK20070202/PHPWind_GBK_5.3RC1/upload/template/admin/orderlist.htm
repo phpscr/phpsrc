@@ -1,0 +1,59 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=7><b>提示信息</b></td></tr>
+<tr><td class=b><br>订单状态说明：<br>1. 未支付订单：用户还没有付款<br>2. 已支付订单，等待用户确认：用户已经付款，需要用户确认收货后订单才能成为“已完成订单”状态<br>3. 已完成订单：支付完成，{$db_currencyname}充值成功 <br>&nbsp;</td></tr></table><br>
+
+<form action="$basename&" method="post">
+<input type="hidden" name="action" value="del">
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=8><b>订单管理</b> &nbsp; <a href="$basename">所有交易订单</a> | 
+<a href="$basename&state=2">已成功订单</a> | 
+<a href="$basename&state=1">未成功订单</a></td></tr>
+<tr class="head_2" align="center">
+<td>ID</td>
+<td>用户名</td>
+<td>订单号</td>
+<td>付款帐号</td>
+<td>支付金额</td>
+<td>交易状态</td>
+<td>交易时间</td>
+<td>删除</td>
+</tr>
+<!--
+EOT;
+$id=($page-1)*$db_perpage;
+foreach($orderdb as $key => $value){
+if($value[state]==0){
+$state='未支付订单';
+}elseif($value[state]==1){
+$state='已支付订单，等待用户确认';
+}elseif($value[state]==2){
+$state='已完成订单';
+}
+$id++;
+print <<<EOT
+-->
+<tr class="b" align="center">
+<td>$id</td>
+<td>$value[username]</td>
+<td>$value[order_no]</td>
+<td>$value[payemail]</td>
+<td>$value[number]</td>
+<td>$state</td>
+<td>$value[date]</td>
+<td><input type="checkbox" name="selid[]" value="$value[id]"></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table><br />$pages
+<center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)">
+<input type="submit" name="hello" value="删 除"></center></form>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>-->

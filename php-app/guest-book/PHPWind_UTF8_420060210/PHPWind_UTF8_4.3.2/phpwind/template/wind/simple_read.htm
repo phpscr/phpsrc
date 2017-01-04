@@ -1,0 +1,53 @@
+<!--<?php
+print <<<EOT
+-->
+<br>
+<table cellspacing=1 cellpadding=0 width='$tablewidth' $i_table align=center>
+<tr><td><table cellspacing=0 cellpadding=8 width='100%'><tr><td bgcolor="#FFFFFF">
+<b><a href='$DIR'>$db_bbsname </a> -&gt; <a href="{$DIR}f$fid.html">$forumname</a> -&gt; <a href='{$DIR}t$tid.html'>$subject</a></b>
+</td><td bgcolor="#FFFFFF" align=right><B><A HREF="login.php">登录</A> -&gt; <A HREF="register.php">注册</A> -&gt; <A HREF="post.php?action=reply&fid=$fid&tid=$tid">回复主题</A> -&gt; <A HREF="post.php?fid=$fid">发表主题</A></B></td></tr>
+</table></td></tr>
+</table>
+<p><center>$pages</center></p>
+<!--
+EOT;
+$key=0;
+foreach($readdb as $read){
+print <<<EOT
+-->
+<table cellspacing=1 cellpadding=1 width='$tablewidth' class=i_table align=center>
+<tr>
+<td>
+<table cellspacing="0" cellpadding="3" width="100%">
+<tr class=head>
+<td><b>$read[author]</b></td>
+<td align=right class=smalltxt>$read[postdate]</td>
+</tr>
+<tr bgcolor="#FFFFFF">
+<td colspan=2 class=tpc_content>
+<!--
+EOT;
+if($key<2 && !$db_adclose){print <<<EOT
+-->
+$db_union[1]
+<!--
+EOT;
+}
+print <<<EOT
+-->
+$read[content]</td>
+</tr>
+</td></tr>
+</table>
+</td></tr>
+</table><br>
+<!--
+EOT;
+$key++;
+}print <<<EOT
+-->
+<br>
+<center><b>查看完整版本: [-- <a href='read.php?tid=$tid' target=_blank>$subject</a> --] [-- <a href="{$DIR}t$tid.html#">top</a> --]</b></center>
+<!--
+EOT;
+?>-->

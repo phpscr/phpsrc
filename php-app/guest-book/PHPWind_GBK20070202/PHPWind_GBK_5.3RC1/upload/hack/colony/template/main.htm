@@ -1,0 +1,891 @@
+<!--<?php
+print <<<EOT
+-->
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr>
+  <td align="left"><img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> 
+	<a href="$db_bfn"><b>$db_bbsname</b> </a> &raquo; <a href="$basename"><b>{$cy_name}</b></a> &raquo; <b>$cydb[cname]</b>
+</td>
+</tr></table>
+</div>
+<div style="height:10px"></div>
+<div class="t">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr class="tr4">
+    <td width="30%">$cydb[admin] 创建于 $cydb[createtime]</td>
+    <td>公告：$cydb[annouce]</td>
+  </tr>
+</table>
+</div>
+<div class="t3">
+<!--
+EOT;
+include printHack("nav");
+print <<<EOT
+-->
+<div style="width:79%; float:right">
+<!--
+EOT;
+if($job=="card"){
+print <<<EOT
+-->
+<div class="t" style="margin-right:0; width:99%">
+<table cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr>
+  <td colspan="6" class="h">{$cn_name}成员列表</td>
+</tr>
+<tr class="tr2">
+<td>真实姓名</td>
+<td>论坛用户名</td>
+<td>是否为管理员</td>
+<td>性别</td>
+<td>状态</td>
+<td width="15%">操作</td>
+</tr>
+<!--
+EOT;
+$i=0;
+foreach($memberdb as $key => $value){
+$i++;
+$trclass=$i%2==0 ? "f_one" : "f_two";
+$ifadmin = $value[ifadmin]==1 ? '是' : '否';
+$gender  = $value[gender]==1  ? '男' : ($value[gender]==2 ? '女' : '保密');
+print <<<EOT
+-->
+<tr class="$trclass tr3">
+<td><a href="$basename&job=seecard&cyid=$cyid&uid=$value[uid]" title="{$cn_name}通讯录">$value[realname]</a></td>
+<td><a href="profile.php?action=show&uid=$value[uid]">$value[username]</a></td>
+<td>$ifadmin</td>
+<td>$gender</td>
+<td>
+<!--
+EOT;
+if($value['thisvisit']+$db_onlinetime*1.5>$timestamp){print <<<EOT
+-->
+<span style="color:#009900">在线</span>
+<!--
+EOT;
+} else{print <<<EOT
+-->
+离线
+<!--
+EOT;
+}print <<<EOT
+--></td>
+<td><a href="message.php?action=write&touid=$value[uid]">短消息</a>&nbsp;<a href="profile.php?action=friend&job=add&touid=$value[uid]">加为好友</a></td>
+</tr>
+<!-- 
+EOT;
+}print <<<EOT
+-->
+</table>
+<div style="text-align:right">$pages</div>
+</div>
+<!--
+EOT;
+}elseif($job=="seecard"){
+$gender  = $rt[gender]==1  ? '男' : ($value[gender]==2 ? '女' : '保密');
+print <<<EOT
+-->
+<div class="t" style="margin-right:0; width:99%">
+<table cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr><td class="h" colspan="2">{$cn_name}通讯录</td></tr>
+<tr class="f_one tr3"><td width="20%">真实姓名</td><th>$rt[realname]&nbsp;</th></tr>
+<tr class="f_two tr3"><td>性别</td><th>$gender &nbsp;</th></tr>
+<tr class="f_one tr3"><td>电话</td><th>$rt[tel]&nbsp; </th></tr>
+<tr class="f_two tr3"><td>邮箱</td><th>$rt[email]&nbsp;</th></tr>
+<tr class="f_one tr3"><td>联系地址</td><th>$rt[address]&nbsp; </th></tr>
+<tr class="f_two tr3"><td>介绍说明</td><th>$rt[introduce]&nbsp; </th></tr>
+</table>
+</div>
+<!--
+EOT;
+}elseif($job=="editcard"){
+print <<<EOT
+-->
+<form method="post" action="$basename&job=editcard&cyid=$cyid">
+<div class="t" style="margin-right:0; width:99%">
+<input type="hidden" name="step" value="2" />
+<table cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr><td class="h" colspan="2">我的{$cn_name}通讯录</td></tr>
+<tr class="f_one tr3"><td>真实姓名</td>
+<th><input type="text" name="realname" value="$rt[realname]" class="input" /></th></tr>
+<tr class="f_one tr3"><td>性别</td>
+<th>
+<select name="gender">
+<option value="0" $gender_0>保密</option>
+<option value="1" $gender_1>男</option>
+<option value="2" $gender_2>女</option>
+</select></th></tr>
+<tr class="f_one tr3"><td>电话</td>
+<th><input type="text" name="tel" value="$rt[tel]" size="50" class="input" /></th></tr>
+<tr class="f_one tr3"><td>邮箱</td>
+<th><input type="text" name="email" value="$rt[email]" size="50" class="input" /></th></tr>
+<tr class="f_one tr3"><td>联系地址</td>
+<th><input type="text" name="address" value="$rt[address]" size="50" class="input" /></th></tr>
+<tr class="f_one tr3"><td>介绍说明</td>
+<th><textarea name="introduce" rows="5" cols="50" >$rt[introduce]</textarea></th></tr>
+</table>
+</div>
+<div class="tac" style="padding:5px"><input type="reset" value="重 置" class="btn" />&nbsp; 
+  <input type="submit" value="提 交" class="btn" /></div></form>
+<!--
+EOT;
+}elseif($job=="set"){
+print <<<EOT
+-->
+<form method="post" action="$basename&job=set&" enctype="multipart/form-data">
+<input type="hidden" name="step" value="2" />
+<input type="hidden" name="cyid" value="$cyid" />
+<div class="t" style="margin-right:0; width:99%">
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr><td  class="h" colspan="2">{$cn_name}基本设置</td></tr>
+<tr class="f_one tr3"><td width="40%">更改{$cn_name}名称</td>
+<th><input type="text" name="cname" value="$cydb[cname]" size="30"  class="input" /></th></tr>
+<tr class="f_one tr3"><td>{$cn_name}分类设置</td>
+<th><select name="classid" value="$cntype">
+<option value=""></option>
+<!-- 
+EOT;
+foreach ($classdb as $class){
+$thisselect=$class[cid]==$cydb[classid] ? 'selected' : '';
+print <<<EOT
+-->
+<option value="$class[cid]" $thisselect>$class[cname]</option>
+<!-- 
+EOT;
+}print <<<EOT
+-->		
+</select></th></tr>
+<tr class="f_one tr3"><td>是否允许新成员加入</td>
+	<th>
+	<input type="radio" name="ifcheck" value="1" $ifcheck_1 />是
+	<input type="radio" name="ifcheck" value="0" $ifcheck_0 />否
+	</th>
+</tr>
+<tr class="f_one tr3">
+  <td>是否公开{$cn_name}内容</td>
+  <th>
+  <input type="radio" name="ifopen" value="1" $ifopen_1 />是
+  <input type="radio" name="ifopen" value="0" $ifopen_0 />否
+  </th>
+</tr>
+<tr class="f_one tr3">
+  <td>是否公开{$cn_name}相册</td>
+  <th><input type="radio" name="albumopen" value="1" $albumopen_1 />是
+  <input type="radio" name="albumopen" value="0" $albumopen_0 />否
+  </th>
+</tr>
+<tr class="f_one tr3"><td>会员加入需要{$moneyname}</td>
+<th><input type="text" name="intomoney" value="$cydb[intomoney]" class="input" /></th></tr>
+<tr class="f_one tr3"><td>更改{$cn_name}标志</td>
+<th><input type="file" class="input file" name="attachment" /></th></tr>
+<tr class="f_one tr3"><td>{$cn_name}公告</td>
+<th><textarea name="annouce" rows="5" cols="40">$cydb[annouce]</textarea></th></tr>
+<tr class="f_one tr3"><td>{$cn_name}简介</td>
+<th><textarea name="descrip" rows="5" cols="40">$cydb[descrip]</textarea></th></tr>
+</table>
+</div><div class="tac" style="padding:5px"><input type="submit" value="提 交"  class="btn" />&nbsp;<input type="reset" value="重 置" class="btn" /></div></form>
+<!--
+EOT;
+}elseif($job=="joinlog"){
+print <<<EOT
+-->
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td  class="h" colspan="5">会员审核记录</td></tr>
+<tr class="tr2">
+<td width="5%">ID</td>
+<td width="20%">用户名</td>
+<td width="20%">管理员</td>
+<td width="*">描述</td>
+<td width="20%">日期</td>
+</tr>
+<!--
+EOT;
+$num=($page-1)*$db_perpage;
+foreach($logdb as $key => $value){
+$num++;
+print <<<EOT
+-->
+<tr class="f_one tr3">
+<td>$num</td>
+<td>$value[username1]</td>
+<td>$value[username2]</td>
+<td><div style="TABLE-LAYOUT: fixed;WORD-WRAP: break-word" align="left">$value[descrip]</div></td>
+<td>$value[date]</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+</div>
+<div style="text-align:right">$pages</div>
+<!-- 
+EOT;
+}elseif($job=='member'){print <<<EOT
+-->
+<form method="post" action="$basename&">
+<input type="hidden" name="job" value="member" />
+<input type="hidden" name="cyid" value="$cyid" />
+<div class="t" style="margin-right:0; width:99%">
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr><td  class="h" colspan="8">会员列表</td></tr>
+<tr class="tr2">
+<td width="5%">ID</td>
+<td>真实姓名</td>
+<td>论坛用户名</td>
+<td>性别</td>
+<td>电话</td>
+<td>Email</td>
+<td>状态</td>
+<td width="5%"><br /></td>
+</tr>
+<!--
+EOT;
+$num=($page-1)*$db_perpage;
+foreach($memberdb as $key => $value){
+$gender = $value[gender]==1  ? '男' : ($value[gender]==2 ? '女' : '保密');
+$sate = $value[ifadmin]==1 ? '管理员' : ($value[ifadmin]=='-1' ? '未审' : '已审');
+$num++;
+print <<<EOT
+-->
+<tr class="f_one tr3">
+<td>$num</td>
+<td><a href="$basename&job=card&cyid=$cyid&uid=$value[uid]">$value[realname]</a></td>
+<td>$value[username]</td>
+<td>$gender</td>
+<td>$value[tel]<br /></td>
+<td>$value[email]<br /></td>
+<td>$sate</td>
+<td><input type="checkbox" name="selid[]" value="$value[uid]" /></td>
+</tr>
+<!-- 
+EOT;
+}print <<<EOT
+-->
+</table>
+</div>
+<div style="text-align:right">$pages</div>
+<div class="tac" style="padding:5px">
+<!-- 
+EOT;
+$len=4;
+if($windid == $cydb['admin']){
+$len=6;
+print <<<EOT
+-->
+<input type="radio" name="action" value="addadmin" />设为管理员
+<input type="radio" name="action" value="deladmin" />取消管理员
+<!-- 
+EOT;
+}print <<<EOT
+-->
+<input type="radio" name="action" value="pass" checked />审核会员
+<input type="radio" name="action" value="del" />删除会员
+<input type="submit" value="提 交" class="btn" />
+</div></form>
+<!--
+EOT;
+}elseif($job=="currency"){
+print <<<EOT
+-->
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" cellspacing="0" cellpadding="0">
+	<tr><td class="h">{$cn_name}{$moneyname}管理</td></tr>
+	<tr class="f_one tr3"><td><br>功能说明：{$moneyname}管理允许创建者管理{$cn_name}的{$moneyname}，给对{$cn_name}发展有贡献的会员增加{$moneyname}（只限于该{$cn_name}的会员）<br><br></td></tr>
+</table>
+</div>
+<form method="post" action="$basename&job=currency&">
+<input type="hidden" name="step" value="2" />
+<input type="hidden" name="cyid" value="$cyid" />
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" cellspacing="0" cellpadding="0">
+	<tr><td class="h" colspan="2">{$moneyname}管理 (手续费:$cn_rate%)</td></tr>
+	<tr class="f_one tr3">
+		<td width="20%">转入用户名</td>
+		<th><input type="text" name="pwuser" size="20" class="input" /></th>
+	</tr>
+	<tr class="f_one tr3">
+		<td>转帐{$moneyname}数</td>
+		<th><input type="text" name="currency" size="20" class="input" /></th>
+	</tr>
+	<tr class="f_one tr3">
+		<td>请输入密码</td>
+		<th><input type="password" name="pwpwd" size="20" class="input" /></th>
+	</tr>
+</table>
+</div>
+<div class="tac" style="padding:5px"><input type="submit" value="提 交" class="btn" /></div></form>
+<!--
+EOT;
+}elseif($job=="currencylog"){
+print <<<EOT
+-->
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="5">{$cn_name}{$moneyname}记录</td></tr>
+<tr class="tr2">
+<td width="5%">ID</td>
+<td width="15%">用户名</td>
+<td width="15%">管理员</td>
+<td width="*">描述</td>
+<td width="20%">日期</td>
+</tr>
+<!--
+EOT;
+$num=($page-1)*$db_perpage;
+foreach($logdb as $key => $value){
+$num++;
+print <<<EOT
+-->
+<tr class="f_one tr3">
+<td>$num</td>
+<td>$value[username1]</td>
+<td>$value[username2]</td>
+<td><div style="TABLE-LAYOUT: fixed;WORD-WRAP: break-word" align="left">$value[descrip]</div></td>
+<td>$value[date]</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+</div>
+<div style="text-align:right">$pages</div>
+<!--
+EOT;
+}elseif($job=="donatelog"){
+print <<<EOT
+-->
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td colspan="4" class="h">{$cn_name}帐户充值记录 <a href="$basename&cyid=$cyid&job=donate">[我要给{$cn_name}充值]</a> ( 当前{$moneyname} $cydb[cmoney] $moneyunit )</td></tr>
+<tr class="tr2">
+<td width="5%">ID</td>
+<td width="15%">用户名</td>
+<td width="*">描述</td>
+<td width="15%">日期</td>
+</tr>
+<!--
+EOT;
+$num=($page-1)*$db_perpage;
+foreach($logdb as $key => $value){
+$num++;
+print <<<EOT
+-->
+<tr class="f_one tr3">
+<td>$num</td>
+<td>$value[username1]</td>
+<td><div style="TABLE-LAYOUT: fixed;WORD-WRAP: break-word" align="left">$value[descrip]</div></td>
+<td>$value[date]</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr></table>
+</div>
+<div style="text-align:right">$pages</div>
+<!--
+EOT;
+}elseif($job=="donate"){
+print <<<EOT
+-->
+<form method="post" action="$basename&cyid=$cyid&job=donate&">
+<input type="hidden" name="step" value="2" />
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr>
+  <td class="h" colspan="2">我要给{$cn_name}充值</td>
+</tr>
+<tr class="f_one tr3"><td colspan="2">你最多只能充值{$moneyname}数：<font color=blue>$usermoney</font></td></tr>
+<tr class="f_one tr3"><td width="20%">充值的{$moneyname}数</td>
+<td ><input type="text" name="sendmoney" size="30" class="input" /></td></tr></table>
+</div><div class="tac" style="padding:5px"><input type="submit" value="提 交" class="btn" /></div></form>
+<!--
+EOT;
+}elseif($job=="board"){
+print <<<EOT
+-->
+<div class="t" style="margin-right:0; width:99%">
+<table cellspacing="0" cellpadding="0" width="100%" border="0">
+	<tr><td class="h" colspan="4">讨论区</td></tr>
+	<tr class="tr2">
+		<td width="40%">标题</td>
+		<td width="20%">作者</td>
+		<td width="20%">最后发表</td>
+		<td width="10%">操作</td>
+	</tr>
+<!-- 
+EOT;
+$i=0;
+foreach($argudb as $key=>$val){
+$i++;
+$trclass=$i%2==0 ? "f_one" : "f_two";
+if(!$val['author']){
+$val['author'] = $val['realname'] ? $val['realname'] : $val['username'];
+}print <<<EOT
+-->
+	<tr class="$trclass tr3">
+		<th>
+			<a href="$basename&cyid=$cyid&job=read&tid=$val[tid]">$val[subject]</a>
+		</th>
+		<td>$val[author]</td>
+		<td>$val[lastpost]</td>
+		<td>
+<!-- 
+EOT;
+if ($cydb['uid']==$val['authorid'] || $cydb['ifadmin']=='1'){
+print <<<EOT
+-->	
+			[<a href="$basename&cyid=$cyid&job=editpost&tid=$val[tid]">编辑</a>]
+			[<a href="$basename&cyid=$cyid&job=delpost&tid=$val[tid]">删</a>]
+<!--
+EOT;
+}print <<<EOT
+-->
+		</td>
+	</tr>
+<!-- 
+EOT;
+}print <<<EOT
+-->
+</table>
+</div>
+<div style="text-align:right">$pages</div>
+<!--
+EOT;
+if($mycydb){
+print <<<EOT
+-->
+<form method="post" action="$basename&job=post&cyid=$cyid&">
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="2">发表言论</td></tr>
+<tr class="f_one tr3"><td width="15%">标题</td><th><input type="text" name="subject" size="90" class="input" /></th></tr>
+<tr class="f_one tr3"><td valign="top">内容</td><th><textarea name="content" rows="10" cols="100%"></textarea></th></tr>
+</table>
+</div>
+<div class="tac" style="padding:5px"><input type="submit" value="提 交" class="btn" /></div>
+</form>
+<!--
+EOT;
+}print <<<EOT
+-->
+<!--
+EOT;
+}elseif($job=="read"){
+print <<<EOT
+-->
+<div class="t" style="margin-bottom:0; margin-right:0; width:99%;border-bottom:0">
+<table cellspacing="0" cellpadding="0" width="100%">
+	<tr><td class="h">讨论区</td></tr>
+</table>
+</div>
+<!-- 
+EOT;
+foreach($agdb as $key=>$val){
+$num++;
+print <<<EOT
+-->
+<div class="t t2" style="margin-right:0; width:99%">
+	<table cellspacing="0" cellpadding="0" width="100%">
+		<tr class="tr1 f_two">
+			<th>
+<!-- 
+EOT;
+if ($mycydb['uid']==$val['authorid'] || $mycydb['ifadmin']=='1'){
+print <<<EOT
+-->	
+			<div style="float:right">[<a href="$basename&cyid=$cyid&job=editpost&tid=$val[tid]">编辑</a>]
+						[<a href="$basename&cyid=$cyid&job=delpost&tid=$val[tid]">删除</a>]
+			</div>
+<!--
+EOT;
+}print <<<EOT
+-->
+			#$num $val[author] &nbsp;&nbsp;&nbsp;<span class="f10 gray">$val[postdate]</span> 
+			</th>
+		</tr>
+		<tr class="tr3">
+			<th>
+				<h5>$val[subject]</h5>
+				<div class="tpc_content">
+				$val[content]
+				</div>
+			</th>
+		</tr>
+	</table>
+</div>			
+<!-- 
+EOT;
+}print <<<EOT
+-->
+<div style="text-align:right">$pages</div>
+<!--
+EOT;
+if($mycydb){
+print <<<EOT
+-->
+<form method="post" action="$basename&job=post&cyid=$cyid&tid=$tid&">
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr>
+  <td class="h" colspan="2">发表评论</td>
+</tr>
+<tr class="f_one tr3"><td width="15%">标题</td>
+<th><input type="text" name="subject" value="Re:$subject" size="90" class="input" /></th></tr>
+<tr class="f_one tr3"><td valign="top">内容</td><th><textarea name="content" rows="10" cols="100%"></textarea></th></tr>
+</table>
+</div>
+<div class="tac" style="padding:5px"><input type="submit" value="提 交" class="btn" /></div>
+</form>
+<!--
+EOT;
+}print <<<EOT
+-->
+<!-- 
+EOT;
+}elseif ($job=='editpost'){print <<<EOT
+-->	
+<form method="post" action="$basename&cyid=$cyid&job=editpost&tid=$tid&">
+<input type="hidden" name="step" value="2" />
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="2">修改内容</td></tr>
+<tr class="f_one tr3"><td width="15%">标题</td><th><input type="text" size="90" name="subject" value="$argu[subject]" class="input" /></th></tr>
+<tr class="f_one tr3"><td valign="top">内容</td>
+  <th><textarea name="content" cols="80%" rows="10">$argu[content]</textarea></th>
+</tr>
+</table>
+</div>
+<div class="tac" style="padding:5px">
+  
+  <input type="submit" value="提 交" class="btn" /></div>
+</form>
+<!--
+EOT;
+}elseif ($job=='album'){
+print <<<EOT
+-->
+<div class="t" style="margin-right:0; width:99%">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr><td class="h">{$cn_name}相册</td>
+</tr>
+<tr class="tr2"><td><a href="javascript:window.history.go(-1);">返回前页</a> <a href="$basename&cyid=$cyid&job=creatalbum">创建相册</a></td>
+</tr>
+<tr class="f_one tr3"><td style="text-align:center;" >
+<!--
+EOT;
+foreach($albumdb as $value){
+if($value[atype]==1){
+$value[atype]="公共相册";
+}elseif($value[atype]==2){
+$value[atype]="个人相册[公开]";
+}else{
+$value[atype]="个人相册[私人]";
+}print <<<EOT
+-->
+<div class="tips" style="width:30%; margin-left:3px" >
+<table width="100%" cellpadding="0" cellspacing="0" >
+<tr><td rowspan="4">
+<a href="$basename&cyid=$cyid&job=viewalbum&aid=$value[aid]"><img src="$value[lastphoto]" width="100" height="100"></a>
+</td>
+  <td>$value[username]</td>
+</tr>
+<tr>
+  <td>相片数$value[photonum]</td>
+</tr>
+<tr>
+  <td>$value[atype]</td>
+</tr>
+<tr>
+  <td>$value[crtime]</td>
+</tr>
+<tr>
+  <td><a href="$basename&cyid=$cyid&job=viewalbum&aid=$value[aid]">$value[aname]</a></td>
+  <td>[<a href="$basename&cyid=$cyid&aid=$value[aid]&job=ulphoto">上传</a>]</td>
+</tr>
+</table>
+</div>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td></tr>
+</table>
+</div>
+<!--
+EOT;
+}elseif ($job=='creatalbum'){
+print <<<EOT
+-->
+<form action="$basename&cyid=$cyid&job=creatalbum" method="post">
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td colspan="2" class="h">创建相册</td>
+  </tr>
+  <tr class="tr2">
+    <td colspan="2"><a href="javascript:window.history.go(-1);">返回前页</a></td>
+    </tr>
+  <tr class="f_one tr3">
+    <td width="20%">相册名称</td>
+    <th><input name="aname" type="text"  class="input" id="aname" /></th>
+  </tr>
+  <tr class="f_one tr3">
+    <td>相册说明</td>
+    <th><textarea name="aintro" cols="50%" rows="5" id="aintro"></textarea></th>
+  </tr>
+  <tr class="f_one tr3">
+    <td>相关属性</td>
+    <th><input type="radio" name="atype" value="1" $ifdisable />
+    公共相册（只有管理员才能创建，任意本{$cn_name}成员均可上传）<br /> 
+      <input name="atype" type="radio" value="2" checked="checked" />
+      个人开放相册（只有本人可以上传，任何本{$cn_name}成员均可见）<br />
+      <input type="radio" name="atype" value="3" />
+      个人私有相册（只有本人可以上传，只有个人可以浏览）</th>
+  </tr>
+  <tr class="f_one tr3">
+    <td>说明</td>
+    <th>创建相册需要{$moneyname}{$cn_camoney}，每个相册最多可以拥有{$cn_maxphotonum}张相片。个人最多可以创建{$cn_albumnum2}个相册，{$cn_name}则最多拥有{$cn_albumnum}个相册。</th>
+  </tr>
+</table>
+
+</div>
+<div class="tac" style="padding:5px">
+  <input name="step" type="hidden" id="step" value="2" />
+  <input class="btn" type="submit" name="Submit" value="提 交" />
+</div>
+</form>
+<!--
+EOT;
+}elseif ($job=='editalbum'){
+print <<<EOT
+-->
+<form action="$basename&cyid=$cyid&job=editalbum" method="post">
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td colspan="2" class="h">编辑相册</td>
+  </tr>
+  <tr class="tr2">
+    <td colspan="2"><a href="javascript:window.history.go(-1);">返回前页</a></td>
+    </tr>
+  <tr class="f_one tr3">
+    <td width="20%">相册名称</td>
+    <th><input name="aname" type="text"  class="input" id="aname" value="$albumdb[aname]" /></th>
+  </tr>
+  <tr class="f_one tr3">
+    <td>相册说明</td>
+    <th><textarea name="aintro" cols="50%" rows="5" id="aintro" >$albumdb[aintro]</textarea></th>
+  </tr>
+  <tr class="f_one tr3">
+    <td>相关属性</td>
+    <th><input type="radio" name="atype" value="1" $ifdisable $atype_1 />
+    公共相册（只有管理员才能创建，任意本{$cn_name}成员均可上传）<br /> 
+      <input  type="radio" name="atype" value="2" $atype_2 />
+      个人开放相册（只有本人可以上传，任何本{$cn_name}成员均可见）<br />
+      <input type="radio" name="atype" value="3" $atype_3 />
+      个人私有相册（只有本人可以上传，只有个人可以浏览）</th>
+  </tr>
+  <tr class="f_one tr3">
+    <td>说明</td>
+    <th>创建相册需要{$moneyname}{$cn_camoney}，每个相册最多可以拥有{$cn_maxphotonum}张相片。个人最多可以创建{$cn_albumnum2}个相册，{$cn_name}则最多拥有{$cn_albumnum}个相册。</th>
+  </tr>
+</table>
+
+</div>
+<div class="tac" style="padding:5px">
+  <input name="step" type="hidden" id="step" value="2" />
+  <input name="aid" type="hidden" id="aid" value="$aid" />
+  <input class="btn" type="submit" name="Submit" value="提 交" />
+</div>
+</form>
+<!--
+EOT;
+}elseif ($job=='viewalbum'){
+print <<<EOT
+-->
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td colspan="2" class="h">$albumdb[aname]</td>
+  </tr>
+  <tr class="tr2">
+  	<td>
+<a href="javascript:window.history.go(-1);">返回前页</a>  
+<a href="$basename&job=ulphoto&cyid=$cyid&aid=$aid">上传相片</a>
+<!--
+EOT;
+if($cydb[ifadmin]==1 || $albumdb[uid]==$winduid){
+print <<<EOT
+-->
+<a href="$basename&job=editalbum&cyid=$cyid&aid=$aid">编辑相册</a>
+<a href="$basename&job=delalbum&cyid=$cyid&aid=$aid">删除相册</a>
+<!--
+EOT;
+}print <<<EOT
+-->
+</td>
+    <td style="text-align:right">$albumdb[username] 创建于 $albumdb[crtime]</td>
+  </tr>
+  <tr class="tr3">
+    <td colspan="2">
+<!--
+EOT;
+foreach($photos as $value){
+print <<<EOT
+-->
+<div class="tips" style="width:16%; margin-left:6px" >
+<a href="$basename&cyid=$cyid&job=viewphoto&aid=$aid&pid=$value[pid]#p">
+<img src="$value[path]" width="100" height="100" vspace="5" style="border:#FFFFFF 3px solid" /><br />
+$value[pname]</a><br />
+$value[uploader] 上传
+</div>
+<!--
+EOT;
+}print <<<EOT
+-->	</td>
+  </tr>
+  <tr class="tr3 f_two">
+    <th colspan="2">
+	相册简介: $albumdb[aintro]
+	</th>
+  </tr>
+</table>
+</div>
+<div style="text-align:right; margin-right:15px;">$pages</div>
+<!--
+EOT;
+}elseif ($job=='ulphoto' || $job=="editphoto"){
+print <<<EOT
+-->
+<form action="$basename&cyid=$cyid" method="post" enctype="multipart/form-data">
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td colspan="2" class="h">相片上传</td>
+  </tr>
+  <tr class="tr2">
+    <td colspan="2"><a href="javascript:window.history.go(-1);">返回前页</a> <a href="$basename&cyid=$cyid&job=creatalbum">创建相册</a></td>
+    </tr>
+  <tr class="tr3 f_one">
+    <td>相册分类</td>
+    <th><select name="aid" id="aid">
+      <option value="">选择相册</option>
+	 $albumselect
+    </select>    </th>
+  </tr>
+  <tr class="tr3 f_one">
+    <td>图片名称</td>
+    <th><input name="pname" type="text" class="input" id="pname"  value="$photodb[pname]" /></th>
+  </tr>
+  <tr class="tr3 f_one">
+    <td width="20%">内容描述</td>
+    <th><textarea name="pintro" rows="5" cols="50" >$photodb[pintro]</textarea></th>
+  </tr>
+<!--
+EOT;
+if($job=="ulphoto"){
+print <<<EOT
+-->
+  <tr class="tr3 f_one">
+    <td>选择文件</td>
+    <th><input type="hidden" name="job" value="ulphoto" /><input name="photo" type="file" class="input file" size="50" /></th>
+  </tr>
+<!--
+EOT;
+}elseif($job=="editphoto"){
+print <<<EOT
+-->
+  <tr class="tr3 f_one">
+    <td><input type="hidden" name="job" value="editphoto" /><input type="hidden" name="pid" value="$pid" /></td>
+    <td>&nbsp;</td>
+  </tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+</div>
+<div class="tac" style="padding:5px">
+  <input name="step" type="hidden" id="step" value="2" />
+  <input type="submit" name="Submit" value="提 交" class="btn" />
+</div>
+</form>
+<!--
+EOT;
+}elseif($job=="update"){
+print <<<EOT
+-->
+<form action="$basename&cyid=$cyid&job=update" method="post" enctype="multipart/form-data">
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="h">升级高级{$cn_name}</td>
+  </tr>
+  <tr class="tr3 f_one">
+	<th>升级需要花费{$cn_updatemoney}{$moneyname}，当前{$cn_name}帐户{$cydb[cmoney]}</th>
+  </tr>
+  <tr class="tr3 f_one">
+	<th>升级后，您的相册数量将会增大为{$cn_albumnum_a}，最大可容纳会员数量将会增大为{$cn_memberfull_a}</th>
+  </tr>
+</table>
+</div>
+<div class="tac" style="padding:5px">
+  <input name="step" type="hidden" id="step" value="2" />
+  <input type="submit" name="Submit" value=" 确定升级 " class="btn" />
+</div>
+</form>
+<!--
+EOT;
+}elseif($job=="honor"){
+print <<<EOT
+-->
+<div class="t" style="margin-right:0; width:99%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="h" colspan="4">{$cn_name}十大荣誉榜</td>
+  </tr>
+  <tr class="tr2">
+	<td>排名</td>
+	<td>会员名</td>
+	<td>荣誉点</td>
+	<td>身份</td>
+  </tr>
+<!--
+EOT;
+$i=0;
+foreach($memberdb as $v){
+$i++;
+print <<<EOT
+-->
+  <tr class="tr3 f_one">
+	<td>{$i}</td>
+	<td>{$v[username]}</td>
+	<td>{$v[honor]}</td>
+	<td>{$v[ifadmin]}</td>
+  </tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+  <tr class="tr3 f_two">
+    <td style="text-align:right" colspan="4"><A HREF="$basename&cyid=$cyid&job=donate">提升我的荣誉点</A></td>
+  </tr>
+</table>
+</div>
+<!--
+EOT;
+}print <<<EOT
+-->
+</div>
+</div>
+<div class="c" style="width:100%"></div>
+<!--
+EOT;
+?>-->

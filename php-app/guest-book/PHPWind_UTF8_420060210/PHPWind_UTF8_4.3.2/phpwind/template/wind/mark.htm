@@ -1,0 +1,41 @@
+<!--<?php print <<<EOT
+-->
+<table width='$tablewidth' cellspacing=0 cellpadding=0 align=center><tr><td align=left>
+<img src='$imgpath/$stylepath/index/home.gif' align=absbottom> 
+<b><a href='$db_bfn'>$db_bbsname </a> -> 评分系统</b></td></tr></table><br>
+
+<form name=ping action='job.php?action=showping&tid=$tid' method=post>
+<table width='$tablewidth' align=center cellspacing=1 cellpadding=3 $i_table>
+<tr class='header'><td colspan='2' class=head>帖子评分</td></tr>
+<tr><td class='f_one' width='21%'>操作者</td>
+<td class='f_one'><a href='profile.php?action=show&uid=$winduid'>$windid</a></td></tr>
+<tr><td class='f_two' width='21%'>作者</td>
+<td class='f_two'>
+<a href='profile.php?action=show&uid=$atc[authorid]'>$atc[author]</a></td></tr>
+<tr><td class='f_one' width='21%'>积分名称:</td>
+<td class='f_one'><select name=cid>$creditselect</select></td></tr>
+<tr><td class='f_two' width='21%'>增加单位:</td>
+<td class='f_two'><input type=text name=addpoint value=1 size=5> 点 ($minper~$maxper)</td></tr>
+<tr><td class='f_one' width='21%'>标题:</td>
+<td class='f_one'><a href='read.php?tid=$tid'>$atc[subject]</a></td></tr>
+<tr><td class='f_one' width='21%'>短消息通知</td>
+<td class='f_one'>
+<input type=radio name=ifmsg value=1 checked>是
+<input type=radio name=ifmsg value=0>否</td></tr>
+<tr><td class='f_one' width='21%'>评分理由</td>
+<td class='f_one'>
+		<select name="" size='8' multiple onchange="this.form.atc_content.value=this.value">
+			<option value="">自定义</option>
+			<option value="">-------</option>
+			$reason_sel
+		</select>
+<textarea name='atc_content' rows='8' cols='80'></textarea>
+</td></tr></table><br>
+<center><input type=submit value='提 交'></center><br>
+<input type=hidden name="page" value="$page">
+<input type=hidden name=pid value=$pid>
+<input type=hidden name=tid value=$tid>
+<input type=hidden name=step value='1'></form>
+<!--
+EOT;
+?>-->

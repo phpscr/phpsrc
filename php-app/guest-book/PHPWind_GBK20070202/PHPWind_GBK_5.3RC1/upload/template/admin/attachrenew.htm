@@ -1,0 +1,72 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<center>
+<form action=$basename method=post>
+
+<select name='S_start')>
+<option value='' selected>查错范围</option>
+$A_option
+</select>
+<select name='orderway'>
+<option value=''>排序</option>
+<option value='size'>附件大小</option>
+<option value='aid'>附件ID</option>
+</select>
+<input type=submit value="查 找"></form>
+</center>
+
+
+<form action="$admin_file?adminjob=attachstats" method=post>
+<input type=hidden name=action value='delete'>
+<input type=hidden name='F_basename' value=$basename> 
+<table width=98% align=center cellspacing=0 cellpadding=0 class=i_table>
+<tr><td><table width=100% cellspacing=1 cellpadding=3>
+<tr>
+
+<td class=head colspan=6><b>附件手动修复(附件不存在而附件记录存在)--- 使用 ftp 远程转移附件功能.此管理无效</b></td></tr>
+<tr class=head_2 align=center><td>附件ID</td><td>附件大小</td><td>附件名称</td><td>附件链接</td>
+<td width=4%>删</td>
+
+</tr>
+<!--
+EOT;
+$num=0;
+foreach($threaddb as $thread){
+$num++;
+print <<<EOT
+-->
+<tr class=b>
+<td align=center>$num</td>
+<td align=center>$thread[size]</td>
+<td align=center>$thread[name]</td>
+<td align=center>$thread[url]</td>
+
+<td align=center><input type='checkbox' name='urlarray[$thread[aid]]' value=$thread[url]></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></td></tr></table><br>
+<center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)">
+<input type="submit" name="hello" value="提 交"></center></form>
+
+<tr><td colspan=2 align=center>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head><b>附件自动修复</b></td></tr>
+<tr><td class=b><br>
+<ul>
+当附件记录大于 1 万时。<b>强烈建议使用上面手动搜索的功能,不要使用此具负载性的功能!</b><br><br>本功能清除只存在附件记录而没有附件的冗余数据，帖子中的附件记录也将同时更新<br><br>使用 ftp 远程转移附件功能.此管理无效
+</ul>
+<br></td></tr></table>
+
+<form action=$basename method=post>
+<input type=hidden name=action value='delete'> 
+<br>
+<center><input type="submit" name="hello" value="提 交"></center></form>
+<!--
+EOT;
+include_once PrintEot('adminbottom');
+?>
+-->

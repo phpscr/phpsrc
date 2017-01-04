@@ -1,0 +1,28 @@
+<?php
+$colors=array(
+	"skyblue",
+	"royalblue",
+	"blue",
+	"darkblue",
+	"orange",
+	"orangered",
+	"crimson",
+	"red",
+	"firebrick",
+	"darkred",
+	"green",
+	"limegreen",
+	"seagreen",
+	"teal",
+	"deeppink",
+	"tomato",
+	"coral",
+	"purple",
+	"indigo",
+	"burlywood",
+	"sandybrown",
+	"sienna",
+	"chocolate",
+	"silver"
+);
+?>

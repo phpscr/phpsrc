@@ -1,0 +1,417 @@
+<!--<?php print <<<EOT
+-->
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td align="left">
+			<img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> 
+			<b><a href="$db_bfn">$db_bbsname</a> &raquo; <a href="forumcp.php">版主管理</a></b>
+<!--
+EOT;
+if($forum_name){ print <<<EOT
+-->
+<b> &raquo; <a href="thread.php?fid=$fid">$forum_name</a></b>
+<!--
+EOT;
+} print <<<EOT
+-->
+		</td>
+	</tr>
+</table></div>
+<!--
+EOT;
+if(!$action){ print <<<EOT
+-->
+<div class="t" style="margin-top:15px">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="$j_sum"><b>基本统计信息</b></td></tr>
+<tr class="tr3">
+<!--
+EOT;
+$i=0;
+foreach($forumdb as $key=>$value){
+$i++;
+print <<<EOT
+-->
+<td style="padding:8px" width="$j_wid">
+<div style="text-align:left;margin-bottom:2px;line-height:150%">
+版块名称： <a href="thread.php?fid=$value[fid]">$value[name]</a><br />
+主 题 数： $value[topic]<br />
+文 章 数： $value[article]<br />
+今日主题： $value[tpost]</div>
+<div style="text-align:right;margin-bottom:2px"><a href="forumcp.php?action=edit&fid=$value[fid]">
+<b>=>进入管理版面</b></a></div>
+</td>
+<!--
+EOT;
+if($i==4){
+$i=0;
+print <<<EOT
+-->
+</tr><tr class="tr3">
+<!--
+EOT;
+}}if($j_sum==4 && $i<4){
+for($j=$i;$j<4;$j++){print <<<EOT
+-->
+<td class="f_one" valign="top" width="$j_wid"><br /></td>
+<!--
+EOT;
+}}print <<<EOT
+-->
+</tr></table></div>
+<!--
+EOT;
+}elseif($action=='edit'){ print <<<EOT
+-->
+<div class="t3" style="margin-top:8px"><table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td width="23%" valign="top">
+<div class="t"><table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td class="h">管理选项</td></tr>
+<tr class="tr3"><th><a href="forumcp.php?action=edit&type=add&fid=$fid">发布</a> | <a href="forumcp.php?action=edit&type=notice&fid=$fid">管理</a> 公告</th></tr>
+<tr class="tr3"><th><a href="forumcp.php?action=edit&type=f_type&fid=$fid">主题分类</a></th></tr>
+<tr class="tr3"><th><a href="forumcp.php?action=edit&type=report&fid=$fid">帖子报告</a></th></tr>
+<tr class="tr3"><th><a href="forumcp.php?action=edit&type=reward&fid=$fid">悬赏贴管理</a></th></tr>
+<tr class="tr3"><th><a href="forumcp.php?action=edit&type=thread&fid=$fid">帖子管理</a></th></tr>
+<!--
+EOT;
+if($first_admin){ print <<<EOT
+-->
+<tr class="tr3"><th><a href="forumcp.php?action=edit&type=adminset&fid=$fid">副版主任免</a></th></tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+</table></div>
+<script language="JavaScript" src="$imgpath/date.js"></script>
+<form action="forumcp.php?action=edit&type=$type&fid=$fid" method="post">
+<div class="t">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td class="h" colspan="2">搜 索</td></tr>
+<tr class="tr1"><th width="35%">用&nbsp;户&nbsp;名&nbsp;：</th>
+	<th><input class="input" type="text" name="username" size="15" /></th></tr>
+<tr class="tr1"><th>帖子类型：</th>
+	<th>
+		<select name="t_type" style="width:105px;">
+		<option></option>
+		<option value="digest">精华帖</option>
+		<option value="active">活动帖</option>
+		<option value="reward">悬赏帖</option>
+		<option value="sale">交易帖</option>
+		</select>
+	</th>
+</tr>
+<tr class="tr1"><th style="vertical-align:middle">发表日期：</th>
+	<th><input class="input" type="text" name="starttime" size="15" id="starttime" onClick="javascript:ShowCalendar(this.id)" /><br />
+	<input class="input" type="text" name="endtime" size="15" id="endtime" onClick="javascript:ShowCalendar(this.id)"/></th>
+</tr>
+<tr class="tr1"><td colspan="2" style="text-align:center;padding-bottom:5px">
+	<input class="btn" type="submit" value="提 交" /></td></tr>
+</table></div>
+</form>
+</td>
+<td width="*" valign="top">
+<!--
+EOT;
+if($type=='notice'){ print <<<EOT
+-->
+<form action="forumcp.php" method="post">
+<div class="t" style="width:98%; margin-right:0">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+<tr><td class="h" colspan="7"><b>论坛公告编辑</b></td></tr>
+<tr class="tr2">
+<td width="5%">ID</td>
+<td width="10%">发布人</td>
+<td width="6%">顺序</td>
+<td width="18%">论坛</td>
+<td>标题</td>
+<td width="20%">发表时间</td>
+<td width="3%">删</td></tr>
+<!--
+EOT;
+$num=0;
+foreach($annoucedb as $key => $value){
+$num++;
+print <<<EOT
+-->
+<tr class="tr3">
+<td>$num</td>
+<td>$value[author]</td>
+<td>$value[vieworder]</td>
+<td>$value[name]</td>
+<td><a href="forumcp.php?action=edit&type=edit&fid=$fid&aid=$value[aid]" title="编辑该公告">$value[subject]</a></td>
+<td>$value[startdate]</td>
+<td style="padding:6px"><input type="checkbox" name="selid[]" value="$value[aid]"/></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></div><input type="hidden" name="action" value="del" />
+<input type="hidden" name="type" value="notice" />
+<center><input class="btn" type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)" />
+<input type="hidden" name="fid" value="$fid" />
+<input class="btn" type="submit" name="add" value="提 交" /></center></form>
+<!--
+EOT;
+}elseif($type=='add' || $type=='edit'){print <<<EOT
+-->
+<script language="JavaScript" src="$js_path"></script>
+<form name="FORM" method="post" action="forumcp.php?">
+<div class="t" style="width:98%;margin-right:0">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td colspan="2" class="h"><b>更新论坛公告</b></td></tr>
+<tr class="tr3 tr"><th width="21%" >标题</th>
+<th width="79%"><input type="text" size="45" name="newsubject" value="$subject" /></th></tr>
+<tr class="tr3 tr"><th width="21%" >顺序</th>
+<th width="79%"><input type="text" size="4" name="vieworder" value="$vieworder" /></th></tr>
+<tr class="tr3 tr"><th width="21%" valign="top">公告内容：<br />前台公告不支持html代码<br />请到后台发表html公告!</th>
+<th width="79%">
+<!--
+EOT;
+include_once PrintEot('editor');
+print <<<EOT
+-->
+</th></tr>
+</table></div>
+<input type="hidden" value="$aid" name="aid" />
+<input type="hidden" value="3" name="step" />
+<input name="type" type="hidden" value="$type" />
+<input name="fid" type="hidden" value="$fid" />
+<input name="action" type="hidden" value="$action" />
+<div style="text-align:center;margin-bottom:25px">
+<input class="btn" type="submit" name="add" value="提 交" /></div></form>
+<!--
+EOT;
+}elseif($type=='report'){ print <<<EOT
+-->
+<form action="forumcp.php" method="post">
+<div class="t" style="width:98%;margin-right:0">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="7"><b>帖子反映管理</b></td></tr>
+<tr class="tr2">
+<td width="6%">ID</td>
+<td width="16%">论坛</td>
+<td width="10%">帖子位置</td>
+<td width="15%">反映用户</td>
+<td>&nbsp;原因</td>
+<td width="10%">报告类型</td>
+<td width="6%">删除</td>
+</tr>
+<!--
+EOT;
+$id=0;
+foreach($reportdb as $report){
+$id++;
+print <<<EOT
+-->
+<tr class="tr3">
+<td>$id</td>
+<td><a href="thread.php?fid=$report[fid]" target="_blank">$report[fname]</a></td>
+<td><a href="read.php?tid=$report[tid]#$report[pid]" target="_blank">进入帖子</a></td>
+<td>$report[username]</td>
+<td>&nbsp;$report[reason]</td>
+<!--
+EOT;
+if($report[type]==1){ print <<<EOT
+-->
+<td>&nbsp;优秀帖子</td>
+<!--
+EOT;
+}else{ print <<<EOT
+-->
+<td>&nbsp;不良帖子</td>
+<!--
+EOT;
+} print <<<EOT
+-->
+<td><input type="checkbox" name="selid[]" value="$report[id]" /></td></tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></div>
+<div style="margin-left:12px;margin-bottom:15px">$pages</div>
+<input type="hidden" name="action" value="del" />
+<input type="hidden" name="fid" value="$fid" />
+<input type="hidden" name="type" value="report" />
+<div style="text-align:center;margin-bottom:25px;">
+<input class="btn" type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)" /> 
+<input class="btn" type="submit" name="add" value="提 交" /></div></form>
+<!--
+EOT;
+}elseif($type=='f_type'){ print <<<EOT
+-->
+<form action="forumcp.php" method="post">
+<div class="t" style="width:98%;margin-right:0">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="2"><b>版块主题分类</b></td></tr>
+<tr class="tr3">
+	<th width="60%">是否在标题前面加上主题分类名称（主题列表页面）</th>
+	<th>
+		<input type="radio" value="1" $addtpctype_Y name="addtpctype" />是  
+		<input type="radio" value="0" $addtpctype_N name="addtpctype" />否
+	</th>
+</tr>
+<tr class="tr3">
+	<th>普通会员主题分类管理</th>
+	<th>
+		<input type="radio" value="2" $t_type_2 name="t_db[0]" />强制分类  
+		<input type="radio" value="1" $t_type_1 name="t_db[0]" />允许分类  
+		<input type="radio" value="0" $t_type_0 name="t_db[0]" />关闭分类
+	</th>
+</tr>
+<!--
+EOT;
+for($m=1;$m<13;$m++){
+print <<<EOT
+-->
+<tr class="tr3">
+	<th>数字码 <font color="green"><b>$m</b></font> 对应主题类别名称</th>
+	<th><input class="input" type="text" size="30" maxLength="25" value="$t_typedb[$m]" name="t_db[$m]" /></th>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></div>
+<input type="hidden" name="action" value="edit" />
+<input type="hidden" name="type" value="f_type" />
+<input type="hidden" name="fid" value="$fid" />
+<input type="hidden" name="step" value="3" />
+<div style="text-align:center;margin-bottom:25px">
+<input class="btn" type="submit" name="add" value="提 交" /></div></form>
+<!--
+EOT;
+}elseif($type=='reward'){print <<<EOT
+-->
+<form action="forumcp.php" method="post">
+<div class="t" style="width:98%;margin-right:0">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="7"><b>悬赏帖到期处理</b></td></tr>
+<tr class="tr2">
+<td width="6%">ID</td>
+<td width="*">悬赏主题</td>
+<td width="12%">悬赏作者</td>
+<td width="15%">&nbsp;悬赏时间</td>
+<td width="12%">论坛</td>
+<td width="12%">最佳答案奖励</td>
+<td width="12%">热心助人奖励</td>
+</tr>
+<!--
+EOT;
+$i=($page-1)*$db_perpage;
+foreach($threaddb as $key=>$thread){
+$i++;
+print <<<EOT
+-->
+<tr class="tr3">
+<td>$i</td>
+<td align="left"><a href="read.php?tid=$thread[tid]" target="_blank">$thread[subject]</a></td>
+<td><a href="profile.php?action=show&uid=$thread[authorid]" target="_blank">$thread[author]</a></td>
+<td>$thread[postdate]</td>
+<td><a href="thread.php?fid=$fid">{$forum[$fid][name]}</a></td>
+<td>$thread[binfo]</td>
+<td>$thread[ainfo]</td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table></div>
+<div style="margin-left:12px;margin-bottom:15px">$pages</div>
+<!--
+EOT;
+}elseif($type=='thread'){ print <<<EOT
+-->
+<form action="mawhole.php" method="post">
+<div class="t" style="width:98%;margin-right:0">
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+<tr><td class="h" colspan="7"><b>主题列表</b></td></tr>
+<tr class="tr2">
+	<td width="6%"></td>
+	<td>标题</td>
+	<td width="15%">作者</td>
+	<td width="20%">发表日期</td>
+</tr>
+<!--
+EOT;
+foreach($threaddb as $key=>$thread){
+print <<<EOT
+-->
+<tr class="tr3 tr">
+	<td class="tac"><input type="checkbox" name="tidarray[]" value="$thread[tid]" /></td>
+	<th>
+<!--
+EOT;
+if($thread[topped]){
+print <<<EOT
+-->
+<img src="$imgpath/$stylepath/file/headtopic_$thread[topped].gif" alt="置顶帖标志" /> 
+<!--
+EOT;
+}print <<<EOT
+-->
+		<a href="read.php?tid=$thread[tid]" target="_blank">$thread[subject]</a>
+<!--
+EOT;
+if($thread[digest]){ print <<<EOT
+-->
+<img src="$imgpath/$stylepath/file/digest_$thread[digest].gif" alt="精华帖标志" />
+<!--
+EOT;
+} print <<<EOT
+-->
+		</th>
+	<td><a href="profile.php?action=show&uid=$thread[authorid]">$thread[author]</td>
+	<td>$thread[postdate]</td>
+</tr>
+<!--
+EOT;
+} print <<<EOT
+-->
+</table></div>
+<div style="margin-left:12px;margin-bottom:15px">$pages</div>
+<input type="hidden" name="action" value="del" />
+<input type="hidden" name="fid" value="$fid" />
+<div style="text-align:center;margin-bottom:25px">
+<input class="btn" type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)" />
+<input class="btn" type="submit" name="hello" value="删除所选项" /></div></form>
+<!--
+EOT;
+}elseif($type=='adminset'){print <<<EOT
+-->
+<form action="forumcp.php?action=edit&type=$type" method="post">
+<div class="t" style="width:98%;margin-right:0">
+<table width="100%" cellspacing="0" cellpadding="0" align="center">
+	<tr><td colspan="2" class="h">副版主任免</td></tr>
+	<tr class="tr3">
+		<td width="30%">第一版主</td>
+		<td>$firstadmin</td>
+	</tr>
+	<tr class="tr3">
+		<td width="30%">版主</td>
+		<td><input type="text" name="forumadmin" value="$s_admin" size="40" /></td>
+	</tr>
+</table></div>
+<input type="hidden" name="fid" value="$fid" />
+<input type="hidden" name="step" value="3" />
+<div class="tac"><input class="btn" type="submit" name="hello" value="提 交" /></div></form>
+<!--
+EOT;
+} print <<<EOT
+-->
+</td></tr>
+</table></div>
+<script language="JavaScript">
+function CheckAll(form){
+	for(var i=0;i<form.elements.length-2;i++){
+		var e = form.elements[i];
+		e.checked == true ? e.checked = false : e.checked = true;
+	}
+}
+</script>
+<!--
+EOT;
+}
+?>-->

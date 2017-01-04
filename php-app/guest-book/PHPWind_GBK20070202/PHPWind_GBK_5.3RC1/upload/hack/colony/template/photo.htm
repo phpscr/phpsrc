@@ -1,0 +1,169 @@
+<!--<?php
+print <<<EOT
+-->
+<script language="JavaScript" type="text/javascript">
+var photopid=new Array($albumdb[photonum]);
+var photopath=new Array($albumdb[photonum]);
+var photoname=new Array($albumdb[photonum]);
+var photouploader=new Array($albumdb[photonum]);
+var photouptime=new Array($albumdb[photonum]);
+var photointro=new Array($albumdb[photonum]);
+
+photopid=Array($pids);
+photopath=Array($paths); //图片路径数组
+photoname=Array($names);
+photouploader=Array($uploaders);
+photouptime=Array($uptimes);
+photointro=Array($intros);
+
+var i=$position;
+var s=1; //start postion
+var _img = null;
+
+function showimg(num){
+	num--; //数组从0计数
+	var photo = document.getElementById("photo");
+	var loading = document.getElementById("loading");
+	var pname = document.getElementById("pname"); //图片名称
+	var uploader = document.getElementById("uploader"); //上传者
+	var uptime = document.getElementById("uptime"); //上传地址
+	var position = document.getElementById("pos"); //当前位置
+	var introduce = document.getElementById("introduce"); //图片介绍
+	var delphoto = document.getElementById("delphoto"); //删除按钮
+	var editphoto = document.getElementById("editphoto"); //编辑按钮
+	pname.innerHTML = photoname[num];
+	uploader.innerHTML = photouploader[num];
+	uptime.innerHTML = photouptime[num];
+	introduce.innerHTML = photointro[num];
+	position.innerHTML=num+1;
+	if(editphoto!=null){
+		editphoto.href="$basename&job=editphoto&cyid=$cyid&pid="+photopid[num];
+		delphoto.href="$basename&job=delphoto&cyid=$cyid&pid="+photopid[num];
+	}
+
+	loading.style.display = "";
+
+	_img =	new Image();
+	_img.src = photopath[num];
+	checkLoadFinished(1);			
+}
+
+function checkLoadFinished(count) {
+	if (count > 1000) { document.getElementById('DownloadInfo').innerHTML = '发生错误，加载图片超时'; return; }
+	var state = '';
+	if (document.all) state = _img.readyState;
+	else state = _img.complete ? 'complete' : '';
+	if(state!='complete') { window.setTimeout("checkLoadFinished(" + (count + 1) + ")",50); return; }
+	var MaxW = 600; var MaxH = 500;
+    var dW=_img.width; var dH=_img.height;
+    if(dW>MaxW || dH>MaxH) {  a=dW/MaxW; b=dH/MaxH;if(b>a){ a=b; } dW=dW/a; dH=dH/a; }
+    if(dW > 0 && dH > 0) { _img.width=dW; _img.height=dH; }
+
+	var photo = document.getElementById("photo");
+	var childs = photo.childNodes; for (var i = 0; i < childs.length; ++i) photo.removeChild(childs[i]);
+	_img.style.border="#E3E3E3 5px solid";
+	photo.appendChild(_img);
+	document.getElementById('loading').style.display="none";
+	scroll(0,145);
+}
+
+function nextimg(){
+	if(i>=photopath.length){
+		alert("已经是最后一张图片");
+		return;
+	}
+	i++;
+	showimg(i);
+}
+
+function preimg(){
+	if(i<=1){
+		alert("已经是第一张图片");
+		return;
+	}
+	i--;
+	showimg(i);
+}
+
+function copyUrl(){
+	var content='';
+	var url='$db_bbsurl/$basename&u=$winduid&cyid=$cyid&job=viewphoto&aid=$aid&pid='+photopid[i];
+	content+=url;
+	content+= '\\r\\n这张照片不错~ 推荐给你看一下啦 ~~~';
+	window.clipboardData.setData("Text",content);
+	alert("按 CTRL+V，粘贴到 QQ 或 MSN 上发给好友吧 *^-^* ");
+}
+
+</script>
+<div class="t3">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr>
+  <td align="left"><img src="$imgpath/$stylepath/index/home.gif" align="absbottom" /> 
+	<a href="$db_bfn"><b>$db_bbsname</b> </a> &raquo; <a href="$basename"><b>{$cy_name}</b></a> &raquo; <b>$cydb[cname]</b>
+</td>
+</tr></table>
+</div>
+<div style="height:10px"></div>
+<div class="t">
+<a name="p"></a>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td colspan="2" class="h" id="pname">$thephoto[pname]</td>
+  </tr>
+  <tr class="tr2">
+    <td colspan="2"><a href="javascript:window.history.go(-1);">返回前页</a>
+<!--
+EOT;
+if($mycydb){
+print <<<EOT
+-->
+<a href="$basename&job=view&cyid=$cyid">{$cn_name}首页</a>
+<!--
+EOT;
+}if($cydb[ifadmin]==1 || $albumdb[uid]==$winduid){
+print <<<EOT
+-->
+<a id="delphoto" href="$basename&job=delphoto&pid=$pid&cyid=$cyid">删除相片</a> 
+<a id="editphoto" href="$basename&job=editphoto&pid=$pid&cyid=$cyid">修改说明</a> 
+<!--
+EOT;
+}print <<<EOT
+-->   </td>
+    </tr>
+  <tr class="tr3 f_one">
+    <td valign="top"  width="75%">
+	<div><a href="javascript:preimg();"><img src="$hkimg/previous.gif" alt="上一张" align="absmiddle"></a> &nbsp; 第 <span id="pos">{$position}</span> / {$albumdb[photonum]} 张相片&nbsp; <a href="javascript:nextimg();"><img src="$hkimg/next.gif" alt="下一张" align="absmiddle"></a></div>
+	<div id="loading" style="color:white;background-color:blue;position:absolute;padding:5px;display:none;
+	top:250px; left:300px;"><label id="DownloadInfo" style="display:block;color:#FFF;">正在加载图片，请稍候...</label></div>
+	<div id="photo" style="display:block;padding:10px; text-align:center; margin:auto;"></div>	</td>
+	<td valign="top" width="25%">
+	  <div style="border:#E3BE67 1px dashed;background-color:#FFFFD2;padding:5px;text-align:left; line-height:180%; margin-bottom:10px;">
+	  相片所有:<span id="uploader">$thephoto[uploader]</span><br />
+	  上传时间:<span id="uptime">$thephoto[uptime]</span><br />
+	  图片说明:	  
+	  <span id="introduce" style="display:block">$thephoto[pintro]</span>	  </div>
+	  <div id="cp" style="border:#E3E3E3 1px dashed ; background-color:#F4F9FA;padding:5px;margin-bottom:10px;">
+	    <input type="button" name="Submit" value="复制此相片地址，发送给好友" onclick="copyUrl();" class="btn" />
+	  </div>
+	  <div id="sm" style="border:#E3E3E3 1px dashed ; background-color:#F4F9FA;padding:5px;width:250px; margin:auto; text-align:center">
+<!--
+EOT;
+$i=0;
+foreach($smallphoto as $key=>$value){
+$i++;
+print <<<EOT
+-->
+<a href="javascript:i=$key;showimg($key);"><img src="$value[small]" width="100" height="100" style="border:#E3E3E3 2px solid; padding:3px; margin:auto;"></a>
+<!--
+EOT;
+}print <<<EOT
+-->
+	  </div>	</td>
+  </tr>
+</table>
+</div>
+<div class="c" style="width:100%"></div>
+<script>showimg(i);</script>
+<!--
+EOT;
+?>-->

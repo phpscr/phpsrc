@@ -1,0 +1,26 @@
+<!--<?php print <<<EOT
+-->
+<div class="t" style="margin-top:8px"><table cellpadding="0" cellspacing="0" align="center">
+	<tr>
+		<td class="h"><b>在线用户：共{$trd_sumonline}人在线，{$trd_nothide}位会员({$trd_hide}位隐身)</b></td>
+	</tr>
+	<tr></tr>
+	<tr class="tr2"><td colspan="100" style="border-bottom:0"></td></tr>
+<!--
+EOT;
+if($trd_onlineinfo){print <<<EOT
+-->
+	<tr><td>
+		<table cellpadding="0" cellspacing="3" width="100%" bgcolor="$threadcolortwo">
+			<tr>$trd_onlineinfo</tr>
+		</table>
+	</td></tr>
+<!--
+EOT;
+}
+print <<<EOT
+-->
+</table></div>
+<!--
+EOT;
+?>

@@ -1,0 +1,69 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=7><b>提示信息</b></td></tr>
+<tr><td class=b>说明：<br>1. 论坛{$db_currencyname}是用户在论坛进行各种交易的货币，可用于购买会员道具。<br>2. 用户的{$db_currencyname}可通过帐户充值或管理员奖励获得。</td></tr>
+</table><br>
+<!--
+EOT;
+if (!$action){print <<<EOT
+-->
+<form action="$basename&" method="post">
+<input type="hidden" name="action" value="edit">
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=9><b>{$db_currencyname}管理</b></td></tr>
+<tr><td class=b>用户名</td>
+<td class=b><input type="text" name="username"></td></tr>
+</table>
+<br><center><input type=submit value='提 交'></center></form>
+
+ &nbsp; $pages
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=4><b>{$db_currencyname}管理</b></td></tr>
+<tr class="c" align="center">
+<td>ID</td>
+<td>用户名</td>
+<td>{$db_currencyname}</td>
+<td>编辑</td>
+</tr>
+<!--
+EOT;
+$id=($page-1)*$db_perpage;
+foreach($currencydb as $key => $value){
+$id++;
+print <<<EOT
+-->
+<tr class=b align="center">
+<td>$id</td>
+<td>$value[username]</td>
+<td>$value[currency]</td>
+<td><a href="$basename&action=edit&uid=$value[uid]">编辑</a></td>
+</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<!--
+EOT;
+}elseif($action=='edit'){print <<<EOT
+-->
+<form action="$basename" method="post">
+<input type="hidden" name="action" value="edit">
+<input type="hidden" name="step" value="2">
+<input type="hidden" name="uid" value="$rt[uid]">
+<table width="98%" align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2 align="center"><b>{$db_currencyname}管理</b></td></tr>
+<tr><td class=b width="20%">用户名</td>
+<td class=b>$rt[username]</td></tr>
+<tr><td class=b width="20%">{$db_currencyname}</td>
+<td class=b><input type="text" name="currency" value="$rt[currency]"></td></tr>
+</table>
+<br><center><input type=submit value='提 交'></center></form>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>
+-->

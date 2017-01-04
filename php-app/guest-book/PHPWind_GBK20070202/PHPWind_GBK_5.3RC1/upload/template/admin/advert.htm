@@ -1,0 +1,278 @@
+<!--<?php
+include_once PrintEot('left');
+print <<<EOT
+-->
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+<tr><td class=head colspan=2><b>提示信息</b></td></tr>
+<tr><td class=b><br><ul>	<li>头部横幅广告：显示在页面的头部，一般以图片或flash方式显示，多条头部横幅广告时系统将随机选取一条显示</li><br><br><li>底部横幅广告：显示在页面的底部，一般以图片或flash方式显示，多条底部横幅广告时系统将随机选取一条显示</li><br><br><li>帖间广告：出现在每个帖子后面，一般以图片或flash方式显示，多条帖间广告时系统将随机选取一条显示</li><br><br><li>文字广告：显示在页面的头部，一般以文字方式显示，每行四条广告，超过四条将换行显示</li><br><br>注：PHPWind 广告管理模块支持自定义添加广告类型，具体实现方法请参照程序包内的“广告调用说明文档.txt”</ul></td></tr>
+</table>
+<br>
+<table width=98% align=center cellspacing=1 cellpadding=3 class=i_table>
+	<tr>
+		<td class=b>
+			[<a href="$basename&action=advert">广告管理</a>]
+			[<a href="$basename&action=advert&job=add">添加广告</a>]
+		</td>
+	</tr>
+</table>
+<br>
+<!--
+EOT;
+if(!$job){print <<<EOT
+-->
+<form method=post action="$basename&action=advert&job=del&">
+<table width=98% align="center" cellpadding=5 cellspacing=1 class=i_table>
+	<tr><td colspan="11" class=head>广告管理</td></tr>
+	<tr align="center">
+		<td class=head_2 width="5%">启用</td>
+		<td class=head_2 width="5%">顺序</td>
+		<td class=head_2 width="15%">广告类型</td>
+		<td class=head_2 width="25%">广告描述</td>
+		<td class=head_2 width="12%">结束时间</td>
+		<td class=head_2>投放范围</td>
+		<td class=head_2 width="5%">编辑</td>
+		<td class=head_2 width="5%">删除</td>
+	</tr>
+<!--
+EOT;
+foreach($moduledb as $key=>$value){
+	$state = $value[state] ? 'checked' : '';
+	$area='';
+	foreach($value[fid] as $k=>$v){
+		if($v=='-4'){
+			$area .= '所有页面 ';
+		}elseif($v=='-3'){
+			$area .= '帖子页面 ';
+		}elseif($v=='-2'){
+			$area .= '主题列表页面 ';
+		}elseif($v=='-1'){
+			$area .= '首页 ';
+		}elseif(is_numeric($v)){
+			$area .= $forum[$v][name].' ';
+		}
+	}
+print <<<EOT
+-->
+	<tr align="center">
+		<td class=b><input type="checkbox" name="applyid[]" value="$value[id]" $state></td>
+		<td class=b>$value[vieworder]</td>
+		<td class=b>$value[varname]</td>
+		<td class=b>$value[title]</td>
+		<td class=b>$value[endtime]</td>
+		<td class=b>$area</td>
+		<td class=b><a href="$basename&action=advert&job=edit&id=$value[id]">编辑</a></td>
+		<td class=b><input type="checkbox" name="selid[]" value="$value[id]"></td>
+	</tr>
+<!--
+EOT;
+}print <<<EOT
+-->
+</table>
+<br>
+<center><input type="submit" value="提 交"></center>
+</form>
+<br>
+<!--
+EOT;
+}elseif($job=='add' || $job=='edit'){print <<<EOT
+-->
+<form method=post action="$basename&action=advert&job=$job&">
+<input type="hidden" name="step" value="2">
+<input type="hidden" name="id" value="$id">
+<table width=98% align="center" cellpadding=3 cellspacing=1 class=i_table>
+	<tr><td colspan="2" class=head>添加广告</td></tr>
+	<tr>
+		<td class=b width="30%"><b>顺序</b></td>
+		<td class=b><input type=text name="vieworder" value="$rt[vieworder]" size="5"></td>
+	</tr>
+	<tr>
+		<td class=b><b>广告标识符</b><br>区分不同广告的唯一标识符</td>
+		<td class=b>
+			<select onchange="this.form.varname.value=this.value">
+				<option></option>
+				<option value="header">头部横幅广告</option>
+				<option value="footer">底部横幅广告</option>
+				<option value="text">文字广告</option>
+				<option value="article">帖间广告</option>
+<!--
+EOT;
+foreach($adtype as $key=>$val){print <<<EOT
+-->
+				<option value="$val[varname]">$val[title]</option>
+<!--
+EOT;
+}print <<<EOT
+-->
+			</select>
+			<br>
+			<input type=text size="20" name="varname" value="$rt[varname]">
+		</td>
+	</tr>
+	<tr>
+		<td class=b><b>广告描述</b><br>广告信息描述，并不在前台显示</td>
+		<td class=b><input type=text size="40" name="title" value="$rt[title]"></td>
+	</tr>
+	<tr>
+		<td class=b><b>开始时间</b><br>格式：yyyy-mm-dd</td>
+		<td class=b><input type=text size="40" name="module[starttime]" value="$config[starttime]"></td>
+	</tr>
+	<tr>
+		<td class=b><b>结束时间</b><br>格式：yyyy-mm-dd</td>
+		<td class=b><input type=text size="40" name="module[endtime]" value="$config[endtime]"></td>
+	</tr>
+	<tr>
+		<td class=b><b>展现方式</b></td>
+		<td class=b>
+			<select name="module[style]" onchange="showcode(this.options[this.selectedIndex].value)">
+				<option value="code" $style_code>代码</option>
+				<option value="txt" $style_txt>文字</option>
+				<option value="img" $style_img>图片</option>
+				<option value="flash" $style_flash>flash</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class=b>
+		<div id='advert'></div>
+		</td>
+	</tr>
+	<tr>
+		<td class=b><b>投放范围</b></td>
+		<td class=b>
+			<table style="TABLE-LAYOUT:fixed;WORD-WRAP:break-word;">
+			<tr><td valign="top">
+			</td></tr>
+				<tr>
+					<td valign="top" colspan="4">
+						<input type="checkbox" name="selids[]" value='-4' $selids_04> 所有页面
+						<input type="checkbox" name="selids[]" value='-1' $selids_01> 首页
+						<input type="checkbox" name="selids[]" value='-2' $selids_02> 主题列表页面
+						<input type="checkbox" name="selids[]" value='-3' $selids_03> 帖子页面
+					</td>
+				</tr>
+				<tr><td valign="top"><b>论坛版块</b></td></tr>
+				<tr>
+
+<!--
+EOT;
+$num=0;
+foreach($forum as $value){
+if($value[type]!='category' && !$value[cms]){
+$ifcheck=${'selids_'.$value[fid]};
+$num++;
+print <<<EOT
+-->
+					<td valign="top">
+						<input type="checkbox" name="selids[]" value='$value[fid]' $ifcheck>$value[name]
+					</td>
+<!--
+EOT;
+if($num==4){
+$num=0;
+print <<<EOT
+-->
+				</tr>
+				<tr>
+<!--
+EOT;
+}}}print <<<EOT
+-->
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+</table>
+<div id="code" style="display:none;" disabled>
+	<table width="100%" cellpadding=3 cellspacing=1 class=i_table>
+		<tr><td class="head" colspan="2">代码</td></tr>
+		<tr>
+			<td class=b width="30%"><b>广告代码:</b><br>请填写广告代码，支持html代码</td>
+			<td class=b><textarea name="module[htmlcode]" rows="5" cols="50">$config[htmlcode]</textarea></td>
+		</tr>
+	</table>
+</div>
+<div id="txt" style="display:none;" disabled>
+	<table width="100%" cellpadding=3 cellspacing=1 class=i_table>
+		<tr><td class="head" colspan="2">文字</td></tr>
+		<tr>
+			<td class=b width="30%"><b>文字内容*</b></td>
+			<td class=b><input type="text" size="40" name="module[title]" value="$config[title]"></td>
+		</tr>
+		<tr>
+			<td class=b><b>文字链接*</b></td>
+			<td class=b><input type="text" size="40" name="module[link]" value="$config[link]"></td>
+		</tr>
+		<tr>
+			<td class=b><b>文字颜色</b></td>
+			<td class=b><input type="text" size="10" name="module[color]" value="$config[color]"></td>
+		</tr>
+		<tr>
+			<td class=b><b>文字大小</b></td>
+			<td class=b><input type="text" size="10" name="module[size]" value="$config[size]"></td>
+		</tr>
+	</table>
+</div>
+<div id="img" style="display:none;" disabled>
+	<table width="100%" cellpadding=3 cellspacing=1 class=i_table>
+		<tr><td class="head" colspan="2">图片</td></tr>
+		<tr>
+			<td class=b width="30%"><b>图片地址*</b></td>
+			<td class=b><input type="text" size="40" name="module[url]" value="$config[url]"></td>
+		</tr>
+		<tr>
+			<td class=b><b>图片链接*</b></td>
+			<td class=b><input type="text" size="40" name="module[link]" value="$config[link]"></td>
+		</tr>
+		<tr>
+			<td class=b><b>图片宽度</b></td>
+			<td class=b><input type="text" size="10" name="module[width]" value="$config[width]"></td>
+		</tr>
+		<tr>
+			<td class=b><b>图片高度</b></td>
+			<td class=b><input type="text" size="10" name="module[height]" value="$config[height]"></td>
+		</tr>
+		<tr>
+			<td class=b><b>图片描述</b></td>
+			<td class=b><input type="text" size="40" name="module[descrip]" value="$config[descrip]"></td>
+		</tr>
+	</table>
+</div>
+<div id="flash" style="display:none;" disabled>
+	<table width="100%" cellpadding=3 cellspacing=1 class=i_table>
+		<tr><td class="head" colspan="2">flash</td></tr>
+		<tr>
+			<td class=b width="30%"><b>flash链接</b></td>
+			<td class=b><input type="text" size="40" name="module[link]" value="$config[link]"></td>
+		</tr>
+		<tr>
+			<td class=b><b>flash宽度</b></td>
+			<td class=b><input type="text" size="40" name="module[width]" value="$config[width]"></td>
+		</tr>
+		<tr>
+			<td class=b><b>flash高度</b></td>
+			<td class=b><input type="text" size="40" name="module[height]" value="$config[height]"></td>
+		</tr>
+	</table>
+</div>
+<br>
+<center>
+<input type="submit" value="提 交">
+</center>
+</form>
+<br>
+<script language="JavaScript">
+function getObj(id) {
+	return document.getElementById(id);
+}
+function showcode(idName){
+	obj = getObj("advert");
+	obj2 = getObj(idName);
+	obj.innerHTML	= obj2.innerHTML;
+}
+showcode('$style');
+</script>
+<!--
+EOT;
+}include_once PrintEot('adminbottom');
+?>-->

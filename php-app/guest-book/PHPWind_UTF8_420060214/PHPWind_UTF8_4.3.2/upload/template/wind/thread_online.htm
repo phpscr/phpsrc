@@ -1,0 +1,25 @@
+<!--<?php print <<<EOT
+-->
+<table cellpadding=0 cellspacing=1 width='$tablewidth' $i_table align=center>
+<tr><td>
+<table cellpadding=0 cellspacing=0 width=100%>
+<tr height=25>
+<td class=head><b>在线用户：共{$trd_sumonline2}人在线，{$trd_sumonline1}位会员({$trd_hide}位隐身)，{$trd_guest}位游客</b></td>
+</tr></table></td></tr>
+<!--
+EOT;
+if($trd_onlineinfo){print <<<EOT
+-->
+<tr><td>
+<table cellpadding=0 cellspacing=3 width=100% bgcolor=$threadcolortwo>
+<tr>$trd_onlineinfo
+</table></td></tr>
+<!--
+EOT;
+}
+print <<<EOT
+-->
+</table><br>
+<!--
+EOT;
+?>

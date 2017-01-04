@@ -1,0 +1,19 @@
+{include file="header.html"}
+	<div id="page">
+		<div class="post">
+		<h2 class="title">移动话题</h2>
+			<div class="entry">
+				<form action="{spUrl c=admin a=move gid=$val.gid}" method="POST"  enctype="multipart/form-data" >
+					<p>标题：{$val.title}</p>
+	<select name="forum" style="width:auto;">
+	{foreach from=$results item=result}
+	<option value="{$result.id}">{$result.name}</option>
+	{/foreach}
+	</select></p>
+
+					<p><input type="submit" class="links" value="移  动" /></p>
+				</form>
+			</div>
+		</div>
+	</div>
+{include file="footer.html"}
