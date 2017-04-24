@@ -86,7 +86,7 @@ if(isset($_GET['action']) && $_GET['action'] = 'register') {
 </head>
 <body>
 <!-- 包含头部文件 -->
-<?php include ROOT_PATH.'\header.inc.php';?>
+<?php include ROOT_PATH.'/header.inc.php';?>
 
 <div id="register">
 	<h2>会员注册</h2>
